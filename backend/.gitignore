@@ -1,0 +1,68 @@
+####################################
+# Node.js
+####################################
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+####################################
+# Environment Files (IMPORTANT)
+####################################
+.env
+ml-service/.env
+
+####################################
+# Logs
+####################################
+logs/
+*.log
+
+####################################
+# OS / Editor Files
+####################################
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+####################################
+# Uploads (User Files)
+####################################
+uploads/contracts/
+
+####################################
+# Python / ML Service
+####################################
+ml-service/venv/
+ml-service/__pycache__/
+ml-service/*.pyc
+ml-service/.python-version
+
+####################################
+# Trained ML Models (Do NOT push these)
+####################################
+ml-service/models/*.pkl
+
+####################################
+# Python Cache
+####################################
+__pycache__/
+*.py[cod]
+
+####################################
+# Jupyter / Temp Files (if any)
+####################################
+.ipynb_checkpoints/
+
+####################################
+# Build / Dist (if added later)
+####################################
+dist/
+build/
+
+####################################
+# Coverage / Testing
+####################################
+coverage/

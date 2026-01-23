@@ -1,0 +1,88 @@
+{
+  "common": {
+    "welcome": "स्वागत है",
+    "loading": "लोड हो रहा है...",
+    "submit": "जमा करें",
+    "cancel": "रद्द करें",
+    "save": "सहेजें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "view": "देखें",
+    "back": "वापस",
+    "search": "खोजें",
+    "filter": "फ़िल्टर",
+    "logout": "लॉग आउट",
+    "profile": "प्रोफ़ाइल",
+    "settings": "सेटिंग्स",
+    "language": "भाषा",
+    "offline": "आप ऑफ़लाइन हैं",
+    "online": "वापस ऑनलाइन"
+  },
+  "auth": {
+    "login": "लॉगिन",
+    "register": "पंजीकरण करें",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "confirmPassword": "पासवर्ड की पुष्टि करें",
+    "name": "नाम",
+    "phone": "फ़ोन नंबर",
+    "role": "भूमिका",
+    "farmer": "किसान",
+    "company": "कंपनी",
+    "loginSuccess": "लॉगिन सफल",
+    "registerSuccess": "पंजीकरण सफल",
+    "forgotPassword": "पासवर्ड भूल गए?",
+    "noAccount": "खाता नहीं है?",
+    "haveAccount": "पहले से ही खाता है?"
+  },
+  "farmer": {
+    "home": "होम",
+    "cropPrediction": "फसल भविष्यवाणी",
+    "contracts": "अनुबंध",
+    "alerts": "अलर्ट",
+    "schemes": "योजनाएं",
+    "predict": "फसल की भविष्यवाणी करें",
+    "history": "भविष्यवाणी इतिहास",
+    "apply": "आवेदन करें",
+    "applications": "मेरे आवेदन"
+  },
+  "company": {
+    "dashboard": "डैशबोर्ड",
+    "createContract": "अनुबंध बनाएं",
+    "myContracts": "मेरे अनुबंध",
+    "applicants": "आवेदक",
+    "disputes": "विवाद"
+  },
+  "admin": {
+    "dashboard": "एडमिन डैशबोर्ड",
+    "verifyCompanies": "कंपनियों को सत्यापित करें",
+    "users": "उपयोगकर्ता प्रबंधन",
+    "contracts": "अनुबंध प्रबंधन",
+    "disputes": "विवाद प्रबंधन",
+    "alerts": "अलर्ट प्रबंधन",
+    "schemes": "योजना प्रबंधन"
+  },
+  "contract": {
+    "cropType": "फसल का प्रकार",
+    "quantity": "मात्रा",
+    "price": "कीमत",
+    "duration": "अवधि",
+    "location": "स्थान",
+    "description": "विवरण",
+    "terms": "शर्तें",
+    "apply": "अनुबंध के लिए आवेदन करें",
+    "viewDetails": "विवरण देखें"
+  },
+  "prediction": {
+    "nitrogen": "नाइट्रोजन (N)",
+    "phosphorus": "फॉस्फोरस (P)",
+    "potassium": "पोटेशियम (K)",
+    "temperature": "तापमान",
+    "humidity": "आर्द्रता",
+    "ph": "pH स्तर",
+    "rainfall": "वर्षा",
+    "predictCrop": "फसल की भविष्यवाणी करें",
+    "result": "भविष्यवाणी परिणाम",
+    "recommended": "अनुशंसित फसल"
+  }
+}

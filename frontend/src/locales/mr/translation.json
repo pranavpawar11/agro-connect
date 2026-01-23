@@ -1,0 +1,88 @@
+{
+  "common": {
+    "welcome": "स्वागत आहे",
+    "loading": "लोड होत आहे...",
+    "submit": "सबमिट करा",
+    "cancel": "रद्द करा",
+    "save": "जतन करा",
+    "delete": "हटवा",
+    "edit": "संपादित करा",
+    "view": "पहा",
+    "back": "मागे",
+    "search": "शोधा",
+    "filter": "फिल्टर",
+    "logout": "लॉग आउट",
+    "profile": "प्रोफाइल",
+    "settings": "सेटिंग्ज",
+    "language": "भाषा",
+    "offline": "तुम्ही ऑफलाइन आहात",
+    "online": "परत ऑनलाइन"
+  },
+  "auth": {
+    "login": "लॉगिन",
+    "register": "नोंदणी करा",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "confirmPassword": "पासवर्ड पुष्टी करा",
+    "name": "नाव",
+    "phone": "फोन नंबर",
+    "role": "भूमिका",
+    "farmer": "शेतकरी",
+    "company": "कंपनी",
+    "loginSuccess": "लॉगिन यशस्वी",
+    "registerSuccess": "नोंदणी यशस्वी",
+    "forgotPassword": "पासवर्ड विसरलात?",
+    "noAccount": "खाते नाही?",
+    "haveAccount": "आधीच खाते आहे?"
+  },
+  "farmer": {
+    "home": "होम",
+    "cropPrediction": "पीक अंदाज",
+    "contracts": "करार",
+    "alerts": "सूचना",
+    "schemes": "योजना",
+    "predict": "पीक अंदाज करा",
+    "history": "अंदाज इतिहास",
+    "apply": "अर्ज करा",
+    "applications": "माझे अर्ज"
+  },
+  "company": {
+    "dashboard": "डॅशबोर्ड",
+    "createContract": "करार तयार करा",
+    "myContracts": "माझे करार",
+    "applicants": "अर्जदार",
+    "disputes": "विवाद"
+  },
+  "admin": {
+    "dashboard": "अॅडमिन डॅशबोर्ड",
+    "verifyCompanies": "कंपन्या सत्यापित करा",
+    "users": "वापरकर्ता व्यवस्थापन",
+    "contracts": "करार व्यवस्थापन",
+    "disputes": "विवाद व्यवस्थापन",
+    "alerts": "सूचना व्यवस्थापन",
+    "schemes": "योजना व्यवस्थापन"
+  },
+  "contract": {
+    "cropType": "पिकाचा प्रकार",
+    "quantity": "प्रमाण",
+    "price": "किंमत",
+    "duration": "कालावधी",
+    "location": "स्थान",
+    "description": "वर्णन",
+    "terms": "अटी",
+    "apply": "करारासाठी अर्ज करा",
+    "viewDetails": "तपशील पहा"
+  },
+  "prediction": {
+    "nitrogen": "नायट्रोजन (N)",
+    "phosphorus": "फॉस्फरस (P)",
+    "potassium": "पोटॅशियम (K)",
+    "temperature": "तापमान",
+    "humidity": "आर्द्रता",
+    "ph": "pH पातळी",
+    "rainfall": "पाऊस",
+    "predictCrop": "पीक अंदाज करा",
+    "result": "अंदाज परिणाम",
+    "recommended": "शिफारस केलेले पीक"
+  }
+}

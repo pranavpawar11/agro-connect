@@ -1,0 +1,88 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "loading": "Loading...",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "back": "Back",
+    "search": "Search",
+    "filter": "Filter",
+    "logout": "Logout",
+    "profile": "Profile",
+    "settings": "Settings",
+    "language": "Language",
+    "offline": "You are offline",
+    "online": "Back online"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "name": "Name",
+    "phone": "Phone Number",
+    "role": "Role",
+    "farmer": "Farmer",
+    "company": "Company",
+    "loginSuccess": "Login successful",
+    "registerSuccess": "Registration successful",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?"
+  },
+  "farmer": {
+    "home": "Home",
+    "cropPrediction": "Crop Prediction",
+    "contracts": "Contracts",
+    "alerts": "Alerts",
+    "schemes": "Schemes",
+    "predict": "Predict Crop",
+    "history": "Prediction History",
+    "apply": "Apply",
+    "applications": "My Applications"
+  },
+  "company": {
+    "dashboard": "Dashboard",
+    "createContract": "Create Contract",
+    "myContracts": "My Contracts",
+    "applicants": "Applicants",
+    "disputes": "Disputes"
+  },
+  "admin": {
+    "dashboard": "Admin Dashboard",
+    "verifyCompanies": "Verify Companies",
+    "users": "User Management",
+    "contracts": "Contract Management",
+    "disputes": "Dispute Management",
+    "alerts": "Alert Management",
+    "schemes": "Scheme Management"
+  },
+  "contract": {
+    "cropType": "Crop Type",
+    "quantity": "Quantity",
+    "price": "Price",
+    "duration": "Duration",
+    "location": "Location",
+    "description": "Description",
+    "terms": "Terms",
+    "apply": "Apply to Contract",
+    "viewDetails": "View Details"
+  },
+  "prediction": {
+    "nitrogen": "Nitrogen (N)",
+    "phosphorus": "Phosphorus (P)",
+    "potassium": "Potassium (K)",
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "ph": "pH Level",
+    "rainfall": "Rainfall",
+    "predictCrop": "Predict Crop",
+    "result": "Prediction Result",
+    "recommended": "Recommended Crop"
+  }
+}
