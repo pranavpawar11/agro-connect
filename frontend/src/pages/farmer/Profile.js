@@ -45,10 +45,10 @@ const Profile = () => {
       const data = await authService.updateProfile(updateData);
       updateUser(data.user);
       setEditing(false);
-      toast.success('Profile updated successfully');
+      toast.success(t('profile.updateSuccess'));
     } catch (error) {
       console.error('Error updating profile:', error);
-      toast.error('Failed to update profile');
+      toast.error(t('profile.updateError'));
     }
   };
 
@@ -56,7 +56,7 @@ const Profile = () => {
     changeLanguage(newLang);
     try {
       await authService.updateProfile({ language: newLang });
-      toast.success('Language updated');
+      toast.success(t('profile.languageUpdated'));
     } catch (error) {
       console.error('Error updating language:', error);
     }
@@ -87,7 +87,7 @@ const Profile = () => {
             <div className="flex-1">
               <h2 className="text-xl font-bold text-gray-800">{user?.name}</h2>
               <p className="text-sm text-gray-600 capitalize">{user?.role}</p>
-              <span className="inline-block mt-1 px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
+              <span className="inline-block mt-1 px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full capitalize">
                 {user?.verificationStatus}
               </span>
             </div>
@@ -97,7 +97,9 @@ const Profile = () => {
             <div className="space-y-4">
               {/* Basic Info */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {t('profile.name')}
+                </label>
                 <input
                   type="text"
                   value={formData.name}
@@ -106,7 +108,9 @@ const Profile = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {t('profile.phone')}
+                </label>
                 <input
                   type="tel"
                   value={formData.phone}
@@ -117,11 +121,15 @@ const Profile = () => {
 
               {/* Farmer Details */}
               <div className="border-t pt-4">
-                <h3 className="font-semibold text-gray-800 mb-3">Farm Details</h3>
+                <h3 className="font-semibold text-gray-800 mb-3">
+                  {t('profile.farmDetails')}
+                </h3>
                 
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('profile.address')}
+                    </label>
                     <input
                       type="text"
                       value={formData.farmerDetails.address}
@@ -135,7 +143,9 @@ const Profile = () => {
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Village</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        {t('profile.village')}
+                      </label>
                       <input
                         type="text"
                         value={formData.farmerDetails.village}
@@ -147,7 +157,9 @@ const Profile = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">District</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        {t('profile.district')}
+                      </label>
                       <input
                         type="text"
                         value={formData.farmerDetails.district}
@@ -162,7 +174,9 @@ const Profile = () => {
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        {t('profile.state')}
+                      </label>
                       <input
                         type="text"
                         value={formData.farmerDetails.state}
@@ -174,7 +188,9 @@ const Profile = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Pincode</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        {t('profile.pincode')}
+                      </label>
                       <input
                         type="text"
                         value={formData.farmerDetails.pincode}
@@ -189,7 +205,9 @@ const Profile = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Land Size (acres)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('profile.landSize')}
+                    </label>
                     <input
                       type="number"
                       value={formData.farmerDetails.landSize}
@@ -202,7 +220,9 @@ const Profile = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Crops (comma separated)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('profile.crops')}
+                    </label>
                     <input
                       type="text"
                       value={formData.farmerDetails.crops}
@@ -210,7 +230,7 @@ const Profile = () => {
                         ...formData, 
                         farmerDetails: { ...formData.farmerDetails, crops: e.target.value }
                       })}
-                      placeholder="e.g., Wheat, Rice, Cotton"
+                      placeholder={t('profile.cropsPlaceholder')}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
                     />
                   </div>
@@ -222,13 +242,13 @@ const Profile = () => {
                   onClick={() => setEditing(false)}
                   className="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold"
                 >
-                  Cancel
+                  {t('common.cancel')}
                 </button>
                 <button
                   onClick={handleSave}
                   className="flex-1 bg-primary text-white py-3 rounded-lg font-semibold"
                 >
-                  Save Changes
+                  {t('profile.saveChanges')}
                 </button>
               </div>
             </div>
@@ -249,7 +269,7 @@ const Profile = () => {
                   <div className="border-t pt-3 mt-3">
                     <h3 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
                       <Leaf className="w-5 h-5 text-primary" />
-                      Farm Details
+                      {t('profile.farmDetails')}
                     </h3>
                   </div>
                   
@@ -257,7 +277,7 @@ const Profile = () => {
                     <div className="flex items-start gap-3 text-gray-700">
                       <MapPin className="w-5 h-5 text-primary mt-1" />
                       <div>
-                        <p className="font-medium">Address</p>
+                        <p className="font-medium">{t('profile.address')}</p>
                         <p className="text-sm">{user.farmerDetails.address}</p>
                       </div>
                     </div>
@@ -274,7 +294,7 @@ const Profile = () => {
                   {user.farmerDetails.landSize && (
                     <div className="flex items-center gap-3 text-gray-700">
                       <Leaf className="w-5 h-5 text-primary" />
-                      <span>Land Size: {user.farmerDetails.landSize} acres</span>
+                      <span>{t('profile.landSizeLabel')}: {user.farmerDetails.landSize} {t('profile.acres')}</span>
                     </div>
                   )}
 
@@ -282,7 +302,7 @@ const Profile = () => {
                     <div className="flex items-start gap-3 text-gray-700">
                       <Leaf className="w-5 h-5 text-primary mt-1" />
                       <div>
-                        <p className="font-medium">Crops</p>
+                        <p className="font-medium">{t('profile.cropsLabel')}</p>
                         <div className="flex flex-wrap gap-2 mt-1">
                           {user.farmerDetails.crops.map((crop, index) => (
                             <span key={index} className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
@@ -300,7 +320,7 @@ const Profile = () => {
                 onClick={() => setEditing(true)}
                 className="w-full bg-primary text-white py-3 rounded-lg font-semibold mt-4"
               >
-                Edit Profile
+                {t('profile.editProfile')}
               </button>
             </div>
           )}
@@ -341,7 +361,7 @@ const Profile = () => {
             <div className="flex items-center justify-between py-3 border-t">
               <div className="flex items-center gap-2">
                 <Volume2 className="w-5 h-5 text-primary" />
-                <span className="font-semibold text-gray-700">Voice Guide</span>
+                <span className="font-semibold text-gray-700">{t('profile.voiceGuide')}</span>
               </div>
               <button
                 onClick={toggleVoice}

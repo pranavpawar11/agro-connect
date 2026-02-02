@@ -40,19 +40,16 @@ exports.register = async (req, res) => {
     
     const token = generateToken(user._id);
     
+    // Get complete user data without password
+    const userWithoutPassword = await User.findById(user._id).select('-password').lean();
+    
     res.status(201).json({
       success: true,
       message: role === 'company' 
         ? 'Company registered successfully. Please wait for admin verification' 
         : 'Registration successful',
       token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        verificationStatus: user.verificationStatus
-      }
+      user: userWithoutPassword
     });
   } catch (error) {
     res.status(500).json({
@@ -66,7 +63,8 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     
-    const user = await User.findOne({ email });
+    // Find user and select password for comparison
+    const user = await User.findOne({ email }).select('+password');
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -89,20 +87,24 @@ exports.login = async (req, res) => {
       });
     }
     
+    // For company users, check verification status
+    if (user.role === 'company' && user.verificationStatus !== 'verified') {
+      return res.status(403).json({
+        success: false,
+        message: `Your account is ${user.verificationStatus}. Please wait for admin verification.`
+      });
+    }
+    
     const token = generateToken(user._id);
+    
+    // Get complete user data without password
+    const userWithoutPassword = await User.findById(user._id).select('-password').lean();
     
     res.status(200).json({
       success: true,
       message: 'Login successful',
       token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        verificationStatus: user.verificationStatus,
-        language: user.language
-      }
+      user: userWithoutPassword
     });
   } catch (error) {
     res.status(500).json({
@@ -116,7 +118,7 @@ exports.adminLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
     
-    const user = await User.findOne({ email, role: 'admin' });
+    const user = await User.findOne({ email, role: 'admin' }).select('+password');
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -134,16 +136,14 @@ exports.adminLogin = async (req, res) => {
     
     const token = generateToken(user._id);
     
+    // Get complete admin data without password
+    const adminWithoutPassword = await User.findById(user._id).select('-password').lean();
+    
     res.status(200).json({
       success: true,
       message: 'Admin login successful',
       token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role
-      }
+      user: adminWithoutPassword
     });
   } catch (error) {
     res.status(500).json({
@@ -176,8 +176,6 @@ exports.getProfile = async (req, res) => {
   }
 };
 
-
-// controllers/authController.js - updateProfile function
 exports.updateProfile = async (req, res) => {
   try {
     const { name, phone, farmerDetails, companyDetails, language } = req.body;
@@ -214,7 +212,6 @@ exports.updateProfile = async (req, res) => {
       };
       
       // ALWAYS reset verification status to pending when company details are edited
-      // This ensures admin re-verifies any changes
       updateData.verificationStatus = 'pending';
       updateData.verificationRemarks = ''; // Clear any previous remarks
     }
@@ -229,9 +226,13 @@ exports.updateProfile = async (req, res) => {
       }
     ).select('-password');
     
+    const message = currentUser.role === 'company' 
+      ? 'Profile updated successfully. Verification status reset to pending.'
+      : 'Profile updated successfully';
+    
     res.status(200).json({
       success: true,
-      message: 'Profile updated successfully. Verification status reset to pending.',
+      message,
       user
     });
   } catch (error) {

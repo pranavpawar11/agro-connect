@@ -1,48 +1,45 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, ArrowRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import useAuth from '../../hooks/useAuth';
 
 const SchemeCard = ({ scheme }) => {
   const navigate = useNavigate();
-
-  const getCategoryColor = (category) => {
-    const colors = {
-      subsidy: 'bg-green-100 text-green-800',
-      loan: 'bg-blue-100 text-blue-800',
-      insurance: 'bg-purple-100 text-purple-800',
-      training: 'bg-orange-100 text-orange-800',
-      equipment: 'bg-red-100 text-red-800',
-      other: 'bg-gray-100 text-gray-800',
-    };
-    return colors[category] || colors.other;
-  };
-
+  const { i18n } = useTranslation();
+  const { user } = useAuth();
+  
+  // Get the current language from user preference or i18n, fallback to 'en'
+  const currentLang = user?.language || i18n.language || 'en';
+  
+  // Extract the text in the current language with fallback to English
+  const name = scheme.name?.[currentLang] || scheme.name?.en || 'Untitled Scheme';
+  const description = scheme.description?.[currentLang] || scheme.description?.en || '';
+  
   return (
-    <div
+    <div 
       onClick={() => navigate(`/farmer/schemes/${scheme._id}`)}
-      className="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition-shadow cursor-pointer"
+      className="bg-white rounded-lg shadow-sm p-4 cursor-pointer hover:shadow-md transition-shadow"
     >
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-3">
-          <div className="bg-primary-light p-2 rounded-lg">
-            <BookOpen className="w-6 h-6 text-primary" />
-          </div>
-          <div>
-            <h3 className="font-bold text-gray-800">{scheme.name}</h3>
-            <p className="text-sm text-gray-600">{scheme.state}</p>
+      <div className="flex justify-between items-start">
+        <div className="flex-1">
+          <h3 className="font-semibold text-gray-900 mb-2">
+            {name}
+          </h3>
+          <p className="text-sm text-gray-600 line-clamp-2 mb-3">
+            {description}
+          </p>
+          <div className="flex items-center gap-2">
+            <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full capitalize">
+              {scheme.category}
+            </span>
+            <span className="text-xs text-gray-500">
+              {scheme.state}
+            </span>
           </div>
         </div>
-        <span className={`px-3 py-1 text-xs font-semibold rounded-full capitalize ${getCategoryColor(scheme.category)}`}>
-          {scheme.category}
-        </span>
+        <ChevronRight className="text-gray-400 flex-shrink-0 ml-2" size={20} />
       </div>
-
-      <p className="text-sm text-gray-600 line-clamp-2 mb-4">{scheme.description}</p>
-
-      <button className="w-full flex items-center justify-center gap-2 text-primary font-semibold hover:text-primary-dark transition-colors">
-        View Details
-        <ArrowRight className="w-4 h-4" />
-      </button>
     </div>
   );
 };

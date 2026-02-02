@@ -23,8 +23,8 @@ app.use(cors({
   origin: [
     "http://localhost:3000",
     "https://localhost:3000",
-    "http://10.26.15.31:3000",
-    "https://10.26.15.31:3000",
+    "http://192.168.1.10:3000",
+    "https://192.168.1.10:3000",
     "https://fantastic-creponne-a522b0.netlify.app/"
   ],
   credentials: true

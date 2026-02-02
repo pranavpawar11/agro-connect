@@ -11,7 +11,7 @@ import useVoice from '../../hooks/useVoice';
 const SchemeDetail = () => {
     const { schemeId } = useParams();
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { user } = useAuth();
     const { speak, isEnabled } = useVoice();
     const [scheme, setScheme] = useState(null);
@@ -32,15 +32,31 @@ const SchemeDetail = () => {
         }
     };
 
+    // Get current language
+    const currentLang = user?.language || i18n.language || 'en';
+
+    // Helper function to get localized text
+    const getLocalizedText = (field) => {
+        if (!scheme || !field) return '';
+        if (typeof field === 'string') return field; // Already a string
+        return field[currentLang] || field.en || ''; // Multilingual object
+    };
+
     const handleSpeak = () => {
         if (scheme) {
-            const text = `${scheme.name}. ${scheme.description}`;
-            speak(text, user?.language || 'en');
+            const name = getLocalizedText(scheme.name);
+            const description = getLocalizedText(scheme.description);
+            const text = `${name}. ${description}`;
+            speak(text, currentLang);
         }
     };
 
     if (loading) return <Loading fullScreen />;
-    if (!scheme) return <div>Scheme not found</div>;
+    if (!scheme) return (
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <p className="text-gray-500">{t('common.loading')}</p>
+        </div>
+    );
 
     return (
         <div className="min-h-screen bg-gray-50 pb-20">
@@ -50,7 +66,7 @@ const SchemeDetail = () => {
                     <button onClick={() => navigate(-1)} className="p-2">
                         <ArrowLeft className="w-6 h-6" />
                     </button>
-                    <h1 className="text-xl font-bold">Scheme Details</h1>
+                    <h1 className="text-xl font-bold">{t('farmer.schemes')}</h1>
                 </div>
                 {isEnabled && (
                     <button onClick={handleSpeak} className="p-2 bg-white bg-opacity-20 rounded-full">
@@ -67,7 +83,9 @@ const SchemeDetail = () => {
                             <BookOpen className="w-8 h-8 text-primary" />
                         </div>
                         <div className="flex-1">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-2">{scheme.name}</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                                {getLocalizedText(scheme.name)}
+                            </h2>
                             <div className="flex items-center gap-2">
                                 <span className="px-3 py-1 bg-primary-light text-primary text-xs font-semibold rounded-full capitalize">
                                     {scheme.category}
@@ -80,45 +98,61 @@ const SchemeDetail = () => {
 
                 {/* Description */}
                 <div className="bg-white rounded-xl shadow-lg p-6">
-                    <h3 className="font-bold text-gray-800 mb-3">Description</h3>
-                    <p className="text-gray-700 leading-relaxed">{scheme.description}</p>
+                    <h3 className="font-bold text-gray-800 mb-3">
+                        {t('scheme.description')}
+                    </h3>
+                    <p className="text-gray-700 leading-relaxed">
+                        {getLocalizedText(scheme.description)}
+                    </p>
                 </div>
 
                 {/* Eligibility */}
                 <div className="bg-white rounded-xl shadow-lg p-6">
                     <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
                         <CheckCircle className="w-5 h-5 text-green-500" />
-                        Eligibility
+                        {t('scheme.eligibility')}
                     </h3>
-                    <p className="text-gray-700 leading-relaxed">{scheme.eligibility}</p>
+                    <p className="text-gray-700 leading-relaxed">
+                        {getLocalizedText(scheme.eligibility)}
+                    </p>
                 </div>
 
                 {/* Steps */}
                 <div className="bg-white rounded-xl shadow-lg p-6">
-                    <h3 className="font-bold text-gray-800 mb-3">How to Apply</h3>
-                    <div className="text-gray-700 leading-relaxed whitespace-pre-line">{scheme.steps}</div>
+                    <h3 className="font-bold text-gray-800 mb-3">
+                        {t('scheme.howToApply')}
+                    </h3>
+                    <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+                        {getLocalizedText(scheme.steps)}
+                    </div>
                 </div>
 
                 {/* Documents */}
                 <div className="bg-white rounded-xl shadow-lg p-6">
                     <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
                         <FileText className="w-5 h-5 text-blue-500" />
-                        Required Documents
+                        {t('scheme.requiredDocuments')}
                     </h3>
-                    <p className="text-gray-700 leading-relaxed">{scheme.documents}</p>
+                    <p className="text-gray-700 leading-relaxed">
+                        {getLocalizedText(scheme.documents)}
+                    </p>
                 </div>
 
                 {/* Benefits */}
                 {scheme.benefits && (
                     <div className="bg-gradient-to-br from-primary to-primary-dark text-white rounded-xl shadow-lg p-6">
-                        <h3 className="font-bold mb-3">Benefits</h3>
-                        <p className="leading-relaxed">{scheme.benefits}</p>
+                        <h3 className="font-bold mb-3">{t('scheme.benefits')}</h3>
+                        <p className="leading-relaxed">
+                            {getLocalizedText(scheme.benefits)}
+                        </p>
                     </div>
                 )}
 
                 {/* Contact Info */}
                 <div className="bg-white rounded-xl shadow-lg p-6 space-y-3">
-                    <h3 className="font-bold text-gray-800 mb-3">Contact Information</h3>
+                    <h3 className="font-bold text-gray-800 mb-3">
+                        {t('scheme.contactInformation')}
+                    </h3>
                     {scheme.contactNumber && (
                         <div className="flex items-center gap-3 text-gray-700">
                             <Phone className="w-5 h-5 text-primary" />

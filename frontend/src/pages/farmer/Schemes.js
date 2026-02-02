@@ -11,7 +11,7 @@ import { SCHEME_CATEGORIES } from '../../utils/constants';
 
 const Schemes = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const [schemes, setSchemes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,8 +23,9 @@ const Schemes = () => {
 
   const fetchSchemes = async () => {
     try {
+      const currentLang = user?.language || i18n.language || 'en';
       const filters = {
-        language: user?.language || 'en',
+        language: currentLang,
       };
       if (selectedCategory !== 'all') {
         filters.category = selectedCategory;
@@ -52,7 +53,7 @@ const Schemes = () => {
       <div className="bg-white p-4 border-b">
         <div className="flex items-center gap-2 mb-2">
           <Filter className="w-5 h-5 text-gray-600" />
-          <span className="font-semibold text-gray-700">Category:</span>
+          <span className="font-semibold text-gray-700">{t('scheme.category')}:</span>
         </div>
         <div className="flex gap-2 overflow-x-auto pb-2">
           <button
@@ -63,7 +64,7 @@ const Schemes = () => {
                 : 'bg-gray-200 text-gray-700'
             }`}
           >
-            All
+            {t('scheme.all')}
           </button>
           {SCHEME_CATEGORIES.map((category) => (
             <button
@@ -75,7 +76,7 @@ const Schemes = () => {
                   : 'bg-gray-200 text-gray-700'
               }`}
             >
-              {category}
+              {t(`scheme.category_${category}`) || category}
             </button>
           ))}
         </div>
@@ -92,7 +93,7 @@ const Schemes = () => {
           </div>
         ) : (
           <div className="text-center py-12 bg-white rounded-xl">
-            <p className="text-gray-500">No schemes available</p>
+            <p className="text-gray-500">{t('scheme.noSchemes')}</p>
           </div>
         )}
       </div>

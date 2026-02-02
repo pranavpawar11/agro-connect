@@ -9,7 +9,6 @@ import AlertCard from '../../components/farmer/AlertCard';
 import Loading from '../../components/common/Loading';
 import useInstallPrompt from '../../hooks/useInstallPrompt';
 
-
 const FarmerHome = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -17,8 +16,6 @@ const FarmerHome = () => {
   const [alerts, setAlerts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { canInstall, install } = useInstallPrompt();
-
-
 
   useEffect(() => {
     fetchAlerts();
@@ -54,7 +51,7 @@ const FarmerHome = () => {
     },
     {
       icon: TrendingUp,
-      label: 'Mandi Prices',
+      label: t('farmer.mandiPrices'),
       color: 'bg-yellow-100 text-yellow-600',
       path: '/farmer/mandi-prices',
     },
@@ -70,7 +67,9 @@ const FarmerHome = () => {
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Header */}
       <div className="bg-gradient-to-r from-primary to-primary-dark text-white p-6 rounded-b-3xl">
-        <h1 className="text-2xl font-bold mb-1">{t('common.welcome')}, {user?.name}!</h1>
+        <h1 className="text-2xl font-bold mb-1">
+          {t('common.welcome')}, {user?.name}!
+        </h1>
         <p className="text-sm opacity-90">
           {user?.farmerDetails?.village}, {user?.farmerDetails?.district}
         </p>
@@ -79,7 +78,9 @@ const FarmerHome = () => {
       <div className="px-4 -mt-3">
         {/* Quick Actions */}
         <div className="bg-white rounded-2xl shadow-lg p-5 mb-6">
-          <h2 className="text-lg font-bold text-gray-800 mb-4">Quick Actions..</h2>
+          <h2 className="text-lg font-bold text-gray-800 mb-4">
+            {t('farmer.quickActions')}
+          </h2>
           <div className="grid grid-cols-2 gap-4">
             {quickActions.map((action, index) => {
               const Icon = action.icon;
@@ -100,15 +101,14 @@ const FarmerHome = () => {
               );
             })}
           </div>
-         {canInstall && (
-  <button
-    onClick={install}
-    className="mt-3 bg-white text-primary px-4 py-2 rounded-lg font-semibold shadow"
-  >
-    📲 Install AgroConnect App
-  </button>
-)}
-
+          {canInstall && (
+            <button
+              onClick={install}
+              className="mt-3 w-full bg-primary text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-primary-dark transition-colors"
+            >
+              📲 {t('farmer.installApp')}
+            </button>
+          )}
         </div>
 
         {/* Latest Alerts */}
@@ -116,13 +116,13 @@ const FarmerHome = () => {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
               <Bell className="w-5 h-5" />
-              Latest Alerts
+              {t('farmer.latestAlerts')}
             </h2>
             <button
               onClick={() => navigate('/farmer/alerts')}
               className="text-primary text-sm font-semibold"
             >
-              View All
+              {t('farmer.viewAll')}
             </button>
           </div>
 
@@ -135,7 +135,9 @@ const FarmerHome = () => {
               ))}
             </div>
           ) : (
-            <p className="text-gray-500 text-center py-4">No alerts available</p>
+            <p className="text-gray-500 text-center py-4">
+              {t('farmer.noAlerts')}
+            </p>
           )}
         </div>
       </div>
