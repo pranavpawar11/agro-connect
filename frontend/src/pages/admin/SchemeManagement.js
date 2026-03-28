@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BookOpen, Plus, Edit, Trash2, Eye } from 'lucide-react';
+import { BookOpen, Plus, Edit, Trash2, Globe, Phone, Tag } from 'lucide-react';
 import Sidebar from '../../components/common/Sidebar';
 import Navbar from '../../components/common/Navbar';
 import Loading from '../../components/common/Loading';
@@ -58,36 +58,12 @@ const SchemeManagement = () => {
     e.preventDefault();
     try {
       const schemeData = {
-        name: {
-          en: formData.name_en,
-          hi: formData.name_hi,
-          mr: formData.name_mr,
-        },
-        description: {
-          en: formData.description_en,
-          hi: formData.description_hi,
-          mr: formData.description_mr,
-        },
-        eligibility: {
-          en: formData.eligibility_en,
-          hi: formData.eligibility_hi,
-          mr: formData.eligibility_mr,
-        },
-        steps: {
-          en: formData.steps_en,
-          hi: formData.steps_hi,
-          mr: formData.steps_mr,
-        },
-        documents: {
-          en: formData.documents_en,
-          hi: formData.documents_hi,
-          mr: formData.documents_mr,
-        },
-        benefits: {
-          en: formData.benefits_en,
-          hi: formData.benefits_hi,
-          mr: formData.benefits_mr,
-        },
+        name: { en: formData.name_en, hi: formData.name_hi, mr: formData.name_mr },
+        description: { en: formData.description_en, hi: formData.description_hi, mr: formData.description_mr },
+        eligibility: { en: formData.eligibility_en, hi: formData.eligibility_hi, mr: formData.eligibility_mr },
+        steps: { en: formData.steps_en, hi: formData.steps_hi, mr: formData.steps_mr },
+        documents: { en: formData.documents_en, hi: formData.documents_hi, mr: formData.documents_mr },
+        benefits: { en: formData.benefits_en, hi: formData.benefits_hi, mr: formData.benefits_mr },
         state: formData.state,
         category: formData.category,
         officialWebsite: formData.officialWebsite,
@@ -156,105 +132,147 @@ const SchemeManagement = () => {
     setEditMode(false);
     setSelectedScheme(null);
     setFormData({
-      name_en: '',
-      name_hi: '',
-      name_mr: '',
-      description_en: '',
-      description_hi: '',
-      description_mr: '',
-      eligibility_en: '',
-      eligibility_hi: '',
-      eligibility_mr: '',
-      steps_en: '',
-      steps_hi: '',
-      steps_mr: '',
-      documents_en: '',
-      documents_hi: '',
-      documents_mr: '',
-      benefits_en: '',
-      benefits_hi: '',
-      benefits_mr: '',
-      state: '',
-      category: 'subsidy',
-      officialWebsite: '',
-      contactNumber: '',
+      name_en: '', name_hi: '', name_mr: '',
+      description_en: '', description_hi: '', description_mr: '',
+      eligibility_en: '', eligibility_hi: '', eligibility_mr: '',
+      steps_en: '', steps_hi: '', steps_mr: '',
+      documents_en: '', documents_hi: '', documents_mr: '',
+      benefits_en: '', benefits_hi: '', benefits_mr: '',
+      state: '', category: 'subsidy', officialWebsite: '', contactNumber: '',
     });
   };
 
   const getCategoryColor = (category) => {
     const colors = {
-      subsidy: 'bg-green-100 text-green-800',
-      loan: 'bg-blue-100 text-blue-800',
-      insurance: 'bg-purple-100 text-purple-800',
-      training: 'bg-orange-100 text-orange-800',
-      equipment: 'bg-red-100 text-red-800',
-      other: 'bg-gray-100 text-gray-800',
+      subsidy: 'bg-green-100 text-green-800 border border-green-200',
+      loan: 'bg-blue-100 text-blue-800 border border-blue-200',
+      insurance: 'bg-purple-100 text-purple-800 border border-purple-200',
+      training: 'bg-orange-100 text-orange-800 border border-orange-200',
+      equipment: 'bg-red-100 text-red-800 border border-red-200',
+      other: 'bg-neutral-100 text-neutral-700 border border-neutral-200',
     };
     return colors[category] || colors.other;
   };
 
+  const inputClass = "w-full px-4 py-3 border-2 border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary-400 focus:border-primary-400 outline-none transition-all";
+  const textareaClass = `${inputClass} resize-none`;
+  const sectionHeaderClass = "flex items-center gap-2 font-black text-neutral-800 mb-3 pb-2 border-b-2 border-neutral-100";
+
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gradient-mesh-light farmland-pattern">
       <Sidebar role="admin" />
-      
+
       <div className="flex-1 flex flex-col overflow-hidden lg:ml-64">
         <Navbar />
-        
+
         <main className="flex-1 overflow-y-auto pt-20 p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-2xl font-bold text-gray-800">Scheme Management</h1>
-            <button
-              onClick={() => setShowModal(true)}
-              className="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-dark flex items-center gap-2"
-            >
-              <Plus className="w-5 h-5" />
-              Add Scheme
-            </button>
+          {/* Hero Header */}
+          <div className="relative mb-8 rounded-3xl overflow-hidden shadow-xl animate-fade-in">
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-700 to-violet-900" />
+            <div className="absolute -top-10 -right-10 w-64 h-64 bg-white/5 rounded-full" />
+            <div className="absolute -bottom-16 -left-10 w-80 h-80 bg-white/5 rounded-full" />
+            <div className="absolute top-4 right-40 w-32 h-32 bg-indigo-300/10 rounded-full" />
+
+            <div className="relative p-8 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="bg-white/20 backdrop-blur-sm p-3 rounded-2xl">
+                  <BookOpen className="w-8 h-8 text-indigo-300" />
+                </div>
+                <div>
+                  <h1 className="text-4xl font-display font-black text-white tracking-tight">
+                    Scheme Management
+                  </h1>
+                  <p className="text-indigo-100 text-lg mt-1">Create and manage government schemes for farmers</p>
+                </div>
+              </div>
+              <button
+                onClick={() => { setEditMode(false); setShowModal(true); }}
+                className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-bold px-6 py-3 rounded-2xl border border-white/30 transition-all duration-200 shadow-lg"
+              >
+                <Plus className="w-5 h-5" />
+                Add Scheme
+              </button>
+            </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          {/* Schemes Table */}
+          <div className="glass-card rounded-3xl border-2 border-white/50 shadow-soft overflow-hidden">
             {loading ? (
-              <Loading />
+              <div className="p-12 flex justify-center">
+                <Loading />
+              </div>
             ) : schemes.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase">Scheme Name</th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase">State</th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase">Category</th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase">Contact</th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase">Created</th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase">Actions</th>
+                  <thead>
+                    <tr className="bg-gradient-to-r from-neutral-50 to-indigo-50 border-b border-neutral-200">
+                      <th className="px-6 py-4 text-left text-xs font-black text-neutral-600 uppercase tracking-wider">Scheme Name</th>
+                      <th className="px-6 py-4 text-left text-xs font-black text-neutral-600 uppercase tracking-wider">Category</th>
+                      <th className="px-6 py-4 text-left text-xs font-black text-neutral-600 uppercase tracking-wider">State</th>
+                      <th className="px-6 py-4 text-left text-xs font-black text-neutral-600 uppercase tracking-wider">Website</th>
+                      <th className="px-6 py-4 text-left text-xs font-black text-neutral-600 uppercase tracking-wider">Created</th>
+                      <th className="px-6 py-4 text-left text-xs font-black text-neutral-600 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {schemes.map((scheme) => (
-                      <tr key={scheme._id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 font-medium text-gray-800">{scheme.name.en}</td>
-                        <td className="px-6 py-4 text-gray-700">{scheme.state}</td>
+                  <tbody className="divide-y divide-neutral-100">
+                    {schemes.map((scheme, index) => (
+                      <tr
+                        key={scheme._id}
+                        className="hover:bg-indigo-50/50 transition-colors duration-150 animate-slide-up"
+                        style={{ animationDelay: `${index * 0.05}s` }}
+                      >
                         <td className="px-6 py-4">
-                          <span className={`px-3 py-1 text-xs font-semibold rounded-full capitalize ${getCategoryColor(scheme.category)}`}>
+                          <div className="flex items-center gap-3">
+                            <div className="bg-gradient-to-br from-indigo-500 to-purple-600 w-9 h-9 rounded-xl flex items-center justify-center shadow-sm flex-shrink-0">
+                              <BookOpen className="w-4 h-4 text-white" />
+                            </div>
+                            <div>
+                              <p className="font-bold text-neutral-800">{scheme.name?.en}</p>
+                              {scheme.name?.hi && (
+                                <p className="text-xs text-neutral-500 mt-0.5">{scheme.name.hi}</p>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className={`px-3 py-1 text-xs font-bold rounded-full capitalize ${getCategoryColor(scheme.category)}`}>
                             {scheme.category}
                           </span>
                         </td>
-                        <td className="px-6 py-4 text-gray-700">{scheme.contactNumber || 'N/A'}</td>
-                        <td className="px-6 py-4 text-gray-700">{formatDate(scheme.createdAt)}</td>
+                        <td className="px-6 py-4 text-neutral-700 font-medium text-sm">
+                          {scheme.state || <span className="text-neutral-400 italic">All States</span>}
+                        </td>
+                        <td className="px-6 py-4">
+                          {scheme.officialWebsite ? (
+                            <a
+                              href={scheme.officialWebsite}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1.5 text-indigo-600 hover:text-indigo-800 text-sm font-semibold transition-colors"
+                            >
+                              <Globe className="w-3.5 h-3.5" />
+                              Visit
+                            </a>
+                          ) : (
+                            <span className="text-neutral-400 text-xs">—</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 text-neutral-600 text-sm">{formatDate(scheme.createdAt)}</td>
                         <td className="px-6 py-4">
                           <div className="flex gap-2">
                             <button
                               onClick={() => handleEdit(scheme)}
-                              className="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200"
+                              className="p-2 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-100 hover:scale-110 transition-all duration-200 border border-indigo-100"
                               title="Edit"
                             >
-                              <Edit className="w-5 h-5" />
+                              <Edit className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => handleDelete(scheme._id)}
-                              className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200"
+                              className="p-2 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 hover:scale-110 transition-all duration-200 border border-red-100"
                               title="Delete"
                             >
-                              <Trash2 className="w-5 h-5" />
+                              <Trash2 className="w-4 h-4" />
                             </button>
                           </div>
                         </td>
@@ -264,298 +282,226 @@ const SchemeManagement = () => {
                 </table>
               </div>
             ) : (
-              <div className="text-center py-12">
-                <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-500">No schemes found</p>
+              <div className="text-center py-20">
+                <div className="bg-gradient-to-br from-indigo-100 to-purple-100 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-4">
+                  <BookOpen className="w-12 h-12 text-indigo-400" />
+                </div>
+                <p className="text-neutral-500 font-semibold text-lg">No schemes found</p>
+                <p className="text-neutral-400 text-sm mt-1">Add your first government scheme to get started</p>
               </div>
             )}
           </div>
         </main>
       </div>
 
-      {/* Add/Edit Scheme Modal */}
+      {/* Create / Edit Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full my-8">
-            <div className="p-6 border-b sticky top-0 bg-white rounded-t-xl">
-              <h2 className="text-2xl font-bold text-gray-800">
-                {editMode ? 'Edit Scheme' : 'Add New Scheme'}
-              </h2>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto animate-bounce-in">
+            <div className="p-6 border-b border-neutral-100 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-t-3xl sticky top-0 z-10">
+              <div className="flex items-center gap-3">
+                <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-2.5 rounded-xl">
+                  <BookOpen className="w-5 h-5 text-white" />
+                </div>
+                <h2 className="text-2xl font-black text-neutral-900">
+                  {editMode ? 'Edit Scheme' : 'Create New Scheme'}
+                </h2>
+              </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-6 space-y-6 max-h-[70vh] overflow-y-auto">
+            <form onSubmit={handleSubmit} className="p-6 space-y-8">
               {/* Basic Info */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    State *
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.state}
-                    onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Category *
-                  </label>
-                  <select
-                    value={formData.category}
-                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                  >
-                    {SCHEME_CATEGORIES.map((cat) => (
-                      <option key={cat} value={cat} className="capitalize">
-                        {cat}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Contact Number
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.contactNumber}
-                    onChange={(e) => setFormData({ ...formData, contactNumber: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Official Website
-                  </label>
-                  <input
-                    type="url"
-                    value={formData.officialWebsite}
-                    onChange={(e) => setFormData({ ...formData, officialWebsite: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                  />
-                </div>
-              </div>
-
-              {/* Multi-language Fields */}
-              <div className="space-y-4">
-                <h3 className="font-bold text-gray-800">Scheme Name</h3>
-                <div className="grid grid-cols-3 gap-4">
+              <div>
+                <h3 className={sectionHeaderClass}>
+                  <Tag className="w-4 h-4 text-indigo-500" />
+                  Basic Information
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">English *</label>
+                    <label className="block text-sm font-bold text-neutral-700 mb-2">State</label>
                     <input
                       type="text"
-                      value={formData.name_en}
-                      onChange={(e) => setFormData({ ...formData, name_en: e.target.value })}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
+                      value={formData.state}
+                      onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                      className={inputClass}
+                      placeholder="e.g., Maharashtra (blank for all)"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Hindi</label>
+                    <label className="block text-sm font-bold text-neutral-700 mb-2">Category *</label>
+                    <select
+                      value={formData.category}
+                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                      className={inputClass}
+                    >
+                      {SCHEME_CATEGORIES?.map((cat) => (
+                        <option key={cat.value} value={cat.value}>{cat.label}</option>
+                      )) || (
+                        <>
+                          <option value="subsidy">Subsidy</option>
+                          <option value="loan">Loan</option>
+                          <option value="insurance">Insurance</option>
+                          <option value="training">Training</option>
+                          <option value="equipment">Equipment</option>
+                          <option value="other">Other</option>
+                        </>
+                      )}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-neutral-700 mb-2">
+                      <Globe className="w-3.5 h-3.5 inline mr-1 text-neutral-400" />
+                      Official Website
+                    </label>
+                    <input
+                      type="url"
+                      value={formData.officialWebsite}
+                      onChange={(e) => setFormData({ ...formData, officialWebsite: e.target.value })}
+                      className={inputClass}
+                      placeholder="https://..."
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-neutral-700 mb-2">
+                      <Phone className="w-3.5 h-3.5 inline mr-1 text-neutral-400" />
+                      Contact Number
+                    </label>
                     <input
                       type="text"
-                      value={formData.name_hi}
-                      onChange={(e) => setFormData({ ...formData, name_hi: e.target.value })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Marathi</label>
-                    <input
-                      type="text"
-                      value={formData.name_mr}
-                      onChange={(e) => setFormData({ ...formData, name_mr: e.target.value })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
+                      value={formData.contactNumber}
+                      onChange={(e) => setFormData({ ...formData, contactNumber: e.target.value })}
+                      className={inputClass}
+                      placeholder="1800-xxx-xxxx"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <h3 className="font-bold text-gray-800">Description</h3>
+              {/* Scheme Name */}
+              <div>
+                <h3 className={sectionHeaderClass}>Scheme Name</h3>
                 <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">English *</label>
-                    <textarea
-                      value={formData.description_en}
-                      onChange={(e) => setFormData({ ...formData, description_en: e.target.value })}
-                      required
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Hindi</label>
-                    <textarea
-                      value={formData.description_hi}
-                      onChange={(e) => setFormData({ ...formData, description_hi: e.target.value })}
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Marathi</label>
-                    <textarea
-                      value={formData.description_mr}
-                      onChange={(e) => setFormData({ ...formData, description_mr: e.target.value })}
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
+                  {[['name_en', 'English *', true], ['name_hi', 'Hindi'], ['name_mr', 'Marathi']].map(([field, label, required]) => (
+                    <div key={field}>
+                      <label className="block text-sm font-bold text-neutral-700 mb-2">{label}</label>
+                      <input
+                        type="text"
+                        value={formData[field]}
+                        onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
+                        required={!!required}
+                        className={inputClass}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <h3 className="font-bold text-gray-800">Eligibility</h3>
+              {/* Description */}
+              <div>
+                <h3 className={sectionHeaderClass}>Description</h3>
                 <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">English *</label>
-                    <textarea
-                      value={formData.eligibility_en}
-                      onChange={(e) => setFormData({ ...formData, eligibility_en: e.target.value })}
-                      required
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Hindi</label>
-                    <textarea
-                      value={formData.eligibility_hi}
-                      onChange={(e) => setFormData({ ...formData, eligibility_hi: e.target.value })}
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Marathi</label>
-                    <textarea
-                      value={formData.eligibility_mr}
-                      onChange={(e) => setFormData({ ...formData, eligibility_mr: e.target.value })}
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
+                  {[['description_en', 'English *', true], ['description_hi', 'Hindi'], ['description_mr', 'Marathi']].map(([field, label, required]) => (
+                    <div key={field}>
+                      <label className="block text-sm font-bold text-neutral-700 mb-2">{label}</label>
+                      <textarea
+                        value={formData[field]}
+                        onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
+                        required={!!required}
+                        rows="3"
+                        className={textareaClass}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <h3 className="font-bold text-gray-800">Application Steps</h3>
+              {/* Eligibility */}
+              <div>
+                <h3 className={sectionHeaderClass}>Eligibility</h3>
                 <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">English *</label>
-                    <textarea
-                      value={formData.steps_en}
-                      onChange={(e) => setFormData({ ...formData, steps_en: e.target.value })}
-                      required
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Hindi</label>
-                    <textarea
-                      value={formData.steps_hi}
-                      onChange={(e) => setFormData({ ...formData, steps_hi: e.target.value })}
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Marathi</label>
-                    <textarea
-                      value={formData.steps_mr}
-                      onChange={(e) => setFormData({ ...formData, steps_mr: e.target.value })}
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
+                  {[['eligibility_en', 'English *', true], ['eligibility_hi', 'Hindi'], ['eligibility_mr', 'Marathi']].map(([field, label, required]) => (
+                    <div key={field}>
+                      <label className="block text-sm font-bold text-neutral-700 mb-2">{label}</label>
+                      <textarea
+                        value={formData[field]}
+                        onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
+                        required={!!required}
+                        rows="3"
+                        className={textareaClass}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <h3 className="font-bold text-gray-800">Required Documents</h3>
+              {/* Application Steps */}
+              <div>
+                <h3 className={sectionHeaderClass}>Application Steps</h3>
                 <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">English *</label>
-                    <textarea
-                      value={formData.documents_en}
-                      onChange={(e) => setFormData({ ...formData, documents_en: e.target.value })}
-                      required
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Hindi</label>
-                    <textarea
-                      value={formData.documents_hi}
-                      onChange={(e) => setFormData({ ...formData, documents_hi: e.target.value })}
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Marathi</label>
-                    <textarea
-                      value={formData.documents_mr}
-                      onChange={(e) => setFormData({ ...formData, documents_mr: e.target.value })}
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
+                  {[['steps_en', 'English *', true], ['steps_hi', 'Hindi'], ['steps_mr', 'Marathi']].map(([field, label, required]) => (
+                    <div key={field}>
+                      <label className="block text-sm font-bold text-neutral-700 mb-2">{label}</label>
+                      <textarea
+                        value={formData[field]}
+                        onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
+                        required={!!required}
+                        rows="3"
+                        className={textareaClass}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <h3 className="font-bold text-gray-800">Benefits</h3>
+              {/* Required Documents */}
+              <div>
+                <h3 className={sectionHeaderClass}>Required Documents</h3>
                 <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">English</label>
-                    <textarea
-                      value={formData.benefits_en}
-                      onChange={(e) => setFormData({ ...formData, benefits_en: e.target.value })}
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Hindi</label>
-                    <textarea
-                      value={formData.benefits_hi}
-                      onChange={(e) => setFormData({ ...formData, benefits_hi: e.target.value })}
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Marathi</label>
-                    <textarea
-                      value={formData.benefits_mr}
-                      onChange={(e) => setFormData({ ...formData, benefits_mr: e.target.value })}
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
+                  {[['documents_en', 'English *', true], ['documents_hi', 'Hindi'], ['documents_mr', 'Marathi']].map(([field, label, required]) => (
+                    <div key={field}>
+                      <label className="block text-sm font-bold text-neutral-700 mb-2">{label}</label>
+                      <textarea
+                        value={formData[field]}
+                        onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
+                        required={!!required}
+                        rows="3"
+                        className={textareaClass}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <div className="flex gap-3 pt-4 sticky bottom-0 bg-white border-t">
+              {/* Benefits */}
+              <div>
+                <h3 className={sectionHeaderClass}>Benefits</h3>
+                <div className="grid grid-cols-3 gap-4">
+                  {[['benefits_en', 'English'], ['benefits_hi', 'Hindi'], ['benefits_mr', 'Marathi']].map(([field, label]) => (
+                    <div key={field}>
+                      <label className="block text-sm font-bold text-neutral-700 mb-2">{label}</label>
+                      <textarea
+                        value={formData[field]}
+                        onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
+                        rows="3"
+                        className={textareaClass}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Footer Buttons */}
+              <div className="flex gap-3 pt-2 sticky bottom-0 bg-white border-t border-neutral-100 pb-1">
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300"
+                  className="flex-1 bg-neutral-100 text-neutral-700 py-3 rounded-xl font-bold hover:bg-neutral-200 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary-dark"
+                  className="flex-1 bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-3 rounded-xl font-bold hover:opacity-90 transition-opacity shadow-lg"
                 >
                   {editMode ? 'Update Scheme' : 'Create Scheme'}
                 </button>
