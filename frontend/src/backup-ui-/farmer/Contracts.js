@@ -94,7 +94,7 @@ const Contracts = () => {
             </button>
             <div className="flex-1">
               <h1 className="text-xl font-display font-bold">{t('farmer.contracts')}</h1>
-              <p className="text-primary-100 text-sm">Browse farming opportunities</p>
+              <p className="text-primary-100 text-sm">{t('contract.Browsefarmingopportunities')}</p>
             </div>
           </div>
 

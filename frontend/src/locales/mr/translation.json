@@ -71,7 +71,8 @@
     "description": "वर्णन",
     "terms": "अटी",
     "apply": "करारासाठी अर्ज करा",
-    "viewDetails": "तपशील पहा"
+    "viewDetails": "तपशील पहा",
+    "Browsefarmingopportunities": "कृषी संधी ब्राउज़ करें"
   },
   "prediction": {
     "nitrogen": "नायट्रोजन (N)",

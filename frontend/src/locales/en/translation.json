@@ -71,7 +71,8 @@
     "description": "Description",
     "terms": "Terms",
     "apply": "Apply to Contract",
-    "viewDetails": "View Details"
+    "viewDetails": "View Details",
+    "Browsefarmingopportunities": "Browse farming opportunities"
   },
   "prediction": {
     "nitrogen": "Nitrogen (N)",

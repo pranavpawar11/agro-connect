@@ -71,7 +71,8 @@
     "description": "विवरण",
     "terms": "शर्तें",
     "apply": "अनुबंध के लिए आवेदन करें",
-    "viewDetails": "विवरण देखें"
+    "viewDetails": "विवरण देखें",
+    "Browsefarmingopportunities": "कृषी संधी ब्राउज़ करें"
   },
   "prediction": {
     "nitrogen": "नाइट्रोजन (N)",
