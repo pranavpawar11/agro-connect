@@ -28,7 +28,7 @@ const CropPrediction = () => {
         },
       });
       setPrediction(data.prediction);
-      toast.success('Crop prediction successful!');
+      toast.success(t('prediction.success'));
     } catch (error) {
       console.error('Prediction error:', error);
     } finally {
@@ -39,20 +39,20 @@ const CropPrediction = () => {
   const features = [
     {
       icon: Brain,
-      title: 'AI-Powered',
-      description: 'Machine learning algorithms',
+      title: t('prediction.features.ai.title'),
+      description: t('prediction.features.ai.desc'),
       color: 'from-purple-500 to-indigo-600'
     },
     {
       icon: Zap,
-      title: 'Instant Results',
-      description: 'Get predictions in seconds',
+      title: t('prediction.features.instant.title'),
+      description: t('prediction.features.instant.desc'),
       color: 'from-yellow-500 to-orange-600'
     },
     {
       icon: TrendingUp,
-      title: 'Data-Driven',
-      description: 'Based on soil & weather data',
+      title: t('prediction.features.data.title'),
+      description: t('prediction.features.data.desc'),
       color: 'from-green-500 to-emerald-600'
     },
   ];
@@ -65,11 +65,11 @@ const CropPrediction = () => {
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse-soft"></div>
           <div className="absolute top-1/2 -left-24 w-64 h-64 bg-emerald-400 rounded-full blur-3xl animate-pulse-soft" style={{ animationDelay: '1s' }}></div>
         </div>
-        
+
         <div className="relative p-4">
           <div className="flex items-center gap-4 mb-4">
-            <button 
-              onClick={() => navigate(-1)} 
+            <button
+              onClick={() => navigate(-1)}
               className="p-2.5 hover:bg-white/20 rounded-xl transition-colors active:scale-95"
             >
               <ArrowLeft className="w-6 h-6" />
@@ -81,7 +81,7 @@ const CropPrediction = () => {
                 </div>
                 {t('farmer.cropPrediction')}
               </h1>
-              <p className="text-primary-100 text-sm mt-1.5 ml-1">AI-powered crop recommendations</p>
+              <p className="text-primary-100 text-sm mt-1.5 ml-1">{t('prediction.subtitle')}</p>
             </div>
           </div>
 
@@ -90,7 +90,7 @@ const CropPrediction = () => {
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <div 
+                <div
                   key={index}
                   className="glass-effect backdrop-blur-xl border border-white/30 rounded-xl px-4 py-2.5 flex items-center gap-2.5 shrink-0 animate-slide-in-right shadow-soft"
                   style={{ animationDelay: `${index * 0.1}s` }}
@@ -114,7 +114,7 @@ const CropPrediction = () => {
         <div className="glass-card rounded-3xl shadow-xl p-6 md:p-8 border-2 border-white/50 relative overflow-hidden">
           {/* Decorative Background Element */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary-200/20 to-emerald-200/20 rounded-full blur-3xl -z-0"></div>
-          
+
           <div className="relative z-10">
             {/* Card Header */}
             <div className="flex items-start gap-4 mb-6 pb-6 border-b-2 border-neutral-100">
@@ -123,10 +123,10 @@ const CropPrediction = () => {
               </div>
               <div className="flex-1">
                 <h2 className="text-xl font-display font-bold text-neutral-900 mb-1">
-                  Soil & Weather Parameters
+                  {t('prediction.formTitle')}
                 </h2>
                 <p className="text-sm text-neutral-600 leading-relaxed">
-                  Enter accurate data for the best crop recommendations
+                  {t('prediction.formDesc')}
                 </p>
               </div>
             </div>
@@ -163,10 +163,10 @@ const CropPrediction = () => {
               <div className="bg-gradient-to-br from-blue-500 to-cyan-600 p-2.5 rounded-xl shadow-soft shrink-0">
                 <Info className="w-5 h-5 text-white" />
               </div>
-              <h3 className="font-bold text-blue-900 text-base">How It Works</h3>
+              <h3 className="font-bold text-blue-900 text-base">{t('prediction.howItWorks.title')}</h3>
             </div>
             <p className="text-sm text-blue-800 leading-relaxed ml-11">
-              Our AI analyzes your soil composition and local weather patterns to recommend the most suitable crops for your farm.
+              {t('prediction.howItWorks.desc')}
             </p>
           </div>
 
@@ -176,10 +176,10 @@ const CropPrediction = () => {
               <div className="bg-gradient-to-br from-amber-500 to-orange-600 p-2.5 rounded-xl shadow-soft shrink-0">
                 <TrendingUp className="w-5 h-5 text-white" />
               </div>
-              <h3 className="font-bold text-amber-900 text-base">Accuracy Tips</h3>
+              <h3 className="font-bold text-amber-900 text-base">{t('prediction.tips.title')}</h3>
             </div>
             <p className="text-sm text-amber-800 leading-relaxed ml-11">
-              Use recent soil test results and current weather data for the most accurate predictions. Update regularly for best results.
+              {t('prediction.tips.desc')}
             </p>
           </div>
         </div>
@@ -190,16 +190,16 @@ const CropPrediction = () => {
           <div className="relative">
             <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-yellow-300" />
-              Why Use Crop Prediction?
+              {t('prediction.benefits.title')}
             </h3>
             <div className="grid grid-cols-2 gap-3">
               {[
-                { icon: '🎯', text: 'Optimized yields' },
-                { icon: '💰', text: 'Better profits' },
-                { icon: '🌱', text: 'Soil health' },
-                { icon: '⚡', text: 'Quick decisions' },
+                { icon: '🎯', text: t('prediction.benefits.items.yield') },
+                { icon: '💰', text: t('prediction.benefits.items.profit') },
+                { icon: '🌱', text: t('prediction.benefits.items.soil') },
+                { icon: '⚡', text: t('prediction.benefits.items.decisions') },
               ].map((benefit, index) => (
-                <div 
+                <div
                   key={index}
                   className="bg-white/10 backdrop-blur-sm rounded-xl p-3 flex items-center gap-2.5 border border-white/20"
                 >

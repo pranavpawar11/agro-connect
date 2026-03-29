@@ -38,7 +38,7 @@ const ContractDetail = () => {
       setContract(data.contract);
     } catch (error) {
       console.error('Error fetching contract:', error);
-      toast.error('Failed to load contract details');
+      toast.error(t('contractDetail.loadError'));
     } finally {
       setLoading(false);
     }
@@ -49,12 +49,12 @@ const ContractDetail = () => {
     setApplying(true);
     try {
       await contractService.applyToContract(contractId, applicationData);
-      toast.success('Application submitted successfully!');
+      toast.success(t('contractDetail.applySuccess'));
       setShowApplicationForm(false);
       fetchContractDetail(); // Refresh contract data
     } catch (error) {
       console.error('Error applying:', error);
-      toast.error(error.response?.data?.message || 'Failed to submit application');
+      toast.error(error.response?.data?.message || t('contractDetail.applyError'));
     } finally {
       setApplying(false);
     }
@@ -67,7 +67,7 @@ const ContractDetail = () => {
         contractId: contractId,
         ...disputeData
       });
-      toast.success('Dispute raised successfully!');
+      toast.success(t('contractDetail.disputeSuccess'));
       setShowDisputeForm(false);
       setDisputeData({
         subject: '',
@@ -76,18 +76,18 @@ const ContractDetail = () => {
       });
     } catch (error) {
       console.error('Error raising dispute:', error);
-      toast.error(error.response?.data?.message || 'Failed to raise dispute');
+      toast.error(error.response?.data?.message || t('contractDetail.disputeError'));
     }
   };
 
   const getStatusConfig = (status) => {
     const configs = {
-      pending: { bg: 'bg-gradient-to-r from-warning-500 to-warning-600', text: 'text-white', label: 'Pending' },
-      approved: { bg: 'bg-gradient-to-r from-accent-500 to-accent-600', text: 'text-white', label: 'Approved' },
-      active: { bg: 'bg-gradient-to-r from-success-500 to-success-600', text: 'text-white', label: 'Active' },
-      in_progress: { bg: 'bg-gradient-to-r from-purple-500 to-purple-600', text: 'text-white', label: 'In Progress' },
-      completed: { bg: 'bg-gradient-to-r from-neutral-500 to-neutral-600', text: 'text-white', label: 'Completed' },
-      cancelled: { bg: 'bg-gradient-to-r from-danger-500 to-danger-600', text: 'text-white', label: 'Cancelled' },
+      pending: { bg: 'bg-gradient-to-r from-warning-500 to-warning-600', text: 'text-white', label: t(`contract.status.${status}`) },
+      approved: { bg: 'bg-gradient-to-r from-accent-500 to-accent-600', text: 'text-white', label: t(`contract.status.${status}`) },
+      active: { bg: 'bg-gradient-to-r from-success-500 to-success-600', text: 'text-white', label: t(`contract.status.${status}`) },
+      in_progress: { bg: 'bg-gradient-to-r from-purple-500 to-purple-600', text: 'text-white', label: t(`contract.status.${status}`) },
+      completed: { bg: 'bg-gradient-to-r from-neutral-500 to-neutral-600', text: 'text-white', label: t(`contract.status.${status}`) },
+      cancelled: { bg: 'bg-gradient-to-r from-danger-500 to-danger-600', text: 'text-white', label: t(`contract.status.${status}`) },
     };
     return configs[status] || configs.pending;
   };
@@ -95,7 +95,7 @@ const ContractDetail = () => {
   if (loading) return <Loading fullScreen />;
   if (!contract) return (
     <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white flex items-center justify-center">
-      <p className="text-neutral-600">Contract not found</p>
+      <p className="text-neutral-600">{t('contractDetail.notFound') } </p>
     </div>
   );
 
@@ -117,8 +117,8 @@ const ContractDetail = () => {
             <ArrowLeft className="w-6 h-6" />
           </button>
           <div className="flex-1">
-            <h1 className="text-xl font-display font-bold">Contract Details</h1>
-            <p className="text-primary-100 text-sm">Full contract information</p>
+            <h1 className="text-xl font-display font-bold">{t('contractDetail.title')}</h1>
+            <p className="text-primary-100 text-sm">{t('contractDetail.subtitle')}</p>
           </div>
         </div>
       </div>
@@ -159,7 +159,7 @@ const ContractDetail = () => {
               <div className="flex items-center bg-neutral-50 rounded-xl p-4">
                 <Package className="w-5 h-5 mr-3 text-primary-700 shrink-0" />
                 <div className="flex-1">
-                  <p className="text-xs font-semibold text-neutral-600 mb-0.5">Quantity Required</p>
+                  <p className="text-xs font-semibold text-neutral-600 mb-0.5">{t('contractDetail.quantity')}</p>
                   <p className="font-bold text-neutral-900">{contract.quantity} {contract.unit}</p>
                 </div>
               </div>
@@ -167,7 +167,7 @@ const ContractDetail = () => {
               <div className="flex items-center bg-success-50 rounded-xl p-4">
                 <IndianRupee className="w-5 h-5 mr-3 text-success-700 shrink-0" />
                 <div className="flex-1">
-                  <p className="text-xs font-semibold text-success-700 mb-0.5">Agreed Price</p>
+                  <p className="text-xs font-semibold text-success-700 mb-0.5">{t('contractDetail.price')}</p>
                   <p className="font-bold text-success-900 flex items-center gap-1">
                     <IndianRupee className="w-4 h-4" />
                     {formatPrice(contract.agreedPrice)} per {contract.unit}
@@ -178,7 +178,7 @@ const ContractDetail = () => {
               <div className="flex items-center bg-accent-50 rounded-xl p-4">
                 <MapPin className="w-5 h-5 mr-3 text-accent-700 shrink-0" />
                 <div className="flex-1">
-                  <p className="text-xs font-semibold text-accent-700 mb-0.5">Location</p>
+                  <p className="text-xs font-semibold text-accent-700 mb-0.5">{t('contractDetail.location')}</p>
                   <p className="font-bold text-accent-900">{contract.location.district}, {contract.location.state}</p>
                 </div>
               </div>
@@ -186,7 +186,7 @@ const ContractDetail = () => {
               <div className="flex items-center bg-purple-50 rounded-xl p-4">
                 <Calendar className="w-5 h-5 mr-3 text-purple-700 shrink-0" />
                 <div className="flex-1">
-                  <p className="text-xs font-semibold text-purple-700 mb-0.5">Contract Duration</p>
+                  <p className="text-xs font-semibold text-purple-700 mb-0.5">{t('contractDetail.duration')}</p>
                   <p className="font-bold text-purple-900 text-sm">
                     {formatDate(contract.duration.startDate)} → {formatDate(contract.duration.endDate)}
                   </p>
@@ -203,16 +203,16 @@ const ContractDetail = () => {
               <div className="bg-gradient-to-br from-success-500 to-success-700 p-2 rounded-xl">
                 <IndianRupee className="w-4 h-4 text-white" />
               </div>
-              Payment Information
+              {t('contractDetail.paymentInfo')}
             </h3>
             <div className="space-y-3">
               <div className="flex justify-between items-center p-3 bg-neutral-50 rounded-xl">
-                <span className="text-neutral-700 font-medium">Advance Payment:</span>
+                <span className="text-neutral-700 font-medium">{t('contractDetail.advancePayment')}:</span>
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-neutral-900">
                     {contract.paymentDetails.advancePayment?.amount 
                       ? formatPrice(contract.paymentDetails.advancePayment.amount)
-                      : 'Not set'}
+                      : t('common.notAvailable')}
                   </span>
                   {contract.paymentDetails.advancePayment?.status === 'paid' && (
                     <CheckCircle className="w-5 h-5 text-success-600" />
@@ -220,12 +220,12 @@ const ContractDetail = () => {
                 </div>
               </div>
               <div className="flex justify-between items-center p-3 bg-neutral-50 rounded-xl">
-                <span className="text-neutral-700 font-medium">Final Payment:</span>
+                <span className="text-neutral-700 font-medium">{t('contractDetail.finalPayment')}:</span>
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-neutral-900">
                     {contract.paymentDetails.finalPayment?.amount 
                       ? formatPrice(contract.paymentDetails.finalPayment.amount)
-                      : 'Not set'}
+                      : t('common.notAvailable')}
                   </span>
                   {contract.paymentDetails.finalPayment?.status === 'paid' && (
                     <CheckCircle className="w-5 h-5 text-success-600" />
@@ -233,7 +233,7 @@ const ContractDetail = () => {
                 </div>
               </div>
               <div className="flex justify-between items-center pt-3 border-t-2 border-neutral-200">
-                <span className="font-bold text-neutral-800 text-lg">Total Paid:</span>
+                <span className="font-bold text-neutral-800 text-lg">{t('contractDetail.totalPaid')}:</span>
                 <span className="font-bold text-success-700 text-lg flex items-center gap-1">
                   <IndianRupee className="w-5 h-5" />
                   {formatPrice(contract.paymentDetails.totalPaid || 0)}
@@ -248,7 +248,7 @@ const ContractDetail = () => {
           <div className="glass-effect rounded-2xl shadow-soft p-6 border border-neutral-200">
             <h3 className="font-bold text-lg text-neutral-800 mb-3 flex items-center gap-2">
               <MessageSquare className="w-5 h-5 text-accent-600" />
-              Description
+              {t('contractDetail.description')}
             </h3>
             <p className="text-neutral-700 leading-relaxed">{contract.description}</p>
           </div>
@@ -259,7 +259,7 @@ const ContractDetail = () => {
           <div className="glass-effect rounded-2xl shadow-soft p-6 border border-neutral-200">
             <h3 className="font-bold text-lg text-neutral-800 mb-3 flex items-center gap-2">
               <FileText className="w-5 h-5 text-purple-600" />
-              Requirements & Terms
+              {t('contractDetail.requirements')}
             </h3>
             <p className="text-neutral-700 leading-relaxed whitespace-pre-line">{contract.requirements}</p>
           </div>
@@ -270,7 +270,7 @@ const ContractDetail = () => {
           <div className="glass-effect rounded-2xl shadow-soft p-6 border border-neutral-200">
             <h3 className="font-bold text-lg text-neutral-800 mb-3 flex items-center gap-2">
               <FileText className="w-5 h-5 text-danger-600" />
-              Legal Contract Document
+              {t('contractDetail.legalDoc')}
             </h3>
             <a
               href={getFileUrl(contract.legalContract)}
@@ -279,7 +279,7 @@ const ContractDetail = () => {
               className="inline-flex items-center gap-2 bg-gradient-to-r from-primary-600 to-primary-700 text-white px-5 py-3 rounded-xl font-bold shadow-medium hover:shadow-glow transition-all"
             >
               <FileText className="w-5 h-5" />
-              View Contract PDF
+              {t('contractDetail.viewPdf')}
               <ExternalLink className="w-4 h-4" />
             </a>
             {contract.legalContractVerification && (
@@ -305,7 +305,7 @@ const ContractDetail = () => {
             className="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white py-5 rounded-2xl font-bold text-lg shadow-strong hover:shadow-glow transition-all flex items-center justify-center gap-2"
           >
             <CheckCircle className="w-6 h-6" />
-            Apply to Contract
+            {t('contractDetail.apply')}
           </button>
         )}
 
@@ -316,7 +316,7 @@ const ContractDetail = () => {
             className="w-full bg-gradient-to-r from-danger-500 to-danger-600 text-white py-4 rounded-2xl font-bold shadow-medium hover:shadow-strong transition-all flex items-center justify-center gap-2"
           >
             <AlertTriangle className="w-5 h-5" />
-            Raise Dispute
+            {t('contractDetail.raiseDispute')}
           </button>
         )}
 
@@ -325,12 +325,12 @@ const ContractDetail = () => {
           <form onSubmit={handleApply} className="glass-effect rounded-2xl shadow-strong p-6 border border-neutral-200 space-y-5 animate-scale-in">
             <h3 className="font-bold text-xl text-neutral-900 flex items-center gap-2">
               <CheckCircle className="w-6 h-6 text-primary-700" />
-              Apply to Contract
+              {t('contractDetail.apply')}
             </h3>
             
             <div>
               <label className="block text-sm font-bold text-neutral-700 mb-2">
-                Proposed Quantity ({contract.unit})
+                {t('contractDetail.proposedQty')} ({contract.unit})
               </label>
               <input
                 type="number"
@@ -345,14 +345,14 @@ const ContractDetail = () => {
 
             <div>
               <label className="block text-sm font-bold text-neutral-700 mb-2">
-                Message to Company
+                {t('contractDetail.messageToCompany')}
               </label>
               <textarea
                 value={applicationData.farmerMessage}
                 onChange={(e) => setApplicationData({ ...applicationData, farmerMessage: e.target.value })}
                 rows="4"
                 className="w-full px-4 py-3.5 border-2 border-neutral-200 rounded-xl focus:ring-4 focus:ring-primary-100 focus:border-primary-500 outline-none transition-all font-medium resize-none"
-                placeholder="Tell us about your experience and why you're interested..."
+                placeholder={t('contractDetail.messagePlaceholder')}
               />
             </div>
 
@@ -362,14 +362,14 @@ const ContractDetail = () => {
                 onClick={() => setShowApplicationForm(false)}
                 className="flex-1 bg-neutral-100 text-neutral-700 py-3.5 rounded-xl font-bold hover:bg-neutral-200 transition-colors"
               >
-                Cancel
+                {t('common.cancel')}
               </button>
               <button
                 type="submit"
                 disabled={applying}
                 className="flex-1 bg-gradient-to-r from-primary-600 to-primary-700 text-white py-3.5 rounded-xl font-bold shadow-medium hover:shadow-glow disabled:opacity-50 transition-all"
               >
-                {applying ? 'Submitting...' : 'Submit Application'}
+                {applying ? t('common.submitting') : t('contractDetail.submitApplication')}
               </button>
             </div>
           </form>
@@ -382,15 +382,15 @@ const ContractDetail = () => {
               <div className="bg-gradient-to-r from-danger-500 to-danger-600 p-6 rounded-t-3xl">
                 <h2 className="text-xl font-bold text-white flex items-center gap-2">
                   <AlertTriangle className="w-6 h-6" />
-                  Raise Dispute
+                  {t('contractDetail.raiseDispute')}
                 </h2>
-                <p className="text-danger-100 text-sm mt-1">Report an issue with this contract</p>
+                <p className="text-danger-100 text-sm mt-1">{t('contractDetail.disputeSubtitle')}</p>
               </div>
               
               <form onSubmit={handleRaiseDispute} className="p-6 space-y-4">
                 <div>
                   <label className="block text-sm font-bold text-neutral-700 mb-2">
-                    Subject *
+                    {t('contractDetail.subject')} *
                   </label>
                   <input
                     type="text"
@@ -398,29 +398,29 @@ const ContractDetail = () => {
                     onChange={(e) => setDisputeData({ ...disputeData, subject: e.target.value })}
                     required
                     className="w-full px-4 py-3.5 border-2 border-neutral-200 rounded-xl focus:ring-4 focus:ring-danger-100 focus:border-danger-500 outline-none transition-all font-medium"
-                    placeholder="Brief subject"
+                    placeholder={t('contractDetail.subject')}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-bold text-neutral-700 mb-2">
-                    Priority
+                    {t('contractDetail.priority')}
                   </label>
                   <select
                     value={disputeData.priority}
                     onChange={(e) => setDisputeData({ ...disputeData, priority: e.target.value })}
                     className="w-full px-4 py-3.5 border-2 border-neutral-200 rounded-xl focus:ring-4 focus:ring-danger-100 focus:border-danger-500 outline-none transition-all font-medium"
                   >
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                    <option value="critical">Critical</option>
+                    <option value="low">{t('contractDetail.priority.low')}</option>
+                    <option value="medium">{t('contractDetail.priority.medium')}</option>
+                    <option value="high">{t('contractDetail.priority.high')}</option>
+                    <option value="critical">{t('contractDetail.priority.critical')}</option>
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-sm font-bold text-neutral-700 mb-2">
-                    Message *
+                    {t('contractDetail.message')} *
                   </label>
                   <textarea
                     value={disputeData.message}
@@ -428,7 +428,7 @@ const ContractDetail = () => {
                     required
                     rows="4"
                     className="w-full px-4 py-3.5 border-2 border-neutral-200 rounded-xl focus:ring-4 focus:ring-danger-100 focus:border-danger-500 outline-none transition-all font-medium resize-none"
-                    placeholder="Describe the issue in detail..."
+                    placeholder={t('contractDetail.disputePlaceholder')}
                   />
                 </div>
 
@@ -438,13 +438,13 @@ const ContractDetail = () => {
                     onClick={() => setShowDisputeForm(false)}
                     className="flex-1 bg-neutral-100 text-neutral-700 py-3.5 rounded-xl font-bold hover:bg-neutral-200 transition-colors"
                   >
-                    Cancel
+                    {t('common.cancel')}
                   </button>
                   <button
                     type="submit"
                     className="flex-1 bg-gradient-to-r from-danger-500 to-danger-600 text-white py-3.5 rounded-xl font-bold shadow-medium hover:shadow-strong transition-all"
                   >
-                    Submit Dispute
+                    {t('contractDetail.submitDispute')}
                   </button>
                 </div>
               </form>

@@ -54,7 +54,7 @@ const Alerts = () => {
               <Bell className="w-5 h-5" />
               {t('farmer.alerts')}
             </h1>
-            <p className="text-primary-100 text-sm mt-0.5">Weather & important updates</p>
+            <p className="text-primary-100 text-sm mt-0.5">{t('alerts.subtitle')}</p>
           </div>
         </div>
       </div>
@@ -66,7 +66,7 @@ const Alerts = () => {
           className="group w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-4 rounded-2xl font-bold text-base shadow-medium hover:shadow-glow transition-all flex items-center justify-center gap-2"
         >
           <TrendingUp className="w-5 h-5 group-hover:scale-110 transition-transform" />
-          View Mandi Prices
+          {t('alerts.viewMandi')}
         </button>
 
         {/* Alerts Section */}
@@ -85,8 +85,8 @@ const Alerts = () => {
             <div className="bg-neutral-100 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-4">
               <AlertTriangle className="w-10 h-10 text-neutral-400" />
             </div>
-            <p className="text-neutral-600 font-semibold mb-1">No alerts available</p>
-            <p className="text-sm text-neutral-500">We'll notify you when there are weather updates</p>
+            <p className="text-neutral-600 font-semibold mb-1">{t('alerts.noAlerts')}</p>
+            <p className="text-sm text-neutral-500">{t('alerts.noAlertsHint')}</p>
           </div>
         )}
       </div>

@@ -72,7 +72,24 @@
     "terms": "शर्तें",
     "apply": "अनुबंध के लिए आवेदन करें",
     "viewDetails": "विवरण देखें",
-    "Browsefarmingopportunities": "कृषी संधी ब्राउज़ करें"
+    "Browsefarmingopportunities": "कृषी संधी ब्राउज़ करें",
+    "searchPlaceholder": "फसल या कंपनी से खोजें...",
+    "filters": "फ़िल्टर",
+    "active": "सक्रिय",
+    "filterContracts": "अनुबंध फ़िल्टर करें",
+    "minPrice": "न्यूनतम मूल्य (₹)",
+    "maxPrice": "अधिकतम मूल्य (₹)",
+    "cropPlaceholder": "जैसे, गेहूं, चावल",
+    "clearAll": "सभी हटाएं",
+    "applyFilters": "फ़िल्टर लागू करें",
+    "noContracts": "कोई अनुबंध उपलब्ध नहीं",
+
+    "status": {
+      "approved": "स्वीकृत",
+      "active": "सक्रिय",
+      "in_progress": "प्रगति में",
+      "completed": "पूर्ण"
+    }
   },
   "prediction": {
     "nitrogen": "नाइट्रोजन (N)",
@@ -84,7 +101,61 @@
     "rainfall": "वर्षा",
     "predictCrop": "फसल की भविष्यवाणी करें",
     "result": "भविष्यवाणी परिणाम",
-    "recommended": "अनुशंसित फसल"
+    "recommended": "अनुशंसित फसल",
+    "subtitle": "एआई आधारित फसल सुझाव",
+
+    "features": {
+      "ai": {
+        "title": "एआई आधारित",
+        "desc": "मशीन लर्निंग एल्गोरिदम"
+      },
+      "instant": {
+        "title": "तुरंत परिणाम",
+        "desc": "कुछ ही सेकंड में परिणाम प्राप्त करें"
+      },
+      "data": {
+        "title": "डेटा आधारित",
+        "desc": "मिट्टी और मौसम के डेटा पर आधारित"
+      }
+    },
+
+    "formTitle": "मिट्टी और मौसम पैरामीटर",
+    "formDesc": "सर्वश्रेष्ठ फसल सुझाव के लिए सटीक डेटा दर्ज करें",
+
+    "success": "फसल भविष्यवाणी सफल!",
+
+    "howItWorks": {
+      "title": "यह कैसे काम करता है",
+      "desc": "हमारा एआई आपकी मिट्टी और मौसम का विश्लेषण करके उपयुक्त फसल सुझाता है।"
+    },
+
+    "tips": {
+      "title": "सटीकता सुझाव",
+      "desc": "हाल के मिट्टी परीक्षण और मौसम डेटा का उपयोग करें।"
+    },
+
+    "benefits": {
+      "title": "फसल भविष्यवाणी क्यों उपयोग करें?",
+      "items": {
+        "yield": "बेहतर उत्पादन",
+        "profit": "अधिक लाभ",
+        "soil": "मिट्टी की सेहत",
+        "decisions": "तेज़ निर्णय"
+      }
+    },
+    "historySubtitle": "आपकी फसल भविष्यवाणी टाइमलाइन",
+
+    "confidenceLevel": "विश्वास स्तर",
+
+    "confidence": {
+      "high": "उच्च विश्वास",
+      "medium": "मध्यम विश्वास",
+      "low": "कम विश्वास"
+    },
+
+    "noHistory": "अभी तक कोई इतिहास नहीं",
+    "noHistoryHint": "यहां देखने के लिए भविष्यवाणी शुरू करें",
+    "startPrediction": "भविष्यवाणी करें"
   },
   "scheme": {
     "description": "विवरण",
@@ -119,7 +190,7 @@
     "noAlerts": "कोई अलर्ट उपलब्ध नहीं",
     "installApp": "AgroConnect ऐप इंस्टॉल करें"
   },
-   "profile": {
+  "profile": {
     "name": "नाम",
     "phone": "फोन",
     "address": "पता",
@@ -134,6 +205,7 @@
     "cropsLabel": "फसलें",
     "cropsPlaceholder": "जैसे, गेहूं, चावल, कपास",
     "farmDetails": "खेत विवरण",
+    "personalInfo": "व्यक्तिगत जानकारी",
     "editProfile": "प्रोफ़ाइल संपादित करें",
     "saveChanges": "परिवर्तन सहेजें",
     "updateSuccess": "प्रोफ़ाइल सफलतापूर्वक अपडेट किया गया",
@@ -141,26 +213,123 @@
     "languageUpdated": "भाषा अपडेट की गई",
     "voiceGuide": "आवाज गाइड"
   },
-   "profile": {
-    "name": "नाम",
-    "phone": "फोन",
-    "address": "पता",
-    "village": "गांव",
-    "district": "जिला",
-    "state": "राज्य",
-    "pincode": "पिनकोड",
-    "landSize": "भूमि का आकार (एकड़)",
-    "landSizeLabel": "भूमि का आकार",
-    "acres": "एकड़",
-    "crops": "फसलें (अल्पविराम से अलग)",
-    "cropsLabel": "फसलें",
-    "cropsPlaceholder": "जैसे, गेहूं, चावल, कपास",
-    "farmDetails": "खेत विवरण",
-    "editProfile": "प्रोफ़ाइल संपादित करें",
-    "saveChanges": "परिवर्तन सहेजें",
-    "updateSuccess": "प्रोफ़ाइल सफलतापूर्वक अपडेट किया गया",
-    "updateError": "प्रोफ़ाइल अपडेट करने में विफल",
-    "languageUpdated": "भाषा अपडेट की गई",
-    "voiceGuide": "आवाज गाइड"
+  "mandi": {
+    "title": "मंडी भाव",
+    "subtitle": "सीधे बाज़ार दर · Agmarknet",
+    "searchPlaceholder": "फसल, बाज़ार या ज़िला खोजें…",
+    "stateLabel": "राज्य",
+    "districtLabel": "ज़िला",
+    "districtPlaceholder": "ज़िला",
+    "allStates": "सभी राज्य",
+    "sortBy": "क्रमबद्ध करें",
+    "sortModal": "मोडल मूल्य",
+    "sortMin": "न्यूनतम मूल्य",
+    "sortMax": "अधिकतम मूल्य",
+    "sortDate": "तारीख",
+    "sortAsc": "कम → ज़्यादा",
+    "sortDesc": "ज़्यादा → कम",
+    "modalPrice": "मोडल",
+    "minPrice": "न्यूनतम",
+    "maxPrice": "अधिकतम",
+    "perQuintal": "/ क्विंटल",
+    "variety": "किस्म",
+    "grade": "श्रेणी",
+    "arrivedOn": "आवक तारीख",
+    "noResults": "कोई भाव नहीं मिला",
+    "noResultsHint": "अलग राज्य, ज़िला या फसल का नाम आज़माएं",
+    "errorTitle": "भाव लोड नहीं हो सके",
+    "errorHint": "इंटरनेट जाँचें और दोबारा कोशिश करें",
+    "retry": "दोबारा कोशिश करें",
+    "loading": "सीधे भाव लोड हो रहे हैं…",
+    "lastUpdated": "अपडेट",
+    "recordsFound": "रिकॉर्ड",
+    "clearFilters": "फ़िल्टर हटाएं",
+    "priceUnit": "₹ / क्विंटल",
+    "applyDistrict": "ज़िला फ़िल्टर लगाने के लिए Enter दबाएं",
+    "bestMandi": "आज की सबसे अच्छी मंडी",
+    "priceTrend": "मूल्य प्रवृत्ति",
+    "avgModalPrice": "औसत मोडल मूल्य",
+    "profitCalc": "मुनाफ़ा कैलकुलेटर",
+    "profitCalcHint": "अनुमानित कमाई देखने के लिए मात्रा दर्ज करें",
+    "total": "कुल",
+    "page": "पृष्ठ",
+    "prev": "पिछला",
+    "next": "अगला"
+  },
+
+  "alerts": {
+    "subtitle": "मौसम और महत्वपूर्ण अपडेट",
+    "viewMandi": "मंडी भाव देखें",
+    "noAlerts": "कोई अलर्ट उपलब्ध नहीं",
+    "noAlertsHint": "मौसम अपडेट होने पर आपको सूचित किया जाएगा"
+  },
+
+  "applications": {
+  "title": "मेरे आवेदन",
+  "subtitle": "अपने अनुबंध आवेदनों को ट्रैक करें",
+
+  "quantity": "मात्रा",
+  "pricePerUnit": "प्रति इकाई मूल्य",
+  "companyRemarks": "कंपनी की टिप्पणी",
+
+  "noApplications": "अभी तक कोई आवेदन नहीं",
+  "noApplicationsHint": "यहां देखने के लिए आवेदन करना शुरू करें",
+  "browseContracts": "अनुबंध देखें",
+
+  "status": {
+    "accepted": "स्वीकृत",
+    "rejected": "अस्वीकृत",
+    "pending": "लंबित"
   }
+},
+
+"contractDetail": {
+  "title": "अनुबंध विवरण",
+  "subtitle": "पूरा अनुबंध जानकारी",
+
+  "quantity": "आवश्यक मात्रा",
+  "price": "निर्धारित मूल्य",
+  "location": "स्थान",
+  "duration": "अनुबंध अवधि",
+
+  "paymentInfo": "भुगतान जानकारी",
+  "advancePayment": "अग्रिम भुगतान",
+  "finalPayment": "अंतिम भुगतान",
+  "totalPaid": "कुल भुगतान",
+
+  "description": "विवरण",
+  "requirements": "आवश्यकताएं और शर्तें",
+
+  "legalDoc": "कानूनी अनुबंध दस्तावेज़",
+  "viewPdf": "अनुबंध PDF देखें",
+
+  "apply": "अनुबंध के लिए आवेदन करें",
+  "submitApplication": "आवेदन जमा करें",
+  "proposedQty": "प्रस्तावित मात्रा",
+  "messageToCompany": "कंपनी के लिए संदेश",
+  "messagePlaceholder": "अपने अनुभव के बारे में बताएं...",
+
+  "raiseDispute": "विवाद दर्ज करें",
+  "disputeSubtitle": "इस अनुबंध से संबंधित समस्या बताएं",
+  "subject": "विषय",
+  "subjectPlaceholder": "संक्षिप्त विषय",
+  "priority": "प्राथमिकता",
+  "message": "संदेश",
+  "disputePlaceholder": "समस्या को विस्तार से बताएं...",
+  "submitDispute": "विवाद जमा करें",
+
+  "priority": {
+    "low": "कम",
+    "medium": "मध्यम",
+    "high": "उच्च",
+    "critical": "गंभीर"
+  },
+
+  "loadError": "अनुबंध लोड करने में विफल",
+  "applySuccess": "आवेदन सफलतापूर्वक जमा हुआ!",
+  "applyError": "आवेदन जमा करने में विफल",
+  "disputeSuccess": "विवाद सफलतापूर्वक दर्ज हुआ!",
+  "disputeError": "विवाद दर्ज करने में विफल",
+  "notFound": "अनुबंध नहीं मिला"
+}
 }

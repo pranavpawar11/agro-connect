@@ -66,8 +66,8 @@ const MyApplications = () => {
             <ArrowLeft className="w-6 h-6" />
           </button>
           <div className="flex-1">
-            <h1 className="text-xl font-display font-bold">My Applications</h1>
-            <p className="text-primary-100 text-sm mt-0.5">Track your contract applications</p>
+            <h1 className="text-xl font-display font-bold">{t('applications.title')}</h1>
+            <p className="text-primary-100 text-sm mt-0.5">{t('applications.subtitle')}</p>
           </div>
         </div>
       </div>
@@ -77,9 +77,9 @@ const MyApplications = () => {
           <div className="py-12">
             <Loading />
           </div>
-        ) : applications.length > 0 ? (
+        ) : applications?.length > 0 ? (
           <div className="space-y-4">
-            {applications.map((application) => (
+            {applications?.map((application) => (
               <div 
                 key={application._id} 
                 className="glass-effect rounded-2xl shadow-soft border border-neutral-200 overflow-hidden hover:shadow-medium transition-all"
@@ -89,7 +89,7 @@ const MyApplications = () => {
                   <div className="flex items-center gap-2">
                     {getStatusIcon(application.status)}
                     <span className="font-bold text-sm uppercase tracking-wide">
-                      {application.status}
+                      {t(`applications.status.${application.status}`)}
                     </span>
                   </div>
                   <span className="text-xs opacity-90">
@@ -105,10 +105,10 @@ const MyApplications = () => {
                     </div>
                     <div className="flex-1">
                       <h3 className="font-bold text-lg text-neutral-800 capitalize mb-1">
-                        {application.contract?.cropType}
+                        {application.contract?.cropType || t('common.notAvailable')}
                       </h3>
                       <p className="text-sm text-neutral-600">
-                        {application.contract?.company?.companyDetails?.companyName}
+                        {application.contract?.company?.companyDetails?.companyName || t('common.notAvailable')}
                       </p>
                     </div>
                   </div>
@@ -116,13 +116,13 @@ const MyApplications = () => {
                   {/* Details Grid */}
                   <div className="grid grid-cols-2 gap-3 mb-4">
                     <div className="bg-neutral-50 rounded-xl p-3">
-                      <p className="text-xs text-neutral-600 mb-1 font-medium">Quantity</p>
+                      <p className="text-xs text-neutral-600 mb-1 font-medium">{t('applications.quantity')}</p>
                       <p className="font-bold text-neutral-800">
                         {application.proposedQuantity} {application.contract?.unit}
                       </p>
                     </div>
                     <div className="bg-neutral-50 rounded-xl p-3">
-                      <p className="text-xs text-neutral-600 mb-1 font-medium">Price per unit</p>
+                      <p className="text-xs text-neutral-600 mb-1 font-medium">{t('applications.pricePerUnit')}</p>
                       <p className="font-bold text-success-700 flex items-center gap-1">
                         <IndianRupee className="w-3.5 h-3.5" />
                         {formatPrice(application.contract?.agreedPrice)}
@@ -135,7 +135,7 @@ const MyApplications = () => {
                     <div className="bg-accent-50 border-l-4 border-accent-500 rounded-lg p-4">
                       <p className="text-xs font-bold text-accent-900 mb-2 flex items-center gap-1.5">
                         <span>💬</span>
-                        Company Remarks
+                        {t('applications.companyRemarks')}
                       </p>
                       <p className="text-sm text-accent-800 leading-relaxed">
                         {application.companyRemarks}
@@ -151,13 +151,13 @@ const MyApplications = () => {
             <div className="bg-neutral-100 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-4">
               <Clock className="w-10 h-10 text-neutral-400" />
             </div>
-            <p className="text-neutral-600 font-semibold mb-1">No applications yet</p>
-            <p className="text-sm text-neutral-500 mb-4">Start applying to contracts to see them here</p>
+            <p className="text-neutral-600 font-semibold mb-1">{t('applications.noApplications')}</p>
+            <p className="text-sm text-neutral-500 mb-4">{t('applications.noApplicationsHint')}</p>
             <button
               onClick={() => navigate('/farmer/contracts')}
               className="bg-gradient-to-r from-primary-600 to-primary-700 text-white px-6 py-3 rounded-xl font-bold shadow-medium hover:shadow-glow transition-all"
             >
-              Browse Contracts
+              {t('applications.browseContracts')}
             </button>
           </div>
         )}

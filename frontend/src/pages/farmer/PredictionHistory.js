@@ -54,7 +54,7 @@ const PredictionHistory = () => {
               <Calendar className="w-5 h-5" />
               {t('farmer.history')}
             </h1>
-            <p className="text-primary-100 text-sm mt-0.5">Your crop prediction timeline</p>
+            <p className="text-primary-100 text-sm mt-0.5">{t('prediction.historySubtitle')}</p>
           </div>
         </div>
       </div>
@@ -64,7 +64,7 @@ const PredictionHistory = () => {
           <div className="py-12">
             <Loading />
           </div>
-        ) : predictions.length > 0 ? (
+        ) : predictions?.length > 0 ? (
           <div className="space-y-4">
             {predictions.map((prediction, index) => (
               <div 
@@ -97,7 +97,7 @@ const PredictionHistory = () => {
                   {/* Confidence Meter */}
                   <div className="mb-4">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-bold text-neutral-700">Confidence Level</span>
+                      <span className="text-sm font-bold text-neutral-700">{t('prediction.confidenceLevel')}</span>
                       <span className="text-sm font-bold text-neutral-900">{prediction.primaryConfidence}%</span>
                     </div>
                     <div className="h-3 bg-neutral-100 rounded-full overflow-hidden">
@@ -108,8 +108,11 @@ const PredictionHistory = () => {
                     </div>
                     <p className="text-xs text-neutral-600 mt-1.5 flex items-center gap-1">
                       <TrendingUp className="w-3 h-3" />
-                      {prediction.primaryConfidence >= 80 ? 'High confidence' : 
-                       prediction.primaryConfidence >= 60 ? 'Moderate confidence' : 'Low confidence'}
+                      {prediction.primaryConfidence >= 80
+  ? t('prediction.confidence.high')
+  : prediction.primaryConfidence >= 60
+  ? t('prediction.confidence.medium')
+  : t('prediction.confidence.low')}
                     </p>
                   </div>
 
@@ -118,7 +121,8 @@ const PredictionHistory = () => {
                     <div className="bg-neutral-50 rounded-xl p-3 flex items-center gap-2">
                       <MapPin className="w-4 h-4 text-neutral-600 shrink-0" />
                       <span className="text-sm font-medium text-neutral-700">
-                        {prediction.location.village}, {prediction.location.district}
+                        {prediction.location?.village || t('common.unknown')}, 
+{prediction.location?.district || t('common.unknown')}
                       </span>
                     </div>
                   )}
@@ -131,13 +135,13 @@ const PredictionHistory = () => {
             <div className="bg-neutral-100 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-4">
               <Sprout className="w-10 h-10 text-neutral-400" />
             </div>
-            <p className="text-neutral-600 font-semibold mb-1">No prediction history yet</p>
-            <p className="text-sm text-neutral-500 mb-4">Start making predictions to see them here</p>
+            <p className="text-neutral-600 font-semibold mb-1">{t('prediction.noHistory')}</p>
+            <p className="text-sm text-neutral-500 mb-4">{t('prediction.noHistoryHint')}</p>
             <button
               onClick={() => navigate('/farmer/crop-prediction')}
               className="bg-gradient-to-r from-primary-600 to-primary-700 text-white px-6 py-3 rounded-xl font-bold shadow-medium hover:shadow-glow transition-all"
             >
-              Make a Prediction
+              {t('prediction.startPrediction')}
             </button>
           </div>
         )}

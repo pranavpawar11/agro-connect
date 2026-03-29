@@ -19,7 +19,7 @@ const ContractCard = ({ contract }) => {
           <p className="text-sm text-gray-600">{contract.company?.companyDetails?.companyName}</p>
         </div>
         <span className="px-3 py-1 bg-primary-light text-primary text-xs font-semibold rounded-full">
-          {contract.status}
+          {t(`contract.status.${contract.status}`)}
         </span>
       </div>
 

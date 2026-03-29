@@ -72,7 +72,24 @@
     "terms": "अटी",
     "apply": "करारासाठी अर्ज करा",
     "viewDetails": "तपशील पहा",
-    "Browsefarmingopportunities": "कृषी संधी ब्राउज़ करें"
+    "Browsefarmingopportunities": "कृषी संधी ब्राउज़ करें",
+    "searchPlaceholder": "पीक किंवा कंपनी शोधा...",
+    "filters": "फिल्टर",
+    "active": "सक्रिय",
+    "filterContracts": "करार फिल्टर करा",
+    "minPrice": "किमान किंमत (₹)",
+    "maxPrice": "कमाल किंमत (₹)",
+    "cropPlaceholder": "उदा., गहू, तांदूळ",
+    "clearAll": "सर्व काढा",
+    "applyFilters": "फिल्टर लागू करा",
+    "noContracts": "कोणतेही करार उपलब्ध नाहीत",
+
+    "status": {
+      "approved": "मंजूर",
+      "active": "सक्रिय",
+      "in_progress": "प्रगतीत",
+      "completed": "पूर्ण"
+    }
   },
   "prediction": {
     "nitrogen": "नायट्रोजन (N)",
@@ -84,7 +101,61 @@
     "rainfall": "पाऊस",
     "predictCrop": "पीक अंदाज करा",
     "result": "अंदाज परिणाम",
-    "recommended": "शिफारस केलेले पीक"
+    "recommended": "शिफारस केलेले पीक",
+    "subtitle": "AI आधारित पीक शिफारसी",
+
+    "features": {
+      "ai": {
+        "title": "AI आधारित",
+        "desc": "मशीन लर्निंग अल्गोरिदम"
+      },
+      "instant": {
+        "title": "त्वरित निकाल",
+        "desc": "काही सेकंदात निकाल मिळवा"
+      },
+      "data": {
+        "title": "डेटा आधारित",
+        "desc": "माती आणि हवामान डेटा आधारित"
+      }
+    },
+
+    "formTitle": "माती व हवामान घटक",
+    "formDesc": "योग्य शिफारसीसाठी अचूक माहिती भरा",
+
+    "success": "पीक अंदाज यशस्वी!",
+
+    "howItWorks": {
+      "title": "हे कसे काम करते",
+      "desc": "AI तुमच्या माती व हवामानावर आधारित योग्य पीक सुचवते."
+    },
+
+    "tips": {
+      "title": "अचूकता टिप्स",
+      "desc": "नवीन माती चाचणी आणि हवामान डेटा वापरा."
+    },
+
+    "benefits": {
+      "title": "पीक अंदाज का वापरावा?",
+      "items": {
+        "yield": "जास्त उत्पादन",
+        "profit": "अधिक नफा",
+        "soil": "माती आरोग्य",
+        "decisions": "जलद निर्णय"
+      }
+    },
+    "historySubtitle": "तुमचा पीक अंदाज इतिहास",
+
+    "confidenceLevel": "विश्वास पातळी",
+
+    "confidence": {
+      "high": "उच्च विश्वास",
+      "medium": "मध्यम विश्वास",
+      "low": "कमी विश्वास"
+    },
+
+    "noHistory": "अद्याप कोणताही इतिहास नाही",
+    "noHistoryHint": "येथे पाहण्यासाठी अंदाज सुरू करा",
+    "startPrediction": "अंदाज करा"
   },
   "scheme": {
     "description": "वर्णन",
@@ -135,10 +206,130 @@
     "cropsPlaceholder": "उदा., गहू, तांदूळ, कापूस",
     "farmDetails": "शेत तपशील",
     "editProfile": "प्रोफाइल संपादित करा",
+    "personalInfo": "वैयक्तिक जानकारी",
     "saveChanges": "बदल जतन करा",
     "updateSuccess": "प्रोफाइल यशस्वीरित्या अपडेट केले",
     "updateError": "प्रोफाइल अपडेट करण्यात अयशस्वी",
     "languageUpdated": "भाषा अपडेट केली",
     "voiceGuide": "आवाज मार्गदर्शक"
+  },
+  "mandi": {
+    "title": "मंडी भाव",
+    "subtitle": "थेट बाजार दर · Agmarknet",
+    "searchPlaceholder": "पीक, बाजार किंवा जिल्हा शोधा…",
+    "stateLabel": "राज्य",
+    "districtLabel": "जिल्हा",
+    "districtPlaceholder": "जिल्हा",
+    "allStates": "सर्व राज्ये",
+    "sortBy": "क्रमवारी",
+    "sortModal": "मोडल किंमत",
+    "sortMin": "किमान किंमत",
+    "sortMax": "कमाल किंमत",
+    "sortDate": "तारीख",
+    "sortAsc": "कमी → जास्त",
+    "sortDesc": "जास्त → कमी",
+    "modalPrice": "मोडल",
+    "minPrice": "किमान",
+    "maxPrice": "कमाल",
+    "perQuintal": "/ क्विंटल",
+    "variety": "जात",
+    "grade": "श्रेणी",
+    "arrivedOn": "आवक तारीख",
+    "noResults": "कोणतेही भाव सापडले नाहीत",
+    "noResultsHint": "वेगळे राज्य, जिल्हा किंवा पिकाचे नाव वापरा",
+    "errorTitle": "भाव लोड होऊ शकले नाहीत",
+    "errorHint": "इंटरनेट तपासा आणि पुन्हा प्रयत्न करा",
+    "retry": "पुन्हा प्रयत्न करा",
+    "loading": "थेट भाव लोड होत आहेत…",
+    "lastUpdated": "अपडेट",
+    "recordsFound": "नोंदी",
+    "clearFilters": "फिल्टर काढा",
+    "priceUnit": "₹ / क्विंटल",
+    "applyDistrict": "जिल्हा फिल्टर लागू करण्यासाठी Enter दाबा",
+    "bestMandi": "आजची सर्वोत्तम मंडी",
+    "priceTrend": "किंमत कल",
+    "avgModalPrice": "सरासरी मोडल किंमत",
+    "profitCalc": "नफा कॅल्क्युलेटर",
+    "profitCalcHint": "अपेक्षित कमाई पाहण्यासाठी प्रमाण टाका",
+    "total": "एकूण",
+    "page": "पृष्ठ",
+    "prev": "मागील",
+    "next": "पुढील"
+  },
+
+  "alerts": {
+    "subtitle": "हवामान व महत्त्वाच्या सूचना",
+    "viewMandi": "मंडई भाव पहा",
+    "noAlerts": "कोणतीही सूचना उपलब्ध नाही",
+    "noAlertsHint": "हवामान अपडेट झाल्यावर तुम्हाला कळवले जाईल"
+  },
+
+  "applications": {
+  "title": "माझे अर्ज",
+  "subtitle": "तुमचे करार अर्ज ट्रॅक करा",
+
+  "quantity": "प्रमाण",
+  "pricePerUnit": "प्रति युनिट किंमत",
+  "companyRemarks": "कंपनी टिप्पणी",
+
+  "noApplications": "अद्याप कोणतेही अर्ज नाहीत",
+  "noApplicationsHint": "येथे पाहण्यासाठी अर्ज करा",
+  "browseContracts": "करार पहा",
+
+  "status": {
+    "accepted": "स्वीकृत",
+    "rejected": "नाकारले",
+    "pending": "प्रलंबित"
   }
+},
+
+"contractDetail": {
+  "title": "करार तपशील",
+  "subtitle": "पूर्ण करार माहिती",
+
+  "quantity": "आवश्यक प्रमाण",
+  "price": "निश्चित किंमत",
+  "location": "स्थान",
+  "duration": "करार कालावधी",
+
+  "paymentInfo": "पेमेंट माहिती",
+  "advancePayment": "अग्रिम पेमेंट",
+  "finalPayment": "अंतिम पेमेंट",
+  "totalPaid": "एकूण पेमेंट",
+
+  "description": "वर्णन",
+  "requirements": "अटी व आवश्यकता",
+
+  "legalDoc": "कायदेशीर करार दस्तऐवज",
+  "viewPdf": "करार PDF पहा",
+
+  "apply": "करारासाठी अर्ज करा",
+  "submitApplication": "अर्ज सबमिट करा",
+  "proposedQty": "प्रस्तावित प्रमाण",
+  "messageToCompany": "कंपनीसाठी संदेश",
+  "messagePlaceholder": "तुमच्या अनुभवाबद्दल सांगा...",
+
+  "raiseDispute": "तक्रार नोंदवा",
+  "disputeSubtitle": "या कराराबद्दल समस्या नोंदवा",
+  "subject": "विषय",
+  "subjectPlaceholder": "संक्षिप्त विषय",
+  "priority": "प्राथमिकता",
+  "message": "संदेश",
+  "disputePlaceholder": "समस्या सविस्तर सांगा...",
+  "submitDispute": "तक्रार सबमिट करा",
+
+  "priority": {
+    "low": "कमी",
+    "medium": "मध्यम",
+    "high": "जास्त",
+    "critical": "गंभीर"
+  },
+
+  "loadError": "करार लोड करण्यात अयशस्वी",
+  "applySuccess": "अर्ज यशस्वीरित्या सबमिट झाला!",
+  "applyError": "अर्ज सबमिट करण्यात अयशस्वी",
+  "disputeSuccess": "तक्रार यशस्वीरित्या नोंदवली!",
+  "disputeError": "तक्रार नोंदवण्यात अयशस्वी",
+  "notFound": "करार सापडला नाही"
+}
 }

@@ -103,7 +103,7 @@ const Contracts = () => {
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-neutral-400 w-5 h-5" />
             <input
               type="text"
-              placeholder="Search by crop or company..."
+              placeholder={t('contract.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-12 pr-4 py-3.5 rounded-xl text-neutral-800 font-medium focus:outline-none focus:ring-4 focus:ring-white/30 transition-all bg-white/95 backdrop-blur-sm shadow-soft"
@@ -116,10 +116,10 @@ const Contracts = () => {
             className="w-full glass-effect backdrop-blur-sm border border-white/30 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-white/30 transition-all shadow-soft"
           >
             <SlidersHorizontal className="w-5 h-5" />
-            Filters 
+            {t('contract.filters')}
             {hasActiveFilters && (
               <span className="bg-secondary-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                Active
+                {t('contract.active')}
               </span>
             )}
           </button>
@@ -132,7 +132,7 @@ const Contracts = () => {
           <div className="bg-gradient-to-r from-primary-50 to-primary-100 p-4 flex items-center justify-between border-b border-primary-200">
             <h3 className="font-bold text-primary-900 flex items-center gap-2">
               <Filter className="w-5 h-5" />
-              Filter Contracts
+              {t('contract.filterContracts')}
             </h3>
             <button 
               onClick={() => setShowFilters(false)}
@@ -144,19 +144,19 @@ const Contracts = () => {
 
           <div className="p-4 space-y-4">
             <div>
-              <label className="block text-sm font-bold text-neutral-700 mb-2">Crop Type</label>
+              <label className="block text-sm font-bold text-neutral-700 mb-2">{t('contract.cropType')}</label>
               <input
                 type="text"
                 value={filters.cropType}
                 onChange={(e) => setFilters({ ...filters, cropType: e.target.value })}
-                placeholder="e.g., Wheat, Rice"
+                placeholder= {t('contract.cropPlaceholder')}
                 className="w-full px-4 py-3 border-2 border-neutral-200 rounded-xl focus:ring-4 focus:ring-primary-100 focus:border-primary-500 transition-all font-medium"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-bold text-neutral-700 mb-2">District</label>
+                <label className="block text-sm font-bold text-neutral-700 mb-2">{t('contract.district')}</label>
                 <input
                   type="text"
                   value={filters.district}
@@ -165,7 +165,7 @@ const Contracts = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-bold text-neutral-700 mb-2">State</label>
+                <label className="block text-sm font-bold text-neutral-700 mb-2">{t('contract.state')}</label>
                 <input
                   type="text"
                   value={filters.state}
@@ -177,7 +177,7 @@ const Contracts = () => {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-bold text-neutral-700 mb-2">Min Price (₹)</label>
+                <label className="block text-sm font-bold text-neutral-700 mb-2">{t('contract.minPrice')}</label>
                 <input
                   type="number"
                   value={filters.minPrice}
@@ -186,7 +186,7 @@ const Contracts = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-bold text-neutral-700 mb-2">Max Price (₹)</label>
+                <label className="block text-sm font-bold text-neutral-700 mb-2">{t('contract.maxPrice')}</label>
                 <input
                   type="number"
                   value={filters.maxPrice}
@@ -201,13 +201,13 @@ const Contracts = () => {
                 onClick={clearFilters}
                 className="flex-1 bg-neutral-100 text-neutral-700 py-3 rounded-xl font-bold hover:bg-neutral-200 transition-colors"
               >
-                Clear All
+                {t('contract.clearAll')}
               </button>
               <button
                 onClick={applyFilters}
                 className="flex-1 bg-gradient-to-r from-primary-600 to-primary-700 text-white py-3 rounded-xl font-bold shadow-medium hover:shadow-glow transition-all"
               >
-                Apply Filters
+                {t('contract.applyFilters')}
               </button>
             </div>
           </div>
@@ -221,7 +221,7 @@ const Contracts = () => {
           className="group w-full glass-effect border-2 border-primary-300 text-primary-800 py-4 rounded-2xl font-bold shadow-soft hover:shadow-medium hover:border-primary-500 transition-all flex items-center justify-center gap-2"
         >
           <FileText className="w-5 h-5" />
-          My Applications
+          {t('farmer.applications')}
           <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
         </button>
 
@@ -237,7 +237,7 @@ const Contracts = () => {
                   : 'glass-effect text-neutral-700 border border-neutral-200 hover:border-primary-300'
               }`}
             >
-              {status.replace('_', ' ')}
+              {t(`contract.status.${status}`)}
             </button>
           ))}
         </div>
@@ -258,13 +258,13 @@ const Contracts = () => {
             <div className="bg-neutral-100 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-4">
               <FileText className="w-10 h-10 text-neutral-400" />
             </div>
-            <p className="text-neutral-600 font-semibold mb-2">No contracts available</p>
+            <p className="text-neutral-600 font-semibold mb-2">{t('contract.noContracts')}</p>
             {(searchTerm || hasActiveFilters) && (
               <button
                 onClick={clearFilters}
                 className="mt-3 text-primary-700 font-bold hover:text-primary-800 transition-colors"
               >
-                Clear all filters
+                {t('contract.clearAll')}
               </button>
             )}
           </div>

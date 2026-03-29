@@ -72,7 +72,24 @@
     "terms": "Terms",
     "apply": "Apply to Contract",
     "viewDetails": "View Details",
-    "Browsefarmingopportunities": "Browse farming opportunities"
+    "Browsefarmingopportunities": "Browse farming opportunities",
+    "searchPlaceholder": "Search by crop or company...",
+    "filters": "Filters",
+    "active": "Active",
+    "filterContracts": "Filter Contracts",
+    "minPrice": "Min Price (₹)",
+    "maxPrice": "Max Price (₹)",
+    "cropPlaceholder": "e.g., Wheat, Rice",
+    "clearAll": "Clear All",
+    "applyFilters": "Apply Filters",
+    "noContracts": "No contracts available",
+
+    "status": {
+      "approved": "Approved",
+      "active": "Active",
+      "in_progress": "In Progress",
+      "completed": "Completed"
+    }
   },
   "prediction": {
     "nitrogen": "Nitrogen (N)",
@@ -84,9 +101,63 @@
     "rainfall": "Rainfall",
     "predictCrop": "Predict Crop",
     "result": "Prediction Result",
-    "recommended": "Recommended Crop"
+    "recommended": "Recommended Crop",
+    "subtitle": "AI-powered crop recommendations",
+
+    "features": {
+      "ai": {
+        "title": "AI-Powered",
+        "desc": "Machine learning algorithms"
+      },
+      "instant": {
+        "title": "Instant Results",
+        "desc": "Get predictions in seconds"
+      },
+      "data": {
+        "title": "Data-Driven",
+        "desc": "Based on soil & weather data"
+      }
+    },
+
+    "formTitle": "Soil & Weather Parameters",
+    "formDesc": "Enter accurate data for the best crop recommendations",
+
+    "success": "Crop prediction successful!",
+
+    "howItWorks": {
+      "title": "How It Works",
+      "desc": "Our AI analyzes your soil composition and local weather patterns to recommend the most suitable crops for your farm."
+    },
+
+    "tips": {
+      "title": "Accuracy Tips",
+      "desc": "Use recent soil test results and current weather data for the most accurate predictions. Update regularly for best results."
+    },
+
+    "benefits": {
+      "title": "Why Use Crop Prediction?",
+      "items": {
+        "yield": "Optimized yields",
+        "profit": "Better profits",
+        "soil": "Soil health",
+        "decisions": "Quick decisions"
+      }
+    },
+    "historySubtitle": "Your crop prediction timeline",
+
+    "confidenceLevel": "Confidence Level",
+
+    "confidence": {
+      "high": "High confidence",
+      "medium": "Moderate confidence",
+      "low": "Low confidence"
+    },
+
+    "noHistory": "No prediction history yet",
+    "noHistoryHint": "Start making predictions to see them here",
+    "startPrediction": "Make a Prediction"
   },
-   "scheme": {
+  "scheme": {
     "description": "Description",
     "eligibility": "Eligibility",
     "howToApply": "How to Apply",
@@ -135,10 +206,129 @@
     "cropsPlaceholder": "e.g., Wheat, Rice, Cotton",
     "farmDetails": "Farm Details",
     "editProfile": "Edit Profile",
+    "personalInfo": "Personal Information",
     "saveChanges": "Save Changes",
     "updateSuccess": "Profile updated successfully",
     "updateError": "Failed to update profile",
     "languageUpdated": "Language updated",
     "voiceGuide": "Voice Guide"
+  },
+  "mandi": {
+    "title": "Mandi Prices",
+    "subtitle": "Live market rates · Agmarknet",
+    "searchPlaceholder": "Search crop, market or district…",
+    "stateLabel": "State",
+    "districtLabel": "District",
+    "districtPlaceholder": "District",
+    "allStates": "All States",
+    "sortBy": "Sort by",
+    "sortModal": "Modal Price",
+    "sortMin": "Min Price",
+    "sortMax": "Max Price",
+    "sortDate": "Date",
+    "sortAsc": "Low → High",
+    "sortDesc": "High → Low",
+    "modalPrice": "Modal",
+    "minPrice": "Min",
+    "maxPrice": "Max",
+    "perQuintal": "/ quintal",
+    "variety": "Variety",
+    "grade": "Grade",
+    "arrivedOn": "Arrival Date",
+    "noResults": "No prices found",
+    "noResultsHint": "Try a different state, district or crop name",
+    "errorTitle": "Could not load prices",
+    "errorHint": "Check your connection and try again",
+    "retry": "Retry",
+    "loading": "Loading live prices…",
+    "lastUpdated": "Updated",
+    "recordsFound": "records",
+    "clearFilters": "Clear Filters",
+    "priceUnit": "₹ / quintal",
+    "applyDistrict": "Press Enter to apply district filter",
+    "bestMandi": "Best Mandi Today",
+    "priceTrend": "Price Trend",
+    "avgModalPrice": "Avg Modal Price",
+    "profitCalc": "Profit Calculator",
+    "profitCalcHint": "Enter quantity to see estimated earnings",
+    "total": "total",
+    "page": "Page",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "alerts": {
+    "subtitle": "Weather & important updates",
+    "viewMandi": "View Mandi Prices",
+    "noAlerts": "No alerts available",
+    "noAlertsHint": "We'll notify you when there are weather updates"
+  },
+
+  "applications": {
+  "title": "My Applications",
+  "subtitle": "Track your contract applications",
+
+  "quantity": "Quantity",
+  "pricePerUnit": "Price per unit",
+  "companyRemarks": "Company Remarks",
+
+  "noApplications": "No applications yet",
+  "noApplicationsHint": "Start applying to contracts to see them here",
+  "browseContracts": "Browse Contracts",
+
+  "status": {
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "pending": "Pending"
   }
+},
+
+"contractDetail": {
+  "title": "Contract Details",
+  "subtitle": "Full contract information",
+
+  "quantity": "Quantity Required",
+  "price": "Agreed Price",
+  "location": "Location",
+  "duration": "Contract Duration",
+
+  "paymentInfo": "Payment Information",
+  "advancePayment": "Advance Payment",
+  "finalPayment": "Final Payment",
+  "totalPaid": "Total Paid",
+
+  "description": "Description",
+  "requirements": "Requirements & Terms",
+
+  "legalDoc": "Legal Contract Document",
+  "viewPdf": "View Contract PDF",
+
+  "apply": "Apply to Contract",
+  "submitApplication": "Submit Application",
+  "proposedQty": "Proposed Quantity",
+  "messageToCompany": "Message to Company",
+  "messagePlaceholder": "Tell us about your experience...",
+
+  "raiseDispute": "Raise Dispute",
+  "disputeSubtitle": "Report an issue with this contract",
+  "subject": "Subject",
+  "subjectPlaceholder": "Brief subject",
+  "priority": "Priority",
+  "message": "Message",
+  "disputePlaceholder": "Describe the issue in detail...",
+  "submitDispute": "Submit Dispute",
+
+  "priority": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "critical": "Critical"
+  },
+
+  "loadError": "Failed to load contract details",
+  "applySuccess": "Application submitted successfully!",
+  "applyError": "Failed to submit application",
+  "disputeSuccess": "Dispute raised successfully!",
+  "disputeError": "Failed to raise dispute",
+  "notFound": "Contract not found"
+}
 }
