@@ -35,6 +35,8 @@ function App() {
               pauseOnFocusLoss
               draggable
               pauseOnHover
+              theme="light"
+              toastClassName="rounded-xl shadow-strong"
             />
           </LanguageProvider>
         </AuthProvider>
