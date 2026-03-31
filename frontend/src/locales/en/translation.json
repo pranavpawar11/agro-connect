@@ -1,4 +1,6 @@
 {
+  "filterAll": "All",
+
   "common": {
     "welcome": "Welcome",
     "loading": "Loading...",
@@ -16,8 +18,13 @@
     "settings": "Settings",
     "language": "Language",
     "offline": "You are offline",
-    "online": "Back online"
+    "online": "Back online",
+    "appliedOn": "Applied on",
+    "name": "Name",
+    "notAvailable": "Not available",
+    "submitting": "Submitting…"
   },
+
   "auth": {
     "login": "Login",
     "register": "Register",
@@ -35,144 +42,7 @@
     "noAccount": "Don't have an account?",
     "haveAccount": "Already have an account?"
   },
-  "farmer": {
-    "home": "Home",
-    "cropPrediction": "Crop Prediction",
-    "contracts": "Contracts",
-    "alerts": "Alerts",
-    "schemes": "Schemes",
-    "predict": "Predict Crop",
-    "history": "Prediction History",
-    "apply": "Apply",
-    "applications": "My Applications"
-  },
-  "company": {
-    "dashboard": "Dashboard",
-    "createContract": "Create Contract",
-    "myContracts": "My Contracts",
-    "applicants": "Applicants",
-    "disputes": "Disputes"
-  },
-  "admin": {
-    "dashboard": "Admin Dashboard",
-    "verifyCompanies": "Verify Companies",
-    "users": "User Management",
-    "contracts": "Contract Management",
-    "disputes": "Dispute Management",
-    "alerts": "Alert Management",
-    "schemes": "Scheme Management"
-  },
-  "contract": {
-    "cropType": "Crop Type",
-    "quantity": "Quantity",
-    "price": "Price",
-    "duration": "Duration",
-    "location": "Location",
-    "description": "Description",
-    "terms": "Terms",
-    "apply": "Apply to Contract",
-    "viewDetails": "View Details",
-    "Browsefarmingopportunities": "Browse farming opportunities",
-    "searchPlaceholder": "Search by crop or company...",
-    "filters": "Filters",
-    "active": "Active",
-    "filterContracts": "Filter Contracts",
-    "minPrice": "Min Price (₹)",
-    "maxPrice": "Max Price (₹)",
-    "cropPlaceholder": "e.g., Wheat, Rice",
-    "clearAll": "Clear All",
-    "applyFilters": "Apply Filters",
-    "noContracts": "No contracts available",
 
-    "status": {
-      "approved": "Approved",
-      "active": "Active",
-      "in_progress": "In Progress",
-      "completed": "Completed"
-    }
-  },
-  "prediction": {
-    "nitrogen": "Nitrogen (N)",
-    "phosphorus": "Phosphorus (P)",
-    "potassium": "Potassium (K)",
-    "temperature": "Temperature",
-    "humidity": "Humidity",
-    "ph": "pH Level",
-    "rainfall": "Rainfall",
-    "predictCrop": "Predict Crop",
-    "result": "Prediction Result",
-    "recommended": "Recommended Crop",
-    "subtitle": "AI-powered crop recommendations",
-
-    "features": {
-      "ai": {
-        "title": "AI-Powered",
-        "desc": "Machine learning algorithms"
-      },
-      "instant": {
-        "title": "Instant Results",
-        "desc": "Get predictions in seconds"
-      },
-      "data": {
-        "title": "Data-Driven",
-        "desc": "Based on soil & weather data"
-      }
-    },
-
-    "formTitle": "Soil & Weather Parameters",
-    "formDesc": "Enter accurate data for the best crop recommendations",
-
-    "success": "Crop prediction successful!",
-
-    "howItWorks": {
-      "title": "How It Works",
-      "desc": "Our AI analyzes your soil composition and local weather patterns to recommend the most suitable crops for your farm."
-    },
-
-    "tips": {
-      "title": "Accuracy Tips",
-      "desc": "Use recent soil test results and current weather data for the most accurate predictions. Update regularly for best results."
-    },
-
-    "benefits": {
-      "title": "Why Use Crop Prediction?",
-      "items": {
-        "yield": "Optimized yields",
-        "profit": "Better profits",
-        "soil": "Soil health",
-        "decisions": "Quick decisions"
-      }
-    },
-    "historySubtitle": "Your crop prediction timeline",
-
-    "confidenceLevel": "Confidence Level",
-
-    "confidence": {
-      "high": "High confidence",
-      "medium": "Moderate confidence",
-      "low": "Low confidence"
-    },
-
-    "noHistory": "No prediction history yet",
-    "noHistoryHint": "Start making predictions to see them here",
-    "startPrediction": "Make a Prediction"
-  },
-  "scheme": {
-    "description": "Description",
-    "eligibility": "Eligibility",
-    "howToApply": "How to Apply",
-    "requiredDocuments": "Required Documents",
-    "benefits": "Benefits",
-    "contactInformation": "Contact Information",
-    "category": "Category",
-    "all": "All",
-    "noSchemes": "No schemes available",
-    "category_subsidy": "Subsidy",
-    "category_loan": "Loan",
-    "category_insurance": "Insurance",
-    "category_training": "Training",
-    "category_other": "Other"
-  },
   "farmer": {
     "home": "Home",
     "cropPrediction": "Crop Prediction",
@@ -190,6 +60,136 @@
     "noAlerts": "No alerts available",
     "installApp": "Install AgroConnect App"
   },
+
+  "company": {
+    "dashboard": "Dashboard",
+    "createContract": "Create Contract",
+    "myContracts": "My Contracts",
+    "applicants": "Applicants",
+    "disputes": "Disputes"
+  },
+
+  "admin": {
+    "dashboard": "Admin Dashboard",
+    "verifyCompanies": "Verify Companies",
+    "users": "User Management",
+    "contracts": "Contract Management",
+    "disputes": "Dispute Management",
+    "alerts": "Alert Management",
+    "schemes": "Scheme Management"
+  },
+
+  "contract": {
+    "cropType": "Crop Type",
+    "quantity": "Quantity",
+    "price": "Price",
+    "duration": "Duration",
+    "location": "Location",
+    "description": "Description",
+    "terms": "Terms",
+    "apply": "Apply for Contract",
+    "viewDetails": "View Details",
+    "Browsefarmingopportunities": "Browse farming opportunities",
+    "searchPlaceholder": "Search by crop or company...",
+    "filters": "Filters",
+    "active": "Active",
+    "filterContracts": "Filter Contracts",
+    "minPrice": "Min Price (₹)",
+    "maxPrice": "Max Price (₹)",
+    "cropPlaceholder": "e.g., Wheat, Rice",
+    "clearAll": "Clear All",
+    "applyFilters": "Apply Filters",
+    "noContracts": "No contracts found",
+    "applications": "Applications",
+    "contractsFound": "contracts found",
+    "district": "District",
+    "state": "State",
+    "status": {
+      "all": "All",
+      "pending": "Pending",
+      "approved": "Approved",
+      "active": "Active",
+      "in_progress": "In Progress",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    }
+  },
+
+  "prediction": {
+    "nitrogen": "Nitrogen (N)",
+    "phosphorus": "Phosphorus (P)",
+    "potassium": "Potassium (K)",
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "ph": "pH Level",
+    "rainfall": "Rainfall",
+    "predictCrop": "Predict Crop",
+    "result": "Prediction Result",
+    "recommended": "Recommended Crop",
+    "subtitle": "AI-powered crop recommendations",
+    "features": {
+      "ai": {
+        "title": "AI-Powered",
+        "desc": "Machine learning algorithms"
+      },
+      "instant": {
+        "title": "Instant Results",
+        "desc": "Get predictions in seconds"
+      },
+      "data": {
+        "title": "Data-Driven",
+        "desc": "Based on soil & weather data"
+      }
+    },
+    "formTitle": "Soil & Weather Parameters",
+    "formDesc": "Enter accurate data for the best crop recommendations",
+    "success": "Crop prediction successful!",
+    "howItWorks": {
+      "title": "How It Works",
+      "desc": "Our AI analyzes your soil composition and local weather patterns to recommend the most suitable crops for your farm."
+    },
+    "tips": {
+      "title": "Accuracy Tips",
+      "desc": "Use recent soil test results and current weather data for the most accurate predictions. Update regularly for best results."
+    },
+    "benefits": {
+      "title": "Why Use Crop Prediction?",
+      "items": {
+        "yield": "Optimized yields",
+        "profit": "Better profits",
+        "soil": "Soil health",
+        "decisions": "Quick decisions"
+      }
+    },
+    "historySubtitle": "Your crop prediction timeline",
+    "confidenceLevel": "Confidence Level",
+    "confidence": {
+      "high": "High confidence",
+      "medium": "Moderate confidence",
+      "low": "Low confidence"
+    },
+    "noHistory": "No prediction history yet",
+    "noHistoryHint": "Start making predictions to see them here",
+    "startPrediction": "Make a Prediction"
+  },
+
+  "scheme": {
+    "description": "Description",
+    "eligibility": "Eligibility",
+    "howToApply": "How to Apply",
+    "requiredDocuments": "Required Documents",
+    "benefits": "Benefits",
+    "contactInformation": "Contact Information",
+    "category": "Category",
+    "all": "All",
+    "noSchemes": "No schemes available",
+    "category_subsidy": "Subsidy",
+    "category_loan": "Loan",
+    "category_insurance": "Insurance",
+    "category_training": "Training",
+    "category_other": "Other"
+  },
+
   "profile": {
     "name": "Name",
     "phone": "Phone",
@@ -213,6 +213,7 @@
     "languageUpdated": "Language updated",
     "voiceGuide": "Voice Guide"
   },
+
   "mandi": {
     "title": "Mandi Prices",
     "subtitle": "Live market rates · Agmarknet",
@@ -256,6 +257,7 @@
     "prev": "Previous",
     "next": "Next"
   },
+
   "alerts": {
     "subtitle": "Weather & important updates",
     "viewMandi": "View Mandi Prices",
@@ -264,71 +266,78 @@
   },
 
   "applications": {
-  "title": "My Applications",
-  "subtitle": "Track your contract applications",
-
-  "quantity": "Quantity",
-  "pricePerUnit": "Price per unit",
-  "companyRemarks": "Company Remarks",
-
-  "noApplications": "No applications yet",
-  "noApplicationsHint": "Start applying to contracts to see them here",
-  "browseContracts": "Browse Contracts",
-
-  "status": {
-    "accepted": "Accepted",
-    "rejected": "Rejected",
-    "pending": "Pending"
-  }
-},
-
-"contractDetail": {
-  "title": "Contract Details",
-  "subtitle": "Full contract information",
-
-  "quantity": "Quantity Required",
-  "price": "Agreed Price",
-  "location": "Location",
-  "duration": "Contract Duration",
-
-  "paymentInfo": "Payment Information",
-  "advancePayment": "Advance Payment",
-  "finalPayment": "Final Payment",
-  "totalPaid": "Total Paid",
-
-  "description": "Description",
-  "requirements": "Requirements & Terms",
-
-  "legalDoc": "Legal Contract Document",
-  "viewPdf": "View Contract PDF",
-
-  "apply": "Apply to Contract",
-  "submitApplication": "Submit Application",
-  "proposedQty": "Proposed Quantity",
-  "messageToCompany": "Message to Company",
-  "messagePlaceholder": "Tell us about your experience...",
-
-  "raiseDispute": "Raise Dispute",
-  "disputeSubtitle": "Report an issue with this contract",
-  "subject": "Subject",
-  "subjectPlaceholder": "Brief subject",
-  "priority": "Priority",
-  "message": "Message",
-  "disputePlaceholder": "Describe the issue in detail...",
-  "submitDispute": "Submit Dispute",
-
-  "priority": {
-    "low": "Low",
-    "medium": "Medium",
-    "high": "High",
-    "critical": "Critical"
+    "title": "My Applications",
+    "subtitle": "Track your contract applications",
+    "quantity": "Proposed Quantity",
+    "pricePerUnit": "Price / Unit",
+    "companyRemarks": "Company Remarks",
+    "noApplications": "No applications yet",
+    "noApplicationsHint": "Browse contracts and apply to start farming partnerships",
+    "browseContracts": "Browse Contracts",
+    "total": "total",
+    "status": {
+      "pending": "Under Review",
+      "accepted": "Accepted",
+      "rejected": "Not Selected"
+    },
+    "statusLabel": {
+      "pending": "Your application is under review",
+      "accepted": "🎉 Your application was accepted!",
+      "rejected": "Application was not selected this time"
+    }
   },
 
-  "loadError": "Failed to load contract details",
-  "applySuccess": "Application submitted successfully!",
-  "applyError": "Failed to submit application",
-  "disputeSuccess": "Dispute raised successfully!",
-  "disputeError": "Failed to raise dispute",
-  "notFound": "Contract not found"
-}
+  "contractDetail": {
+    "title": "Contract Details",
+    "subtitle": "Full contract information",
+    "quantity": "Quantity",
+    "price": "Price per unit",
+    "location": "Location",
+    "duration": "Duration",
+    "description": "Description",
+    "requirements": "Requirements",
+    "legalDoc": "Legal Contract",
+    "viewPdf": "View / Download PDF",
+    "paymentInfo": "Payment Details",
+    "advancePayment": "Advance Payment",
+    "finalPayment": "Final Payment",
+    "totalPaid": "Total Received",
+    "apply": "Apply for this Contract",
+    "raiseDispute": "Raise a Dispute",
+    "disputeSubtitle": "Describe the issue with this contract",
+    "subject": "Subject",
+    "message": "Message",
+    "priority": "Priority",
+    "messagePlaceholder": "Describe your experience, land size, and why you are a good fit…",
+    "disputePlaceholder": "Describe the issue in detail…",
+    "proposedQty": "Proposed Quantity",
+    "messageToCompany": "Message to Company",
+    "submitApplication": "Submit Application",
+    "submitDispute": "Submit Dispute",
+    "applySuccess": "Application submitted successfully!",
+    "applyError": "Failed to submit application",
+    "disputeSuccess": "Dispute raised successfully",
+    "disputeError": "Failed to raise dispute",
+    "loadError": "Failed to load contract details",
+    "notFound": "Contract not found",
+    "companyInfo": "Company Information",
+    "delivery": "Delivery Status",
+    "quantityDelivered": "Delivered",
+    "alreadyApplied": "You have already applied for this contract",
+    "payment": {
+      "paid": "Paid",
+      "pending": "Pending"
+    },
+    "verification": {
+      "pending": "Verification Pending",
+      "verified": "Legally Verified ✓",
+      "rejected": "Verification Rejected"
+    },
+    "priority": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "critical": "Critical"
+    }
+  }
 }

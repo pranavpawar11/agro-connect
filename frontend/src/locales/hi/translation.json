@@ -1,4 +1,6 @@
 {
+  "filterAll": "सभी",
+
   "common": {
     "welcome": "स्वागत है",
     "loading": "लोड हो रहा है...",
@@ -16,8 +18,13 @@
     "settings": "सेटिंग्स",
     "language": "भाषा",
     "offline": "आप ऑफ़लाइन हैं",
-    "online": "वापस ऑनलाइन"
+    "online": "वापस ऑनलाइन",
+    "appliedOn": "आवेदन तिथि",
+    "name": "नाम",
+    "notAvailable": "उपलब्ध नहीं",
+    "submitting": "जमा हो रहा है…"
   },
+
   "auth": {
     "login": "लॉगिन",
     "register": "पंजीकरण करें",
@@ -35,144 +42,7 @@
     "noAccount": "खाता नहीं है?",
     "haveAccount": "पहले से ही खाता है?"
   },
-  "farmer": {
-    "home": "होम",
-    "cropPrediction": "फसल भविष्यवाणी",
-    "contracts": "अनुबंध",
-    "alerts": "अलर्ट",
-    "schemes": "योजनाएं",
-    "predict": "फसल की भविष्यवाणी करें",
-    "history": "भविष्यवाणी इतिहास",
-    "apply": "आवेदन करें",
-    "applications": "मेरे आवेदन"
-  },
-  "company": {
-    "dashboard": "डैशबोर्ड",
-    "createContract": "अनुबंध बनाएं",
-    "myContracts": "मेरे अनुबंध",
-    "applicants": "आवेदक",
-    "disputes": "विवाद"
-  },
-  "admin": {
-    "dashboard": "एडमिन डैशबोर्ड",
-    "verifyCompanies": "कंपनियों को सत्यापित करें",
-    "users": "उपयोगकर्ता प्रबंधन",
-    "contracts": "अनुबंध प्रबंधन",
-    "disputes": "विवाद प्रबंधन",
-    "alerts": "अलर्ट प्रबंधन",
-    "schemes": "योजना प्रबंधन"
-  },
-  "contract": {
-    "cropType": "फसल का प्रकार",
-    "quantity": "मात्रा",
-    "price": "कीमत",
-    "duration": "अवधि",
-    "location": "स्थान",
-    "description": "विवरण",
-    "terms": "शर्तें",
-    "apply": "अनुबंध के लिए आवेदन करें",
-    "viewDetails": "विवरण देखें",
-    "Browsefarmingopportunities": "कृषी संधी ब्राउज़ करें",
-    "searchPlaceholder": "फसल या कंपनी से खोजें...",
-    "filters": "फ़िल्टर",
-    "active": "सक्रिय",
-    "filterContracts": "अनुबंध फ़िल्टर करें",
-    "minPrice": "न्यूनतम मूल्य (₹)",
-    "maxPrice": "अधिकतम मूल्य (₹)",
-    "cropPlaceholder": "जैसे, गेहूं, चावल",
-    "clearAll": "सभी हटाएं",
-    "applyFilters": "फ़िल्टर लागू करें",
-    "noContracts": "कोई अनुबंध उपलब्ध नहीं",
 
-    "status": {
-      "approved": "स्वीकृत",
-      "active": "सक्रिय",
-      "in_progress": "प्रगति में",
-      "completed": "पूर्ण"
-    }
-  },
-  "prediction": {
-    "nitrogen": "नाइट्रोजन (N)",
-    "phosphorus": "फॉस्फोरस (P)",
-    "potassium": "पोटेशियम (K)",
-    "temperature": "तापमान",
-    "humidity": "आर्द्रता",
-    "ph": "pH स्तर",
-    "rainfall": "वर्षा",
-    "predictCrop": "फसल की भविष्यवाणी करें",
-    "result": "भविष्यवाणी परिणाम",
-    "recommended": "अनुशंसित फसल",
-    "subtitle": "एआई आधारित फसल सुझाव",
-
-    "features": {
-      "ai": {
-        "title": "एआई आधारित",
-        "desc": "मशीन लर्निंग एल्गोरिदम"
-      },
-      "instant": {
-        "title": "तुरंत परिणाम",
-        "desc": "कुछ ही सेकंड में परिणाम प्राप्त करें"
-      },
-      "data": {
-        "title": "डेटा आधारित",
-        "desc": "मिट्टी और मौसम के डेटा पर आधारित"
-      }
-    },
-
-    "formTitle": "मिट्टी और मौसम पैरामीटर",
-    "formDesc": "सर्वश्रेष्ठ फसल सुझाव के लिए सटीक डेटा दर्ज करें",
-
-    "success": "फसल भविष्यवाणी सफल!",
-
-    "howItWorks": {
-      "title": "यह कैसे काम करता है",
-      "desc": "हमारा एआई आपकी मिट्टी और मौसम का विश्लेषण करके उपयुक्त फसल सुझाता है।"
-    },
-
-    "tips": {
-      "title": "सटीकता सुझाव",
-      "desc": "हाल के मिट्टी परीक्षण और मौसम डेटा का उपयोग करें।"
-    },
-
-    "benefits": {
-      "title": "फसल भविष्यवाणी क्यों उपयोग करें?",
-      "items": {
-        "yield": "बेहतर उत्पादन",
-        "profit": "अधिक लाभ",
-        "soil": "मिट्टी की सेहत",
-        "decisions": "तेज़ निर्णय"
-      }
-    },
-    "historySubtitle": "आपकी फसल भविष्यवाणी टाइमलाइन",
-
-    "confidenceLevel": "विश्वास स्तर",
-
-    "confidence": {
-      "high": "उच्च विश्वास",
-      "medium": "मध्यम विश्वास",
-      "low": "कम विश्वास"
-    },
-
-    "noHistory": "अभी तक कोई इतिहास नहीं",
-    "noHistoryHint": "यहां देखने के लिए भविष्यवाणी शुरू करें",
-    "startPrediction": "भविष्यवाणी करें"
-  },
-  "scheme": {
-    "description": "विवरण",
-    "eligibility": "पात्रता",
-    "howToApply": "आवेदन कैसे करें",
-    "requiredDocuments": "आवश्यक दस्तावेज",
-    "benefits": "लाभ",
-    "contactInformation": "संपर्क जानकारी",
-    "category": "श्रेणी",
-    "all": "सभी",
-    "noSchemes": "कोई योजना उपलब्ध नहीं",
-    "category_subsidy": "सब्सिडी",
-    "category_loan": "ऋण",
-    "category_insurance": "बीमा",
-    "category_training": "प्रशिक्षण",
-    "category_other": "अन्य"
-  },
   "farmer": {
     "home": "होम",
     "cropPrediction": "फसल भविष्यवाणी",
@@ -190,6 +60,136 @@
     "noAlerts": "कोई अलर्ट उपलब्ध नहीं",
     "installApp": "AgroConnect ऐप इंस्टॉल करें"
   },
+
+  "company": {
+    "dashboard": "डैशबोर्ड",
+    "createContract": "अनुबंध बनाएं",
+    "myContracts": "मेरे अनुबंध",
+    "applicants": "आवेदक",
+    "disputes": "विवाद"
+  },
+
+  "admin": {
+    "dashboard": "एडमिन डैशबोर्ड",
+    "verifyCompanies": "कंपनियों को सत्यापित करें",
+    "users": "उपयोगकर्ता प्रबंधन",
+    "contracts": "अनुबंध प्रबंधन",
+    "disputes": "विवाद प्रबंधन",
+    "alerts": "अलर्ट प्रबंधन",
+    "schemes": "योजना प्रबंधन"
+  },
+
+  "contract": {
+    "cropType": "फसल का प्रकार",
+    "quantity": "मात्रा",
+    "price": "कीमत",
+    "duration": "अवधि",
+    "location": "स्थान",
+    "description": "विवरण",
+    "terms": "शर्तें",
+    "apply": "अनुबंध के लिए आवेदन करें",
+    "viewDetails": "विवरण देखें",
+    "Browsefarmingopportunities": "कृषि अवसर ब्राउज़ करें",
+    "searchPlaceholder": "फसल या कंपनी से खोजें...",
+    "filters": "फ़िल्टर",
+    "active": "सक्रिय",
+    "filterContracts": "अनुबंध फ़िल्टर करें",
+    "minPrice": "न्यूनतम मूल्य (₹)",
+    "maxPrice": "अधिकतम मूल्य (₹)",
+    "cropPlaceholder": "जैसे, गेहूं, चावल",
+    "clearAll": "सभी हटाएं",
+    "applyFilters": "फ़िल्टर लागू करें",
+    "noContracts": "कोई अनुबंध उपलब्ध नहीं",
+    "applications": "आवेदन",
+    "contractsFound": "अनुबंध मिले",
+    "district": "जिला",
+    "state": "राज्य",
+    "status": {
+      "all": "सभी",
+      "pending": "लंबित",
+      "approved": "स्वीकृत",
+      "active": "सक्रिय",
+      "in_progress": "प्रगति में",
+      "completed": "पूर्ण",
+      "cancelled": "रद्द"
+    }
+  },
+
+  "prediction": {
+    "nitrogen": "नाइट्रोजन (N)",
+    "phosphorus": "फॉस्फोरस (P)",
+    "potassium": "पोटेशियम (K)",
+    "temperature": "तापमान",
+    "humidity": "आर्द्रता",
+    "ph": "pH स्तर",
+    "rainfall": "वर्षा",
+    "predictCrop": "फसल की भविष्यवाणी करें",
+    "result": "भविष्यवाणी परिणाम",
+    "recommended": "अनुशंसित फसल",
+    "subtitle": "एआई आधारित फसल सुझाव",
+    "features": {
+      "ai": {
+        "title": "एआई आधारित",
+        "desc": "मशीन लर्निंग एल्गोरिदम"
+      },
+      "instant": {
+        "title": "तुरंत परिणाम",
+        "desc": "कुछ ही सेकंड में परिणाम प्राप्त करें"
+      },
+      "data": {
+        "title": "डेटा आधारित",
+        "desc": "मिट्टी और मौसम के डेटा पर आधारित"
+      }
+    },
+    "formTitle": "मिट्टी और मौसम पैरामीटर",
+    "formDesc": "सर्वश्रेष्ठ फसल सुझाव के लिए सटीक डेटा दर्ज करें",
+    "success": "फसल भविष्यवाणी सफल!",
+    "howItWorks": {
+      "title": "यह कैसे काम करता है",
+      "desc": "हमारा एआई आपकी मिट्टी और मौसम का विश्लेषण करके उपयुक्त फसल सुझाता है।"
+    },
+    "tips": {
+      "title": "सटीकता सुझाव",
+      "desc": "हाल के मिट्टी परीक्षण और मौसम डेटा का उपयोग करें।"
+    },
+    "benefits": {
+      "title": "फसल भविष्यवाणी क्यों उपयोग करें?",
+      "items": {
+        "yield": "बेहतर उत्पादन",
+        "profit": "अधिक लाभ",
+        "soil": "मिट्टी की सेहत",
+        "decisions": "तेज़ निर्णय"
+      }
+    },
+    "historySubtitle": "आपकी फसल भविष्यवाणी टाइमलाइन",
+    "confidenceLevel": "विश्वास स्तर",
+    "confidence": {
+      "high": "उच्च विश्वास",
+      "medium": "मध्यम विश्वास",
+      "low": "कम विश्वास"
+    },
+    "noHistory": "अभी तक कोई इतिहास नहीं",
+    "noHistoryHint": "यहां देखने के लिए भविष्यवाणी शुरू करें",
+    "startPrediction": "भविष्यवाणी करें"
+  },
+
+  "scheme": {
+    "description": "विवरण",
+    "eligibility": "पात्रता",
+    "howToApply": "आवेदन कैसे करें",
+    "requiredDocuments": "आवश्यक दस्तावेज",
+    "benefits": "लाभ",
+    "contactInformation": "संपर्क जानकारी",
+    "category": "श्रेणी",
+    "all": "सभी",
+    "noSchemes": "कोई योजना उपलब्ध नहीं",
+    "category_subsidy": "सब्सिडी",
+    "category_loan": "ऋण",
+    "category_insurance": "बीमा",
+    "category_training": "प्रशिक्षण",
+    "category_other": "अन्य"
+  },
+
   "profile": {
     "name": "नाम",
     "phone": "फोन",
@@ -213,6 +213,7 @@
     "languageUpdated": "भाषा अपडेट की गई",
     "voiceGuide": "आवाज गाइड"
   },
+
   "mandi": {
     "title": "मंडी भाव",
     "subtitle": "सीधे बाज़ार दर · Agmarknet",
@@ -265,71 +266,78 @@
   },
 
   "applications": {
-  "title": "मेरे आवेदन",
-  "subtitle": "अपने अनुबंध आवेदनों को ट्रैक करें",
-
-  "quantity": "मात्रा",
-  "pricePerUnit": "प्रति इकाई मूल्य",
-  "companyRemarks": "कंपनी की टिप्पणी",
-
-  "noApplications": "अभी तक कोई आवेदन नहीं",
-  "noApplicationsHint": "यहां देखने के लिए आवेदन करना शुरू करें",
-  "browseContracts": "अनुबंध देखें",
-
-  "status": {
-    "accepted": "स्वीकृत",
-    "rejected": "अस्वीकृत",
-    "pending": "लंबित"
-  }
-},
-
-"contractDetail": {
-  "title": "अनुबंध विवरण",
-  "subtitle": "पूरा अनुबंध जानकारी",
-
-  "quantity": "आवश्यक मात्रा",
-  "price": "निर्धारित मूल्य",
-  "location": "स्थान",
-  "duration": "अनुबंध अवधि",
-
-  "paymentInfo": "भुगतान जानकारी",
-  "advancePayment": "अग्रिम भुगतान",
-  "finalPayment": "अंतिम भुगतान",
-  "totalPaid": "कुल भुगतान",
-
-  "description": "विवरण",
-  "requirements": "आवश्यकताएं और शर्तें",
-
-  "legalDoc": "कानूनी अनुबंध दस्तावेज़",
-  "viewPdf": "अनुबंध PDF देखें",
-
-  "apply": "अनुबंध के लिए आवेदन करें",
-  "submitApplication": "आवेदन जमा करें",
-  "proposedQty": "प्रस्तावित मात्रा",
-  "messageToCompany": "कंपनी के लिए संदेश",
-  "messagePlaceholder": "अपने अनुभव के बारे में बताएं...",
-
-  "raiseDispute": "विवाद दर्ज करें",
-  "disputeSubtitle": "इस अनुबंध से संबंधित समस्या बताएं",
-  "subject": "विषय",
-  "subjectPlaceholder": "संक्षिप्त विषय",
-  "priority": "प्राथमिकता",
-  "message": "संदेश",
-  "disputePlaceholder": "समस्या को विस्तार से बताएं...",
-  "submitDispute": "विवाद जमा करें",
-
-  "priority": {
-    "low": "कम",
-    "medium": "मध्यम",
-    "high": "उच्च",
-    "critical": "गंभीर"
+    "title": "मेरे आवेदन",
+    "subtitle": "अपने अनुबंध आवेदनों को ट्रैक करें",
+    "quantity": "प्रस्तावित मात्रा",
+    "pricePerUnit": "मूल्य / इकाई",
+    "companyRemarks": "कंपनी की टिप्पणी",
+    "noApplications": "अभी तक कोई आवेदन नहीं",
+    "noApplicationsHint": "अनुबंध ब्राउज़ करें और कृषि साझेदारी शुरू करें",
+    "browseContracts": "अनुबंध ब्राउज़ करें",
+    "total": "कुल",
+    "status": {
+      "pending": "समीक्षा में",
+      "accepted": "स्वीकृत",
+      "rejected": "चयनित नहीं"
+    },
+    "statusLabel": {
+      "pending": "आपका आवेदन समीक्षा में है",
+      "accepted": "🎉 आपका आवेदन स्वीकार हो गया!",
+      "rejected": "इस बार आवेदन चयनित नहीं हुआ"
+    }
   },
 
-  "loadError": "अनुबंध लोड करने में विफल",
-  "applySuccess": "आवेदन सफलतापूर्वक जमा हुआ!",
-  "applyError": "आवेदन जमा करने में विफल",
-  "disputeSuccess": "विवाद सफलतापूर्वक दर्ज हुआ!",
-  "disputeError": "विवाद दर्ज करने में विफल",
-  "notFound": "अनुबंध नहीं मिला"
-}
+  "contractDetail": {
+    "title": "अनुबंध विवरण",
+    "subtitle": "पूरा अनुबंध जानकारी",
+    "quantity": "आवश्यक मात्रा",
+    "price": "प्रति इकाई मूल्य",
+    "location": "स्थान",
+    "duration": "अनुबंध अवधि",
+    "description": "विवरण",
+    "requirements": "आवश्यकताएं",
+    "legalDoc": "कानूनी दस्तावेज़",
+    "viewPdf": "अनुबंध PDF देखें / डाउनलोड करें",
+    "paymentInfo": "भुगतान जानकारी",
+    "advancePayment": "अग्रिम भुगतान",
+    "finalPayment": "अंतिम भुगतान",
+    "totalPaid": "कुल प्राप्त",
+    "apply": "इस अनुबंध के लिए आवेदन करें",
+    "raiseDispute": "विवाद दर्ज करें",
+    "disputeSubtitle": "इस अनुबंध में समस्या बताएं",
+    "subject": "विषय",
+    "message": "संदेश",
+    "priority": "प्राथमिकता",
+    "messagePlaceholder": "अपना अनुभव, भूमि का आकार और आवेदन का कारण बताएं…",
+    "disputePlaceholder": "समस्या का विस्तार से वर्णन करें…",
+    "proposedQty": "प्रस्तावित मात्रा",
+    "messageToCompany": "कंपनी को संदेश",
+    "submitApplication": "आवेदन जमा करें",
+    "submitDispute": "विवाद जमा करें",
+    "applySuccess": "आवेदन सफलतापूर्वक जमा हुआ!",
+    "applyError": "आवेदन जमा करने में विफल",
+    "disputeSuccess": "विवाद सफलतापूर्वक दर्ज हुआ!",
+    "disputeError": "विवाद दर्ज करने में विफल",
+    "loadError": "अनुबंध विवरण लोड नहीं हुआ",
+    "notFound": "अनुबंध नहीं मिला",
+    "companyInfo": "कंपनी की जानकारी",
+    "delivery": "डिलीवरी स्थिति",
+    "quantityDelivered": "वितरित",
+    "alreadyApplied": "आपने पहले से इस अनुबंध के लिए आवेदन किया है",
+    "payment": {
+      "paid": "भुगतान हुआ",
+      "pending": "लंबित"
+    },
+    "verification": {
+      "pending": "सत्यापन लंबित",
+      "verified": "कानूनी रूप से सत्यापित ✓",
+      "rejected": "सत्यापन अस्वीकृत"
+    },
+    "priority": {
+      "low": "कम",
+      "medium": "मध्यम",
+      "high": "उच्च",
+      "critical": "गंभीर"
+    }
+  }
 }
