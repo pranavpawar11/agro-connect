@@ -36,4 +36,6 @@ router.put('/:contractId/cancel', auth, roleAuth('company', 'admin'), contractCo
 router.put('/:contractId/verify-legal', auth, roleAuth('admin'), contractController.verifyLegalContract);
 router.put('/:contractId/status', auth, roleAuth('admin'), contractController.updateContractStatus);
 
+router.put('/applications/:applicationId/remarks', auth, roleAuth('company'), contractController.addRemarks);
+
 module.exports = router;

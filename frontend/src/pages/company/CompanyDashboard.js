@@ -75,7 +75,7 @@ const CompanyDashboard = () => {
   if (loading) return <Loading fullScreen />;
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex pt-6 h-screen bg-gray-50">
       <Sidebar role="company" />
       
       <div className="flex-1 flex flex-col overflow-hidden lg:ml-64">

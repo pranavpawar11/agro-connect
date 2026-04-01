@@ -245,54 +245,39 @@ exports.updateApplicationStatus = async (req, res) => {
   try {
     const { applicationId } = req.params;
     const { status, companyRemarks } = req.body;
-    
-    if (!['accepted', 'rejected'].includes(status)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid status'
-      });
-    }
-    
-    const application = await ContractApplication.findById(applicationId)
-      .populate('contract');
-    
-    if (!application) {
-      return res.status(404).json({
-        success: false,
-        message: 'Application not found'
-      });
-    }
-    
-    if (application.contract.company.toString() !== req.userId.toString()) {
-      return res.status(403).json({
-        success: false,
-        message: 'Access denied'
-      });
-    }
-    
+ 
+    if (!['accepted', 'rejected'].includes(status))
+      return res.status(400).json({ success: false, message: 'Invalid status' });
+ 
+    const application = await ContractApplication.findById(applicationId).populate('contract');
+    if (!application) return res.status(404).json({ success: false, message: 'Application not found' });
+ 
+    if (application.contract.company.toString() !== req.userId.toString())
+      return res.status(403).json({ success: false, message: 'Access denied' });
+ 
     application.status = status;
     application.companyRemarks = companyRemarks || '';
-    
+ 
     if (status === 'accepted') {
       application.acceptedAt = new Date();
+      // Also update contract to active and set selectedFarmer
       application.contract.status = 'active';
+      application.contract.selectedFarmer = application.farmer;
       await application.contract.save();
+ 
+      // Auto-reject all others
+      await ContractApplication.updateMany(
+        { contract: application.contract._id, _id: { $ne: applicationId }, status: 'pending' },
+        { status: 'rejected', rejectedAt: new Date(), companyRemarks: 'Another farmer was selected.' }
+      );
     } else {
       application.rejectedAt = new Date();
     }
-    
+ 
     await application.save();
-    
-    res.status(200).json({
-      success: true,
-      message: `Application ${status} successfully`,
-      application
-    });
+    res.status(200).json({ success: true, message: `Application ${status}`, application });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -439,60 +424,32 @@ exports.uploadLegalContract = async (req, res) => {
 exports.selectFarmer = async (req, res) => {
   try {
     const { contractId, applicationId } = req.params;
-    
-    const contract = await Contract.findOne({
-      _id: contractId,
-      company: req.userId
-    });
-    
-    if (!contract) {
-      return res.status(404).json({
-        success: false,
-        message: 'Contract not found or access denied'
-      });
-    }
-    
+ 
+    const contract = await Contract.findOne({ _id: contractId, company: req.userId });
+    if (!contract) return res.status(404).json({ success: false, message: 'Contract not found or access denied' });
+ 
     const application = await ContractApplication.findById(applicationId);
-    
-    if (!application || application.contract.toString() !== contractId) {
-      return res.status(404).json({
-        success: false,
-        message: 'Application not found'
-      });
-    }
-    
+    if (!application || application.contract.toString() !== contractId)
+      return res.status(404).json({ success: false, message: 'Application not found' });
+ 
+    // ✅ FIX: set contract to 'active' (not 'approved') so farmer sees it's live
     contract.selectedFarmer = application.farmer;
-    contract.status = 'approved';
+    contract.status = 'active';          // <── WAS 'approved', now 'active'
     await contract.save();
-    
+ 
     application.status = 'accepted';
     application.acceptedAt = new Date();
     await application.save();
-    
-    // Reject other applications
+ 
+    // Reject all other pending applications with auto-remarks
     await ContractApplication.updateMany(
-      { 
-        contract: contractId,
-        _id: { $ne: applicationId }
-      },
-      { 
-        status: 'rejected',
-        rejectedAt: new Date(),
-        companyRemarks: 'Another farmer was selected'
-      }
+      { contract: contractId, _id: { $ne: applicationId }, status: 'pending' },
+      { status: 'rejected', rejectedAt: new Date(), companyRemarks: 'Another farmer was selected for this contract.' }
     );
-    
-    res.status(200).json({
-      success: true,
-      message: 'Farmer selected successfully',
-      contract,
-      application
-    });
+ 
+    res.status(200).json({ success: true, message: 'Farmer selected. Contract is now active.', contract, application });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -678,5 +635,26 @@ exports.cancelContract = async (req, res) => {
       success: false,
       message: error.message
     });
+  }
+};
+
+
+exports.addRemarks = async (req, res) => {
+  try {
+    const { applicationId } = req.params;
+    const { companyRemarks } = req.body;
+ 
+    const application = await ContractApplication.findById(applicationId).populate('contract');
+    if (!application) return res.status(404).json({ success: false, message: 'Application not found' });
+ 
+    if (application.contract.company.toString() !== req.userId.toString())
+      return res.status(403).json({ success: false, message: 'Access denied' });
+ 
+    application.companyRemarks = companyRemarks || '';
+    await application.save();
+ 
+    res.status(200).json({ success: true, message: 'Remarks updated', application });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };

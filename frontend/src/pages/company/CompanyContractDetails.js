@@ -176,7 +176,7 @@ const CompanyContractDetails = () => {
   const hasLegal        = !!contract.legalContractFile?.filename;
 
   return (
-    <div className="flex h-screen pt-6 bg-neutral-50">
+    <div className="flex h-screen bg-neutral-50">
       <Sidebar role="company" />
 
       <div className="flex-1 flex flex-col overflow-hidden lg:ml-64">

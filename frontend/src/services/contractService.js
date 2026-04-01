@@ -41,6 +41,12 @@ const contractService = {
     return response.data;
   },
 
+    addRemarks: async (applicationId, companyRemarks) => {
+    const response = await api.put(`/contracts/applications/${applicationId}/remarks`, { companyRemarks });
+    return response.data;
+  },
+
+
   updateApplicationStatus: async (applicationId, statusData) => {
     const response = await api.put(`/contracts/applications/${applicationId}/status`, statusData);
     return response.data;
