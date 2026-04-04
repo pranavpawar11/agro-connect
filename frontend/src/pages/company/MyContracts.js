@@ -168,11 +168,11 @@ const MyContracts = () => {
                             </div>
                             <div>
                               <p className="text-[10px] text-neutral-400 mb-0.5">Price / {contract.unit}</p>
-                              <p className="text-sm font-bold text-success-700">₹{formatPrice(contract.agreedPrice)}</p>
+                              <p className="text-sm font-bold text-success-700">{formatPrice(contract.agreedPrice)}</p>
                             </div>
                             <div>
                               <p className="text-[10px] text-neutral-400 mb-0.5">Total Value</p>
-                              <p className="text-sm font-bold text-neutral-800">₹{formatPrice(totalValue)}</p>
+                              <p className="text-sm font-bold text-neutral-800">{formatPrice(totalValue)}</p>
                             </div>
                             <div>
                               <p className="text-[10px] text-neutral-400 mb-0.5">Applications</p>

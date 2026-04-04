@@ -32,7 +32,7 @@ export const truncateText = (text, length = 100) => {
 
 export const getFileUrl = (path) => {
   if (!path) return null;
-  const baseUrl = process.env.REACT_APP_UPLOADS_URL || 'http://localhost:5000/uploads';
+  const baseUrl = 'http://localhost:5000';
   return `${baseUrl}/${path.replace('uploads/', '')}`;
 };
 

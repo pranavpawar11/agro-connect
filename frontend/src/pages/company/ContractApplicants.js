@@ -208,9 +208,9 @@ const CompanyContractDetails = () => {
               {/* Key metrics */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  { label: 'Total Value',       val: `₹${formatPrice(totalValue)}`,         color: 'text-primary-700', bg: 'bg-primary-50'  },
+                  { label: 'Total Value',       val: `${formatPrice(totalValue)}`,         color: 'text-primary-700', bg: 'bg-primary-50'  },
                   { label: 'Quantity',          val: `${contract.quantity} ${contract.unit}`, color: 'text-neutral-800', bg: 'bg-neutral-50'  },
-                  { label: `Price/${contract.unit}`, val: `₹${formatPrice(contract.agreedPrice)}`, color: 'text-success-700', bg: 'bg-success-50' },
+                  { label: `Price/${contract.unit}`, val: `${formatPrice(contract.agreedPrice)}`, color: 'text-success-700', bg: 'bg-success-50' },
                   { label: 'Applications',      val: String(contract.applicationsCount || 0), color: 'text-blue-700',    bg: 'bg-blue-50'     },
                 ].map(({ label, val, color, bg }) => (
                   <div key={label} className={`${bg} rounded-2xl p-4`}>
@@ -283,7 +283,7 @@ const CompanyContractDetails = () => {
                     <div key={key} className="bg-neutral-50 rounded-xl p-4 flex items-center justify-between">
                       <div>
                         <p className="text-xs text-neutral-500 mb-0.5">{label}</p>
-                        <p className="text-lg font-bold text-neutral-900">₹{formatPrice(p?.amount || 0)}</p>
+                        <p className="text-lg font-bold text-neutral-900">{formatPrice(p?.amount || 0)}</p>
                         {p?.paidDate && <p className="text-[10px] text-neutral-400 mt-0.5">Paid {formatDate(p.paidDate)}</p>}
                       </div>
                       <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${
@@ -296,8 +296,8 @@ const CompanyContractDetails = () => {
                 })}
                 <div className="bg-success-50 rounded-xl p-4 border-l-4 border-success-500">
                   <p className="text-xs text-success-600 font-medium">Total Paid</p>
-                  <p className="text-2xl font-bold text-success-800">₹{formatPrice(contract.paymentDetails?.totalPaid || 0)}</p>
-                  <p className="text-xs text-success-600 mt-0.5">of ₹{formatPrice(totalValue)} total</p>
+                  <p className="text-2xl font-bold text-success-800">{formatPrice(contract.paymentDetails?.totalPaid || 0)}</p>
+                  <p className="text-xs text-success-600 mt-0.5">of {formatPrice(totalValue)} total</p>
                 </div>
               </div>
             </SectionCard>

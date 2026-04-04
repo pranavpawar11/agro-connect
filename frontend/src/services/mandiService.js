@@ -6,7 +6,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 const API_KEY     = import.meta.env.VITE_MANDI_API_KEY
-  || '579b464db66ec23bdd0000011691861bb0e349df7d45a6c3d7d312b0';
+  || '579b464db66ec23bdd000001cfda5c8e2acc4967457ef3f9f300a982';
 const RESOURCE_ID = '9ef84268-d588-465a-a308-a864a43d0070';
 const BASE_URL    = `https://api.data.gov.in/resource/${RESOURCE_ID}`;
 

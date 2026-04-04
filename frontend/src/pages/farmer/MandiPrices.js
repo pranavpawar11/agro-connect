@@ -22,408 +22,302 @@ import {
   calcProfit,
 } from '../../services/mandiService';
 
-// ─── Constants ────────────────────────────────────────────────────────────────
-
+/* ─── Constants (unchanged) ─────────────────────────────────────────────── */
 const PAGE_SIZE = 50;
 
 const STATES = [
-  'Andhra Pradesh', 'Bihar', 'Chhattisgarh', 'Gujarat', 'Haryana',
-  'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh',
-  'Maharashtra', 'Odisha', 'Punjab', 'Rajasthan', 'Tamil Nadu',
-  'Telangana', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal',
+  'Andhra Pradesh','Bihar','Chhattisgarh','Gujarat','Haryana',
+  'Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh',
+  'Maharashtra','Odisha','Punjab','Rajasthan','Tamil Nadu',
+  'Telangana','Uttar Pradesh','Uttarakhand','West Bengal',
 ];
 
-const SORT_KEYS = ['modalPrice', 'minPrice', 'maxPrice', 'arrivalDate'];
+const SORT_KEYS = ['modalPrice','minPrice','maxPrice','arrivalDate'];
 
-// Crop name → emoji
 const CROP_EMOJI_MAP = [
-  ['apple',        '🍎'], ['banana',       '🍌'], ['mango',        '🥭'],
-  ['grape',        '🍇'], ['pomegranate',  '🍎'], ['orange',       '🍊'],
-  ['mousambi',     '🍋'], ['lime',         '🍋'], ['lemon',        '🍋'],
-  ['watermelon',   '🍉'], ['papaya',       '🍈'], ['pineapple',    '🍍'],
-  ['tomato',       '🍅'], ['onion',        '🧅'], ['potato',       '🥔'],
-  ['garlic',       '🧄'], ['ginger',       '🫛'], ['carrot',       '🥕'],
-  ['brinjal',      '🍆'], ['capsicum',     '🫑'], ['chilly',       '🌶️'],
-  ['chilli',       '🌶️'], ['gourd',        '🥒'], ['pumpkin',      '🎃'],
-  ['cauliflower',  '🥦'], ['cabbage',      '🥬'], ['spinach',      '🥬'],
-  ['radish',       '🫚'], ['beetroot',     '🫐'], ['sweet potato', '🍠'],
-  ['wheat',        '🌾'], ['rice',         '🍚'], ['paddy',        '🌾'],
-  ['maize',        '🌽'], ['corn',         '🌽'], ['jowar',        '🌾'],
-  ['bajra',        '🌾'], ['ragi',         '🌾'],
-  ['soybean',      '🫘'], ['soya',         '🫘'], ['groundnut',    '🥜'],
-  ['mustard',      '🌻'], ['sunflower',    '🌻'], ['cotton',       '🏵️'],
-  ['turmeric',     '🫚'], ['coriander',    '🌿'],
-  ['moong',        '🫘'], ['urad',         '🫘'], ['arhar',        '🫘'],
-  ['tur',          '🫘'], ['gram',         '🫘'],
-  ['sugarcane',    '🎋'],
+  ['apple','🍎'],['banana','🍌'],['mango','🥭'],['grape','🍇'],
+  ['pomegranate','🍎'],['orange','🍊'],['mousambi','🍋'],['lime','🍋'],
+  ['lemon','🍋'],['watermelon','🍉'],['papaya','🍈'],['pineapple','🍍'],
+  ['tomato','🍅'],['onion','🧅'],['potato','🥔'],['garlic','🧄'],
+  ['ginger','🫛'],['carrot','🥕'],['brinjal','🍆'],['capsicum','🫑'],
+  ['chilly','🌶️'],['chilli','🌶️'],['gourd','🥒'],['pumpkin','🎃'],
+  ['cauliflower','🥦'],['cabbage','🥬'],['spinach','🥬'],['radish','🫚'],
+  ['beetroot','🫐'],['sweet potato','🍠'],['wheat','🌾'],['rice','🍚'],
+  ['paddy','🌾'],['maize','🌽'],['corn','🌽'],['jowar','🌾'],['bajra','🌾'],
+  ['ragi','🌾'],['soybean','🫘'],['soya','🫘'],['groundnut','🥜'],
+  ['mustard','🌻'],['sunflower','🌻'],['cotton','🏵️'],['turmeric','🫚'],
+  ['coriander','🌿'],['moong','🫘'],['urad','🫘'],['arhar','🫘'],
+  ['tur','🫘'],['gram','🫘'],['sugarcane','🎋'],
 ];
-
-const getCropEmoji = (name = '') => {
+const getCropEmoji = (name='') => {
   const lower = name.toLowerCase();
-  for (const [key, emoji] of CROP_EMOJI_MAP) {
-    if (lower.includes(key)) return emoji;
-  }
+  for (const [key, emoji] of CROP_EMOJI_MAP) if (lower.includes(key)) return emoji;
   return '🌾';
 };
 
-// ─── Price colour helper ──────────────────────────────────────────────────────
-
 const modalPriceColor = (modal, min, max) => {
-  if (!modal || !min || !max || min === max) return 'text-neutral-900';
-  const mid = (min + max) / 2;
-  if (modal >= mid * 1.05) return 'text-green-600';
-  if (modal <= mid * 0.95) return 'text-red-500';
-  return 'text-amber-600';
+  if (!modal||!min||!max||min===max) return '#4a4035';
+  const mid = (min+max)/2;
+  if (modal >= mid*1.05) return '#2d6a4f';
+  if (modal <= mid*0.95) return '#c0392b';
+  return '#8a6000';
 };
 
-// ─── Price row sub-component ──────────────────────────────────────────────────
+/* ─── Sub-components ────────────────────────────────────────────────────── */
 
 const PriceRow = React.memo(({ price, quantityKg, language, tr }) => {
-  const color     = modalPriceColor(price.modalPrice, price.minPrice, price.maxPrice);
+  const color       = modalPriceColor(price.modalPrice, price.minPrice, price.maxPrice);
   const dateDisplay = formatMandiDate(price.arrivalDate, language);
-  const perKg     = toPerKg(price.modalPrice);
-  const totalVal  = calcProfit(price.modalPrice, quantityKg);
+  const perKg       = toPerKg(price.modalPrice);
+  const totalVal    = calcProfit(price.modalPrice, quantityKg);
   const showVariety = price.variety && price.variety.toLowerCase() !== 'other';
   const showGrade   = price.grade   && price.grade.toLowerCase()   !== 'local';
 
   return (
-    <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 overflow-hidden">
-      {/* Main row */}
-      <div className="p-4 flex items-start gap-3">
-        {/* Emoji icon */}
-        <div className="bg-gradient-to-br from-amber-50 to-orange-100 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shrink-0 border border-amber-100/80">
-          {getCropEmoji(price.commodity)}
-        </div>
+    <div className="mp-price-card">
+      <div className="mp-price-card-inner">
+        {/* Emoji */}
+        <div className="mp-price-emoji">{getCropEmoji(price.commodity)}</div>
 
-        {/* Commodity details */}
-        <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-neutral-900 capitalize text-base leading-tight">
-            {price.commodity}
-          </h3>
+        {/* Info */}
+        <div className="mp-price-info">
+          <h3 className="mp-price-name">{price.commodity}</h3>
           {showVariety && (
-            <p className="text-xs text-neutral-500 mt-0.5">
-              {tr('variety')}: <span className="font-medium text-neutral-700 capitalize">{price.variety}</span>
+            <p className="mp-price-variety">
+              {tr('variety')}: <span>{price.variety}</span>
             </p>
           )}
-          <div className="flex items-center gap-1 mt-1 text-xs text-neutral-500">
-            <MapPin className="w-3 h-3 shrink-0 text-amber-500" />
-            <span className="truncate">
-              {price.market}
-              {price.district && price.district !== price.market && `, ${price.district}`}
-            </span>
+          <div className="mp-price-loc">
+            <MapPin size={11} color="#c8a060" />
+            <span>{price.market}{price.district && price.district !== price.market ? `, ${price.district}` : ''}</span>
           </div>
-          <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-            <span className="text-xs text-neutral-400">📅 {dateDisplay}</span>
-            {showGrade && (
-              <span className="text-[10px] text-neutral-400 font-medium bg-neutral-100 px-2 py-0.5 rounded-full capitalize">
-                {price.grade}
-              </span>
-            )}
+          <div className="mp-price-meta">
+            <span>📅 {dateDisplay}</span>
+            {showGrade && <span className="mp-grade-pill">{price.grade}</span>}
           </div>
         </div>
 
-        {/* Modal price — quintal + kg */}
-        <div className="shrink-0 text-right pl-2">
-          <div className={`text-xl font-bold tracking-tight ${color}`}>
-            {formatINR(price.modalPrice)}
-          </div>
-          <div className="text-[10px] text-neutral-400 leading-tight">{tr('perQuintal')}</div>
-          {perKg != null && (
-            <div className="text-xs font-semibold text-neutral-500 mt-0.5">
-              {formatINR(perKg, 2)} / kg
-            </div>
-          )}
+        {/* Modal price */}
+        <div className="mp-price-modal">
+          <div className="mp-modal-val" style={{ color }}>{formatINR(price.modalPrice)}</div>
+          <div className="mp-modal-unit">{tr('perQuintal')}</div>
+          {perKg != null && <div className="mp-modal-kg">{formatINR(perKg, 2)}/kg</div>}
         </div>
       </div>
 
-      {/* Bottom bar: min / max / profit */}
-      <div className="bg-gradient-to-r from-amber-50/70 to-orange-50/50 border-t border-neutral-100/80 px-4 py-2 flex items-center gap-4 flex-wrap">
-        <div className="flex items-center gap-1.5">
-          <ArrowDown className="w-3 h-3 text-green-500 shrink-0" />
-          <span className="text-xs text-neutral-600">
-            {tr('minPrice')}:&nbsp;
-            <span className="font-bold text-green-600">{formatINR(price.minPrice)}</span>
-            <span className="text-neutral-400 ml-1">({formatINR(toPerKg(price.minPrice), 2)}/kg)</span>
+      {/* Bottom bar */}
+      <div className="mp-price-bar">
+        <div className="mp-bar-stat">
+          <ArrowDown size={11} color="#2d6a4f" />
+          <span>{tr('minPrice')}: <strong style={{color:'#2d6a4f'}}>{formatINR(price.minPrice)}</strong>
+            <em> ({formatINR(toPerKg(price.minPrice),2)}/kg)</em>
           </span>
         </div>
-        <div className="flex items-center gap-1.5">
-          <ArrowUp className="w-3 h-3 text-red-500 shrink-0" />
-          <span className="text-xs text-neutral-600">
-            {tr('maxPrice')}:&nbsp;
-            <span className="font-bold text-red-500">{formatINR(price.maxPrice)}</span>
-            <span className="text-neutral-400 ml-1">({formatINR(toPerKg(price.maxPrice), 2)}/kg)</span>
+        <div className="mp-bar-stat">
+          <ArrowUp size={11} color="#c0392b" />
+          <span>{tr('maxPrice')}: <strong style={{color:'#c0392b'}}>{formatINR(price.maxPrice)}</strong>
+            <em> ({formatINR(toPerKg(price.maxPrice),2)}/kg)</em>
           </span>
         </div>
         {totalVal != null && quantityKg > 0 && (
-          <div className="ml-auto flex items-center gap-1 text-xs font-semibold text-amber-700 bg-amber-100/80 px-2.5 py-1 rounded-full">
-            <Calculator className="w-3 h-3" />
-            {formatINR(totalVal)} for {quantityKg} kg
+          <div className="mp-profit-pill">
+            <Calculator size={10} />
+            {formatINR(totalVal)} for {quantityKg}kg
           </div>
         )}
       </div>
     </div>
   );
 });
-
 PriceRow.displayName = 'PriceRow';
-
-// ─── Best Mandi Banner ────────────────────────────────────────────────────────
 
 const BestMandiBanner = ({ record, language, tr }) => {
   if (!record) return null;
   return (
-    <div className="bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-400 rounded-2xl p-4 shadow-md mb-4">
-      <div className="flex items-start gap-3">
-        <div className="bg-white/30 w-10 h-10 rounded-xl flex items-center justify-center shrink-0">
-          <Trophy className="w-5 h-5 text-white" />
+    <div className="mp-best-banner">
+      <div className="mp-best-grain" />
+      <div className="mp-best-left">
+        <div className="mp-best-icon"><Trophy size={18} color="#f0ede8" /></div>
+        <div>
+          <p className="mp-best-eyebrow">🏆 {tr('bestMandi')}</p>
+          <h3 className="mp-best-name">{record.commodity}</h3>
+          <p className="mp-best-loc">{record.market}, {record.district}</p>
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-white/80 text-xs font-semibold uppercase tracking-wide mb-0.5">
-            🏆 {tr('bestMandi')}
-          </p>
-          <h3 className="text-white font-bold text-base leading-tight capitalize">{record.commodity}</h3>
-          <p className="text-white/90 text-xs mt-0.5 truncate">
-            {record.market}, {record.district}
-          </p>
-        </div>
-        <div className="text-right shrink-0">
-          <div className="text-white font-bold text-xl">{formatINR(record.modalPrice)}</div>
-          <div className="text-white/80 text-[10px]">{tr('perQuintal')}</div>
-          <div className="text-white/90 text-xs font-semibold mt-0.5">{formatINR(toPerKg(record.modalPrice), 2)} / kg</div>
-        </div>
+      </div>
+      <div className="mp-best-right">
+        <div className="mp-best-price">{formatINR(record.modalPrice)}</div>
+        <div className="mp-best-unit">{tr('perQuintal')}</div>
+        <div className="mp-best-kg">{formatINR(toPerKg(record.modalPrice),2)}/kg</div>
       </div>
     </div>
   );
 };
 
-// ─── Trend Chart ──────────────────────────────────────────────────────────────
-
-const TrendChart = ({ data, language, tr }) => {
+const TrendChart = ({ data, tr }) => {
   if (!data || data.length < 2) return null;
   return (
-    <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-4 mb-4">
-      <div className="flex items-center gap-2 mb-3">
-        <BarChart2 className="w-4 h-4 text-amber-500" />
-        <span className="text-sm font-bold text-neutral-800">{tr('priceTrend')}</span>
-        <span className="text-xs text-neutral-400 ml-1">{tr('avgModalPrice')}</span>
+    <div className="mp-chart-card">
+      <div className="mp-chart-head">
+        <BarChart2 size={15} color="#b87a00" />
+        <span className="mp-chart-title">{tr('priceTrend')}</span>
+        <span className="mp-chart-sub">{tr('avgModalPrice')}</span>
       </div>
       <ResponsiveContainer width="100%" height={140}>
-        <LineChart data={data} margin={{ top: 4, right: 8, bottom: 0, left: -20 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-          <XAxis
-            dataKey="date"
-            tick={{ fontSize: 10, fill: '#9ca3af' }}
-            tickFormatter={(v) => {
-              const d = new Date(v);
-              return isNaN(d) ? v : d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
-            }}
-          />
-          <YAxis tick={{ fontSize: 10, fill: '#9ca3af' }} tickFormatter={(v) => `₹${v}`} />
+        <LineChart data={data} margin={{ top:4, right:8, bottom:0, left:-20 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#ede8e0" />
+          <XAxis dataKey="date" tick={{ fontSize:10, fill:'#9a9080', fontFamily:'DM Sans' }}
+            tickFormatter={v => { const d=new Date(v); return isNaN(d)?v:d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'}); }} />
+          <YAxis tick={{ fontSize:10, fill:'#9a9080', fontFamily:'DM Sans' }} tickFormatter={v=>`₹${v}`} />
           <Tooltip
-            formatter={(v) => [`₹${Number(v).toLocaleString('en-IN')}`, tr('avgModalPrice')]}
-            labelFormatter={(v) => {
-              const d = new Date(v);
-              return isNaN(d) ? v : d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
-            }}
+            formatter={v => [`₹${Number(v).toLocaleString('en-IN')}`, tr('avgModalPrice')]}
+            labelFormatter={v => { const d=new Date(v); return isNaN(d)?v:d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); }}
+            contentStyle={{ fontFamily:'DM Sans', fontSize:12, borderRadius:10, border:'1px solid #e8e2da' }}
           />
-          <Line type="monotone" dataKey="avgPrice" stroke="#f59e0b" strokeWidth={2.5} dot={false} activeDot={{ r: 4 }} />
+          <Line type="monotone" dataKey="avgPrice" stroke="#b87a00" strokeWidth={2.5} dot={false} activeDot={{ r:4, fill:'#b87a00' }} />
         </LineChart>
       </ResponsiveContainer>
     </div>
   );
 };
 
-// ─── Profit Calculator ────────────────────────────────────────────────────────
-
 const ProfitCalculator = ({ quantityKg, onChange, tr }) => (
-  <div className="bg-white rounded-2xl border border-amber-100 shadow-sm p-3 mb-4 flex items-center gap-3">
-    <div className="bg-amber-50 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
-      <Calculator className="w-4 h-4 text-amber-600" />
+  <div className="mp-calc-card">
+    <div className="mp-calc-icon"><Calculator size={16} color="#b87a00" /></div>
+    <div className="mp-calc-text">
+      <p className="mp-calc-label">{tr('profitCalc')}</p>
+      <p className="mp-calc-hint">{tr('profitCalcHint')}</p>
     </div>
-    <div className="flex-1">
-      <p className="text-xs text-neutral-500 font-medium">{tr('profitCalc')}</p>
-      <p className="text-[10px] text-neutral-400">{tr('profitCalcHint')}</p>
-    </div>
-    <div className="flex items-center gap-2 shrink-0">
+    <div className="mp-calc-input-wrap">
       <input
-        type="number"
-        min="1"
-        max="100000"
+        type="number" min="1" max="100000"
         value={quantityKg}
-        onChange={(e) => onChange(Math.max(1, Number(e.target.value) || 1))}
-        className="w-20 border border-amber-200 rounded-lg px-2 py-1.5 text-sm font-bold text-neutral-800 text-center focus:outline-none focus:ring-2 focus:ring-amber-300"
+        onChange={e => onChange(Math.max(1, Number(e.target.value)||1))}
+        className="mp-calc-input"
       />
-      <span className="text-xs font-semibold text-neutral-600">kg</span>
+      <span className="mp-calc-unit">kg</span>
     </div>
   </div>
 );
-
-// ─── Pagination ───────────────────────────────────────────────────────────────
 
 const Pagination = ({ page, total, pageSize, loading, onPrev, onNext, tr }) => {
   const totalPages = Math.ceil(total / pageSize);
   if (totalPages <= 1) return null;
   return (
-    <div className="flex items-center justify-between pt-4 pb-2">
-      <button
-        onClick={onPrev}
-        disabled={page === 0 || loading}
-        className="flex items-center gap-1.5 bg-white border border-neutral-200 text-neutral-700 text-xs font-semibold px-4 py-2.5 rounded-xl disabled:opacity-40 hover:bg-neutral-50 transition-colors"
-      >
-        <ChevronLeft className="w-3.5 h-3.5" />
-        {tr('prev')}
+    <div className="mp-pagination">
+      <button onClick={onPrev} disabled={page===0||loading} className="mp-page-btn mp-page-prev">
+        <ChevronLeft size={14} /> {tr('prev')}
       </button>
-      <span className="text-xs text-neutral-500">
-        {tr('page')} {page + 1} / {totalPages}
-        <span className="text-neutral-400 ml-1">({total} {tr('total')})</span>
+      <span className="mp-page-info">
+        {tr('page')} {page+1} / {totalPages}
+        <em> ({total} {tr('total')})</em>
       </span>
-      <button
-        onClick={onNext}
-        disabled={(page + 1) * pageSize >= total || loading}
-        className="flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-4 py-2.5 rounded-xl disabled:opacity-40 transition-colors"
-      >
-        {tr('next')}
-        <ChevronRight className="w-3.5 h-3.5" />
+      <button onClick={onNext} disabled={(page+1)*pageSize>=total||loading} className="mp-page-btn mp-page-next">
+        {tr('next')} <ChevronRight size={14} />
       </button>
     </div>
   );
 };
 
-// ─── Main Component ───────────────────────────────────────────────────────────
-
+/* ─── Main Component ────────────────────────────────────────────────────── */
 const MandiPrices = () => {
   const navigate = useNavigate();
   const { t }    = useTranslation();
   const { user } = useAuth();
   const { language } = React.useContext(LanguageContext);
+  const tr = useCallback(key => t(`mandi.${key}`), [t]);
 
-  const tr = useCallback((key) => t(`mandi.${key}`), [t]);
-
-  // ── API / data state ────────────────────────────────────────────────────
-  const [prices,      setPrices]      = useState([]);
-  const [total,       setTotal]       = useState(0);
-  const [loading,     setLoading]     = useState(true);
-  const [error,       setError]       = useState(null);
+  const [prices, setPrices]           = useState([]);
+  const [total, setTotal]             = useState(0);
+  const [loading, setLoading]         = useState(true);
+  const [error, setError]             = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [page, setPage]               = useState(0);
 
-  // ── Pagination ──────────────────────────────────────────────────────────
-  const [page, setPage] = useState(0);
-
-  // ── Filter state ────────────────────────────────────────────────────────
   const [apiState,      setApiState]      = useState(user?.farmerDetails?.state    || '');
   const [apiDistrict,   setApiDistrict]   = useState(user?.farmerDetails?.district || '');
   const [districtInput, setDistrictInput] = useState(user?.farmerDetails?.district || '');
-
-  // Client-side filters
-  const [search,   setSearch]   = useState('');
-  const [sortKey,  setSortKey]  = useState('modalPrice');
-  const [sortDir,  setSortDir]  = useState('asc');
-
-  // ── UI state ────────────────────────────────────────────────────────────
-  const [quantityKg,   setQuantityKg]   = useState(100);
-  const [showStateDD,  setShowStateDD]  = useState(false);
-  const [showSortDD,   setShowSortDD]   = useState(false);
-  const [showChart,    setShowChart]    = useState(false);
+  const [search,        setSearch]        = useState('');
+  const [sortKey,       setSortKey]       = useState('modalPrice');
+  const [sortDir,       setSortDir]       = useState('asc');
+  const [quantityKg,    setQuantityKg]    = useState(100);
+  const [showStateDD,   setShowStateDD]   = useState(false);
+  const [showSortDD,    setShowSortDD]    = useState(false);
+  const [showChart,     setShowChart]     = useState(false);
   const stateRef = useRef(null);
   const sortRef  = useRef(null);
 
-  // ── Fetch ───────────────────────────────────────────────────────────────
-  const loadPrices = useCallback(async (targetPage = 0) => {
-    setLoading(true);
-    setError(null);
+  const loadPrices = useCallback(async (targetPage=0) => {
+    setLoading(true); setError(null);
     try {
       const { records, total: apiTotal } = await fetchMandiPrices({
-        state:    apiState,
-        district: apiDistrict,
-        limit:    PAGE_SIZE,
-        offset:   targetPage * PAGE_SIZE,
+        state: apiState, district: apiDistrict,
+        limit: PAGE_SIZE, offset: targetPage*PAGE_SIZE,
       });
-      setPrices(records);
-      setTotal(apiTotal);
-      setPage(targetPage);
-      setLastUpdated(new Date());
+      setPrices(records); setTotal(apiTotal); setPage(targetPage); setLastUpdated(new Date());
     } catch (err) {
-      console.error(err);
-      setError(err.message || 'Failed to load');
-    } finally {
-      setLoading(false);
-    }
+      console.error(err); setError(err.message || 'Failed to load');
+    } finally { setLoading(false); }
   }, [apiState, apiDistrict]);
 
   useEffect(() => { loadPrices(0); }, [loadPrices]);
 
-  // Close dropdowns on outside click
   useEffect(() => {
-    const handler = (e) => {
+    const h = e => {
       if (stateRef.current && !stateRef.current.contains(e.target)) setShowStateDD(false);
       if (sortRef.current  && !sortRef.current.contains(e.target))  setShowSortDD(false);
     };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
+    document.addEventListener('mousedown', h);
+    return () => document.removeEventListener('mousedown', h);
   }, []);
 
-  // ── Apply district filter ────────────────────────────────────────────────
   const applyDistrict = () => setApiDistrict(districtInput.trim());
 
-  // ── Client-side search + sort ────────────────────────────────────────────
   const displayPrices = useMemo(() => {
     let list = prices;
     if (search.trim()) {
       const q = search.toLowerCase();
-      list = list.filter(
-        (p) =>
-          p.commodity.toLowerCase().includes(q) ||
-          p.market.toLowerCase().includes(q)    ||
-          p.district.toLowerCase().includes(q)
+      list = list.filter(p =>
+        p.commodity.toLowerCase().includes(q) ||
+        p.market.toLowerCase().includes(q)    ||
+        p.district.toLowerCase().includes(q)
       );
     }
-    return [...list].sort((a, b) => {
-      let va = a[sortKey], vb = b[sortKey];
-      if (sortKey === 'arrivalDate') {
-        const parse = (s) => {
-          const [dd, mm, yyyy] = (s || '').split('/');
-          return dd ? new Date(`${yyyy}-${mm}-${dd}`).getTime() : 0;
-        };
-        va = parse(va); vb = parse(vb);
+    return [...list].sort((a,b) => {
+      let va=a[sortKey], vb=b[sortKey];
+      if (sortKey==='arrivalDate') {
+        const parse = s => { const [dd,mm,yyyy]=(s||'').split('/'); return dd?new Date(`${yyyy}-${mm}-${dd}`).getTime():0; };
+        va=parse(va); vb=parse(vb);
       }
-      if (va === vb) return 0;
-      return sortDir === 'asc' ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
+      if (va===vb) return 0;
+      return sortDir==='asc' ? (va>vb?1:-1) : (va<vb?1:-1);
     });
   }, [prices, search, sortKey, sortDir]);
 
-  // ── Best mandi ───────────────────────────────────────────────────────────
   const bestMandi = useMemo(() => {
     if (!displayPrices.length) return null;
-    return displayPrices.reduce((best, cur) =>
-      cur.modalPrice > (best?.modalPrice ?? 0) ? cur : best, null
-    );
+    return displayPrices.reduce((best,cur) => cur.modalPrice>(best?.modalPrice??0)?cur:best, null);
   }, [displayPrices]);
 
-  // ── Trend data: avg modal price per date across all loaded records ────────
   const trendData = useMemo(() => {
     const byDate = {};
     for (const p of prices) {
-      if (!p.arrivalDate || !p.modalPrice) continue;
-      const [dd, mm, yyyy] = p.arrivalDate.split('/');
+      if (!p.arrivalDate||!p.modalPrice) continue;
+      const [dd,mm,yyyy] = p.arrivalDate.split('/');
       if (!dd) continue;
       const key = `${yyyy}-${mm.padStart(2,'0')}-${dd.padStart(2,'0')}`;
-      if (!byDate[key]) byDate[key] = { sum: 0, count: 0 };
-      byDate[key].sum   += p.modalPrice;
-      byDate[key].count += 1;
+      if (!byDate[key]) byDate[key]={sum:0,count:0};
+      byDate[key].sum+=p.modalPrice; byDate[key].count+=1;
     }
-    return Object.entries(byDate)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([date, { sum, count }]) => ({ date, avgPrice: Math.round(sum / count) }));
+    return Object.entries(byDate).sort(([a],[b])=>a.localeCompare(b))
+      .map(([date,{sum,count}]) => ({ date, avgPrice: Math.round(sum/count) }));
   }, [prices]);
 
-  // ── Helpers ──────────────────────────────────────────────────────────────
   const clearFilters = () => {
     setSearch('');
     setApiState(user?.farmerDetails?.state    || '');
     setApiDistrict(user?.farmerDetails?.district || '');
     setDistrictInput(user?.farmerDetails?.district || '');
-    setSortKey('modalPrice');
-    setSortDir('asc');
+    setSortKey('modalPrice'); setSortDir('asc');
   };
 
   const sortKeyLabel = {
@@ -438,235 +332,521 @@ const MandiPrices = () => {
     apiState    !== (user?.farmerDetails?.state    || '') ||
     apiDistrict !== (user?.farmerDetails?.district || '');
 
-  const toggleSort = (key) => {
-    if (sortKey === key) setSortDir(d => d === 'asc' ? 'desc' : 'asc');
+  const toggleSort = key => {
+    if (sortKey===key) setSortDir(d=>d==='asc'?'desc':'asc');
     else { setSortKey(key); setSortDir('asc'); }
     setShowSortDD(false);
   };
 
-  // ─────────────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white pb-20">
+    <>
+      <style>{`
 
-      {/* ── Header ─────────────────────────────────────────────────────── */}
-      <div className="relative bg-gradient-to-br from-amber-600 via-orange-500 to-amber-700 text-white z-30">
-        <div className="absolute inset-0 overflow-hidden opacity-20 pointer-events-none">
-          <div className="absolute -top-20 -right-20 w-72 h-72 bg-white rounded-full blur-3xl" />
-          <div className="absolute -bottom-10 -left-10 w-56 h-56 bg-yellow-300 rounded-full blur-3xl" />
-        </div>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        <div className="relative p-4 pb-5">
-          {/* Title row */}
-          <div className="flex items-center gap-3 mb-4">
-            <button onClick={() => navigate(-1)} className="p-2.5 hover:bg-white/20 rounded-xl transition-colors">
-              <ArrowLeft className="w-5 h-5" />
-            </button>
-            <div className="flex-1">
-              <h1 className="text-xl font-display font-bold flex items-center gap-2">
-                <TrendingUp className="w-5 h-5" />
-                {tr('title')}
-              </h1>
-              <p className="text-amber-100 text-xs mt-0.5">{tr('subtitle')}</p>
-            </div>
-            <button
-              onClick={() => setShowChart(v => !v)}
-              className={`p-2.5 hover:bg-white/20 rounded-xl transition-colors ${showChart ? 'bg-white/20' : ''}`}
-              title="Toggle trend chart"
-            >
-              <BarChart2 className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => loadPrices(page)}
-              disabled={loading}
-              className="p-2.5 hover:bg-white/20 rounded-xl transition-colors disabled:opacity-40"
-            >
-              <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
-            </button>
-          </div>
+        .mp-root {
+          min-height: 100vh;
+          background: #f7f3ee;
+          font-family: 'DM Sans', sans-serif;
+          padding-bottom: 84px;
+        }
 
-          {/* Search */}
-          <div className="relative mb-3">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400 w-4 h-4" />
-            <input
-              type="text"
-              placeholder={tr('searchPlaceholder')}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-9 py-3 rounded-xl text-neutral-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-white/40 bg-white/95 shadow-sm"
-            />
-            {search && (
-              <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600">
-                <X className="w-4 h-4" />
+        /* ── HEADER ── */
+        .mp-header {
+          background: #1c3a1c;
+          position: relative; overflow: hidden;
+          z-index: 30;
+        }
+        .mp-header-grain {
+          position: absolute; inset: 0; pointer-events: none;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        }
+        .mp-header-glow {
+          position: absolute; top: -60px; right: -60px;
+          width: 240px; height: 240px; border-radius: 50%;
+          background: radial-gradient(circle, rgba(184,122,0,0.15) 0%, transparent 70%);
+          pointer-events: none;
+        }
+        .mp-header-arc {
+          position: absolute; bottom: -2px; left: 0; right: 0;
+          height: 28px; background: #f7f3ee;
+          border-radius: 28px 28px 0 0; z-index: 2;
+        }
+        .mp-header-inner { position: relative; z-index: 1; padding: 18px 18px 32px; }
+
+        /* title row */
+        .mp-title-row {
+          display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+        }
+        .mp-icon-btn {
+          width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0;
+          background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.14);
+          display: flex; align-items: center; justify-content: center;
+          color: #f0ede8; cursor: pointer; transition: background 0.15s;
+        }
+        .mp-icon-btn:hover { background: rgba(255,255,255,0.18); }
+        .mp-icon-btn.active { background: rgba(184,122,0,0.3); border-color: rgba(184,122,0,0.4); }
+        .mp-icon-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .mp-title-block { flex: 1; }
+        .mp-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 20px; font-weight: 700; color: #f0ede8;
+          letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px;
+        }
+        .mp-subtitle { font-size: 11px; color: rgba(240,237,232,0.45); margin-top: 2px; }
+
+        /* search */
+        .mp-search-wrap { position: relative; margin-bottom: 12px; }
+        .mp-search-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+        .mp-search-input {
+          width: 100%; padding: 11px 38px;
+          background: rgba(255,255,255,0.95); border: none; border-radius: 12px;
+          font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: #1c2e1c;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+        .mp-search-input::placeholder { color: #b0a890; }
+        .mp-search-input:focus { outline: none; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
+        .mp-search-clear {
+          position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+          background: none; border: none; cursor: pointer; color: #9a9080;
+          display: flex; align-items: center;
+        }
+
+        /* filter row */
+        .mp-filter-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .mp-filter-chip {
+          display: flex; align-items: center; gap: 5px;
+          background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.16);
+          border-radius: 10px; padding: 7px 12px;
+          color: #f0ede8; font-size: 12px; font-weight: 600;
+          cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s;
+          white-space: nowrap;
+        }
+        .mp-filter-chip:hover { background: rgba(255,255,255,0.2); }
+        .mp-district-chip {
+          display: flex; align-items: center; gap: 5px;
+          background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.16);
+          border-radius: 10px; padding: 7px 10px;
+          flex: 1; min-width: 90px; max-width: 140px;
+        }
+        .mp-district-input {
+          background: transparent; border: none; outline: none;
+          color: #f0ede8; font-size: 12px; font-weight: 600;
+          font-family: 'DM Sans', sans-serif; width: 100%;
+        }
+        .mp-district-input::placeholder { color: rgba(240,237,232,0.45); }
+        .mp-sort-chip {
+          display: flex; align-items: center; gap: 5px;
+          background: rgba(184,122,0,0.25); border: 1px solid rgba(184,122,0,0.35);
+          border-radius: 10px; padding: 7px 12px;
+          color: #f0ede8; font-size: 12px; font-weight: 600;
+          cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+          margin-left: auto;
+        }
+
+        /* dropdowns */
+        .mp-dropdown {
+          position: absolute; top: calc(100% + 4px); left: 0;
+          width: 200px; background: #fff; border-radius: 14px;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.14); border: 1px solid #e8e2da;
+          z-index: 60; max-height: 220px; overflow-y: auto;
+        }
+        .mp-dropdown-right { left: auto; right: 0; width: 170px; }
+        .mp-dd-btn {
+          width: 100%; text-align: left; padding: 9px 14px;
+          font-size: 12px; font-weight: 500; color: #4a4035;
+          background: none; border: none; cursor: pointer;
+          font-family: 'DM Sans', sans-serif; transition: background 0.1s;
+          display: flex; align-items: center; justify-content: space-between;
+        }
+        .mp-dd-btn:hover { background: #f7f3ee; }
+        .mp-dd-btn.active { background: #fdf3e0; color: #8a6000; font-weight: 700; }
+        .mp-dd-btn:first-child { border-radius: 14px 14px 0 0; }
+        .mp-dd-btn:last-child  { border-radius: 0 0 14px 14px; }
+
+        /* ── STATS BAR ── */
+        .mp-stats-bar {
+          background: #fff; border-bottom: 1px solid #e8e2da;
+          padding: 9px 18px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .mp-stats-count { font-size: 12px; color: #9a9080; font-weight: 500; }
+        .mp-stats-right { display: flex; align-items: center; gap: 12px; }
+        .mp-stats-time  { font-size: 11px; color: #b0a890; }
+        .mp-clear-btn {
+          display: flex; align-items: center; gap: 4px;
+          font-size: 12px; font-weight: 700; color: #b87a00;
+          background: none; border: none; cursor: pointer;
+          font-family: 'DM Sans', sans-serif;
+        }
+
+        /* ── BODY ── */
+        .mp-body { padding: 18px 16px 0; }
+
+        /* ── BEST BANNER ── */
+        .mp-best-banner {
+          background: #1c3a1c; border-radius: 18px; padding: 18px;
+          margin-bottom: 14px; display: flex; align-items: center;
+          justify-content: space-between; gap: 12px;
+          position: relative; overflow: hidden;
+          box-shadow: 0 4px 16px rgba(28,58,28,0.2);
+        }
+        .mp-best-grain {
+          position: absolute; inset: 0; pointer-events: none;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        }
+        .mp-best-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; position: relative; z-index: 1; }
+        .mp-best-icon {
+          width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+          background: rgba(184,122,0,0.3); display: flex; align-items: center; justify-content: center;
+        }
+        .mp-best-eyebrow { font-size: 10px; font-weight: 700; color: rgba(240,237,232,0.5); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
+        .mp-best-name {
+          font-family: 'Playfair Display', serif;
+          font-size: 16px; font-weight: 700; color: #f0ede8;
+          text-transform: capitalize; line-height: 1.1; margin-bottom: 3px;
+        }
+        .mp-best-loc { font-size: 11px; color: rgba(240,237,232,0.45); }
+        .mp-best-right { text-align: right; flex-shrink: 0; position: relative; z-index: 1; }
+        .mp-best-price {
+          font-family: 'Playfair Display', serif;
+          font-size: 22px; font-weight: 700; color: #f6c94e;
+        }
+        .mp-best-unit { font-size: 10px; color: rgba(240,237,232,0.4); }
+        .mp-best-kg   { font-size: 12px; font-weight: 600; color: rgba(240,237,232,0.6); margin-top: 2px; }
+
+        /* ── CHART ── */
+        .mp-chart-card {
+          background: #fff; border-radius: 16px; border: 1px solid #e8e2da;
+          padding: 16px; margin-bottom: 14px;
+        }
+        .mp-chart-head { display: flex; align-items: center; gap: 7px; margin-bottom: 12px; }
+        .mp-chart-title { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: #1c2e1c; }
+        .mp-chart-sub   { font-size: 11px; color: #9a9080; }
+
+        /* ── CALCULATOR ── */
+        .mp-calc-card {
+          background: #fff; border-radius: 14px; border: 1px solid #e8ddc8;
+          padding: 12px 14px; margin-bottom: 14px;
+          display: flex; align-items: center; gap: 12px;
+        }
+        .mp-calc-icon {
+          width: 36px; height: 36px; border-radius: 10px;
+          background: #fdf3e0; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .mp-calc-text { flex: 1; }
+        .mp-calc-label { font-size: 13px; font-weight: 600; color: #1c2e1c; }
+        .mp-calc-hint  { font-size: 10px; color: #9a9080; margin-top: 1px; }
+        .mp-calc-input-wrap { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+        .mp-calc-input {
+          width: 70px; border: 1.5px solid #e8ddc8; border-radius: 9px;
+          padding: 7px 8px; font-family: 'DM Sans', sans-serif;
+          font-size: 14px; font-weight: 700; color: #1c2e1c;
+          text-align: center;
+        }
+        .mp-calc-input:focus { outline: none; border-color: #b87a00; }
+        .mp-calc-unit { font-size: 12px; font-weight: 600; color: #6a6055; }
+
+        /* ── PRICE CARDS ── */
+        .mp-price-card {
+          background: #fff; border-radius: 16px;
+          border: 1px solid #e8e2da; border-left: 3px solid #b87a00;
+          box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+          margin-bottom: 10px; overflow: hidden;
+          transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .mp-price-card:hover {
+          box-shadow: 0 4px 16px rgba(0,0,0,0.09);
+          transform: translateY(-1px);
+        }
+        .mp-price-card-inner {
+          display: flex; align-items: flex-start; gap: 12px; padding: 14px;
+        }
+        .mp-price-emoji {
+          width: 48px; height: 48px; flex-shrink: 0;
+          background: #fdf8f0; border-radius: 12px; border: 1px solid #ede8e0;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 22px; line-height: 1;
+        }
+        .mp-price-info { flex: 1; min-width: 0; }
+        .mp-price-name {
+          font-family: 'Playfair Display', serif;
+          font-size: 15px; font-weight: 700; color: #1c2e1c;
+          text-transform: capitalize; line-height: 1.2; margin-bottom: 3px;
+        }
+        .mp-price-variety { font-size: 11px; color: #9a9080; margin-bottom: 3px; }
+        .mp-price-variety span { font-weight: 600; color: #6a6055; text-transform: capitalize; }
+        .mp-price-loc {
+          display: flex; align-items: center; gap: 4px;
+          font-size: 11px; color: #9a9080; margin-bottom: 3px;
+        }
+        .mp-price-loc span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .mp-price-meta { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #b0a890; }
+        .mp-grade-pill {
+          background: #f0ede8; padding: 2px 7px; border-radius: 6px;
+          font-size: 10px; font-weight: 600; color: #6a6055; text-transform: capitalize;
+        }
+        .mp-price-modal { text-align: right; flex-shrink: 0; padding-left: 8px; }
+        .mp-modal-val {
+          font-family: 'Playfair Display', serif;
+          font-size: 20px; font-weight: 700; line-height: 1;
+        }
+        .mp-modal-unit { font-size: 9px; color: #b0a890; margin-top: 1px; }
+        .mp-modal-kg   { font-size: 11px; font-weight: 600; color: #6a6055; margin-top: 3px; }
+
+        /* price bar */
+        .mp-price-bar {
+          background: #fdf8f0; border-top: 1px solid #ede8e0;
+          padding: 8px 14px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+        }
+        .mp-bar-stat {
+          display: flex; align-items: center; gap: 4px;
+          font-size: 11px; color: #6a6055;
+        }
+        .mp-bar-stat strong { font-weight: 700; }
+        .mp-bar-stat em { color: #b0a890; font-style: normal; }
+        .mp-profit-pill {
+          margin-left: auto; display: flex; align-items: center; gap: 4px;
+          font-size: 11px; font-weight: 700; color: #8a6000;
+          background: #fde8b0; padding: 4px 10px; border-radius: 99px;
+        }
+
+        /* ── PAGINATION ── */
+        .mp-pagination {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 16px 0 4px;
+        }
+        .mp-page-btn {
+          display: flex; align-items: center; gap: 5px;
+          font-size: 12px; font-weight: 700; padding: 9px 16px; border-radius: 11px;
+          border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+        }
+        .mp-page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+        .mp-page-prev { background: #fff; border: 1.5px solid #e8e2da; color: #4a4035; }
+        .mp-page-prev:hover:not(:disabled) { border-color: #b87a00; color: #8a6000; }
+        .mp-page-next { background: #1c3a1c; color: #f0ede8; }
+        .mp-page-next:hover:not(:disabled) { background: #2a5a2a; }
+        .mp-page-info { font-size: 11px; color: #9a9080; }
+        .mp-page-info em { color: #b0a890; font-style: normal; }
+
+        /* ── LOADING SKELETONS ── */
+        .mp-skeleton {
+          background: #fff; border-radius: 16px; border: 1px solid #e8e2da;
+          border-left: 3px solid #ede8e0; padding: 14px; margin-bottom: 10px;
+          display: flex; align-items: center; gap: 12px;
+        }
+        .mp-skel-box { background: #f0ede8; border-radius: 10px; flex-shrink: 0; animation: mpPulse 1.4s ease-in-out infinite; }
+        .mp-skel-line { background: #f0ede8; border-radius: 6px; animation: mpPulse 1.4s ease-in-out infinite; }
+        @keyframes mpPulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+        /* ── ERROR / EMPTY ── */
+        .mp-center-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 64px 20px; text-align: center; }
+        .mp-state-icon { width: 64px; height: 64px; border-radius: 18px; background: #f0ede8; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+        .mp-state-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: #1c2e1c; margin-bottom: 6px; }
+        .mp-state-sub   { font-size: 13px; color: #9a9080; margin-bottom: 18px; }
+        .mp-retry-btn {
+          display: flex; align-items: center; gap: 7px; padding: 10px 22px;
+          background: #1c3a1c; color: #f0ede8; border: none; border-radius: 12px;
+          font-size: 13px; font-weight: 700; cursor: pointer;
+          font-family: 'DM Sans', sans-serif; transition: background 0.15s;
+        }
+        .mp-retry-btn:hover { background: #2a5a2a; }
+        .mp-underline-btn { background: none; border: none; color: #b87a00; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; text-decoration: underline; }
+
+        .mp-spin { animation: mpSpin 0.8s linear infinite; }
+        @keyframes mpSpin { to { transform: rotate(360deg); } }
+      `}</style>
+
+      <div className="mp-root">
+
+        {/* ── HEADER ── */}
+        <header className="mp-header ">
+          <div className="mp-header-grain" />
+          <div className="mp-header-glow" />
+
+          <div className="mp-header-inner">
+            {/* Title row */}
+            <div className="mp-title-row">
+              <button className="mp-icon-btn" onClick={() => navigate(-1)}>
+                <ArrowLeft size={18} />
               </button>
-            )}
-          </div>
-
-          {/* Filter row */}
-          <div className="flex items-center gap-2 flex-wrap">
-            {/* State dropdown */}
-            <div className="relative" ref={stateRef}>
-              <button
-                onClick={() => { setShowStateDD(!showStateDD); setShowSortDD(false); }}
-                className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white text-xs font-semibold px-3 py-2.5 rounded-xl transition-colors min-w-[110px]"
-              >
-                <MapPin className="w-3.5 h-3.5 shrink-0" />
-                <span className="truncate max-w-[80px]">{apiState || tr('allStates')}</span>
-                <ChevronDown className="w-3 h-3 shrink-0" />
-              </button>
-              {showStateDD && (
-                <div className="absolute top-full left-0 mt-1 w-52 bg-white rounded-2xl shadow-2xl border border-neutral-100 z-50 max-h-60 overflow-y-auto">
-                  <button
-                    onClick={() => { setApiState(''); setDistrictInput(''); setApiDistrict(''); setShowStateDD(false); }}
-                    className={`w-full text-left px-4 py-2.5 text-xs font-semibold rounded-t-2xl transition-colors ${!apiState ? 'bg-amber-50 text-amber-700' : 'text-neutral-500 hover:bg-neutral-50'}`}
-                  >
-                    {tr('allStates')}
-                  </button>
-                  {STATES.map((s) => (
-                    <button
-                      key={s}
-                      onClick={() => { setApiState(s); setShowStateDD(false); }}
-                      className={`w-full text-left px-4 py-2.5 text-xs font-medium transition-colors hover:bg-amber-50 ${apiState === s ? 'bg-amber-50 text-amber-700 font-bold' : 'text-neutral-700'}`}
-                    >
-                      {s}
-                    </button>
-                  ))}
+              <div className="mp-title-block">
+                <div className="mp-title">
+                  {/* <TrendingUp size={18} color="#f6c94e" /> */}
+                  {tr('title')}
                 </div>
-              )}
+                <div className="mp-subtitle">{tr('subtitle')}</div>
+              </div>
+              <button
+                className={`mp-icon-btn ${showChart ? 'active' : ''}`}
+                onClick={() => setShowChart(v => !v)}
+                title="Toggle trend chart"
+              >
+                <BarChart2 size={17} />
+              </button>
+              <button
+                className="mp-icon-btn"
+                onClick={() => loadPrices(page)}
+                disabled={loading}
+              >
+                <RefreshCw size={17} className={loading ? 'mp-spin' : ''} />
+              </button>
             </div>
 
-            {/* District input */}
-            <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm rounded-xl px-3 py-2.5 flex-1 min-w-[100px] max-w-[150px]">
+            {/* Search */}
+            <div className="mp-search-wrap">
+              <Search size={15} color="#9a9080" className="mp-search-icon" />
               <input
                 type="text"
-                placeholder={tr('districtPlaceholder')}
-                value={districtInput}
-                onChange={(e) => setDistrictInput(e.target.value)}
-                onBlur={applyDistrict}
-                onKeyDown={(e) => { if (e.key === 'Enter') { applyDistrict(); e.target.blur(); } }}
-                className="bg-transparent text-white placeholder-white/60 text-xs font-semibold w-full focus:outline-none"
+                className="mp-search-input"
+                placeholder={tr('searchPlaceholder')}
+                value={search}
+                onChange={e => setSearch(e.target.value)}
               />
-              {districtInput && districtInput !== apiDistrict && (
-                <button onClick={applyDistrict} className="text-white/70 hover:text-white shrink-0">
-                  <ArrowUpDown className="w-3 h-3" />
+              {search && (
+                <button className="mp-search-clear" onClick={() => setSearch('')}>
+                  <X size={15} />
                 </button>
               )}
             </div>
 
-            {/* Sort dropdown */}
-            <div className="relative ml-auto" ref={sortRef}>
-              <button
-                onClick={() => { setShowSortDD(!showSortDD); setShowStateDD(false); }}
-                className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white text-xs font-semibold px-3 py-2.5 rounded-xl transition-colors"
-              >
-                <ArrowUpDown className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">{sortKeyLabel[sortKey]}</span>
-                {sortDir === 'asc' ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />}
-              </button>
-              {showSortDD && (
-                <div className="absolute top-full right-0 mt-1 w-44 bg-white rounded-2xl shadow-2xl border border-neutral-100 z-50">
-                  {SORT_KEYS.map((key) => (
+            {/* Filters */}
+            <div className="mp-filter-row mb-3">
+              {/* State */}
+              <div style={{ position: 'relative' }} ref={stateRef}>
+                <button
+                  className="mp-filter-chip"
+                  onClick={() => { setShowStateDD(!showStateDD); setShowSortDD(false); }}
+                >
+                  <MapPin size={13} />
+                  <span style={{ maxWidth: 80, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {apiState || tr('allStates')}
+                  </span>
+                  <ChevronDown size={12} />
+                </button>
+                {showStateDD && (
+                  <div className="mp-dropdown">
                     <button
-                      key={key}
-                      onClick={() => toggleSort(key)}
-                      className={`w-full text-left px-4 py-2.5 text-xs font-medium hover:bg-amber-50 transition-colors flex items-center justify-between ${sortKey === key ? 'bg-amber-50 text-amber-700 font-bold' : 'text-neutral-700'}`}
-                    >
-                      {sortKeyLabel[key]}
-                      {sortKey === key && (
-                        sortDir === 'asc' ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />
-                      )}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Stats bar ──────────────────────────────────────────────────── */}
-      <div className="bg-white border-b border-neutral-100 px-4 py-2 flex items-center justify-between">
-        <span className="text-xs text-neutral-500">
-          {loading
-            ? tr('loading')
-            : `${displayPrices.length} ${tr('recordsFound')} (${total} ${tr('total')})`
-          }
-        </span>
-        <div className="flex items-center gap-3">
-          {lastUpdated && !loading && (
-            <span className="text-xs text-neutral-400">
-              {tr('lastUpdated')}: {lastUpdated.toLocaleTimeString(
-                language === 'en' ? 'en-IN' : language === 'hi' ? 'hi-IN' : 'mr-IN',
-                { hour: '2-digit', minute: '2-digit' }
-              )}
-            </span>
-          )}
-          {hasActiveFilters && (
-            <button onClick={clearFilters} className="text-xs text-amber-600 font-semibold hover:text-amber-700 flex items-center gap-1">
-              <X className="w-3 h-3" />
-              {tr('clearFilters')}
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* ── Content ────────────────────────────────────────────────────── */}
-      <div className="p-4">
-        {loading ? (
-          <div className="space-y-3 mt-1">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="bg-white rounded-2xl p-4 border border-neutral-100 animate-pulse">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-neutral-200 rounded-2xl shrink-0" />
-                  <div className="flex-1 space-y-2">
-                    <div className="h-4 bg-neutral-200 rounded w-2/3" />
-                    <div className="h-3 bg-neutral-100 rounded w-1/2" />
-                    <div className="h-3 bg-neutral-100 rounded w-1/3" />
+                      className={`mp-dd-btn ${!apiState ? 'active' : ''}`}
+                      onClick={() => { setApiState(''); setDistrictInput(''); setApiDistrict(''); setShowStateDD(false); }}
+                    >{tr('allStates')}</button>
+                    {STATES.map(s => (
+                      <button
+                        key={s}
+                        className={`mp-dd-btn ${apiState===s ? 'active' : ''}`}
+                        onClick={() => { setApiState(s); setShowStateDD(false); }}
+                      >{s}</button>
+                    ))}
                   </div>
-                  <div className="w-20 h-12 bg-neutral-200 rounded-xl" />
-                </div>
+                )}
               </div>
-            ))}
-          </div>
 
-        ) : error ? (
-          <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="bg-red-50 w-20 h-20 rounded-3xl flex items-center justify-center mb-4">
-              <AlertCircle className="w-10 h-10 text-red-400" />
+              {/* District */}
+              <div className="mp-district-chip">
+                <MapPin size={12} color="rgba(240,237,232,0.5)" style={{ flexShrink: 0 }} />
+                <input
+                  type="text"
+                  className="mp-district-input"
+                  placeholder={tr('districtPlaceholder')}
+                  value={districtInput}
+                  onChange={e => setDistrictInput(e.target.value)}
+                  onBlur={applyDistrict}
+                  onKeyDown={e => { if (e.key==='Enter') { applyDistrict(); e.target.blur(); } }}
+                />
+                {districtInput && districtInput !== apiDistrict && (
+                  <button onClick={applyDistrict} style={{ background:'none', border:'none', cursor:'pointer', color:'rgba(240,237,232,0.6)', display:'flex', alignItems:'center' }}>
+                    <ArrowUpDown size={11} />
+                  </button>
+                )}
+              </div>
+
+              {/* Sort */}
+              <div style={{ position:'relative', marginLeft:'auto' }} ref={sortRef}>
+                <button
+                  className="mp-sort-chip"
+                  onClick={() => { setShowSortDD(!showSortDD); setShowStateDD(false); }}
+                >
+                  <ArrowUpDown size={13} />
+                  <span style={{ display:'none' }}>{sortKeyLabel[sortKey]}</span>
+                  {sortDir==='asc' ? <ArrowUp size={11} /> : <ArrowDown size={11} />}
+                </button>
+                {showSortDD && (
+                  <div className="mp-dropdown mp-dropdown-right">
+                    {SORT_KEYS.map(key => (
+                      <button
+                        key={key}
+                        className={`mp-dd-btn ${sortKey===key ? 'active' : ''}`}
+                        onClick={() => toggleSort(key)}
+                      >
+                        {sortKeyLabel[key]}
+                        {sortKey===key && (sortDir==='asc' ? <ArrowUp size={12}/> : <ArrowDown size={12}/>)}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
-            <p className="font-bold text-neutral-800 mb-1">{tr('errorTitle')}</p>
-            <p className="text-sm text-neutral-500 mb-5">{tr('errorHint')}</p>
-            <button
-              onClick={() => loadPrices(0)}
-              className="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-colors"
-            >
-              <RefreshCw className="w-4 h-4" />
-              {tr('retry')}
-            </button>
           </div>
 
-        ) : displayPrices.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="bg-amber-50 w-20 h-20 rounded-3xl flex items-center justify-center mb-4 text-4xl">🌾</div>
-            <p className="font-bold text-neutral-700 mb-1">{tr('noResults')}</p>
-            <p className="text-sm text-neutral-500 mb-4">{tr('noResultsHint')}</p>
-            <button onClick={clearFilters} className="text-sm text-amber-600 font-semibold underline">
-              {tr('clearFilters')}
-            </button>
+          <div className="mp-header-arc" />
+        </header>
+
+        {/* Stats bar */}
+        <div className="mp-stats-bar">
+          <span className="mp-stats-count">
+            {loading ? tr('loading') : `${displayPrices.length} ${tr('recordsFound')} (${total} ${tr('total')})`}
+          </span>
+          <div className="mp-stats-right">
+            {lastUpdated && !loading && (
+              <span className="mp-stats-time">
+                {tr('lastUpdated')}: {lastUpdated.toLocaleTimeString(
+                  language==='en'?'en-IN':language==='hi'?'hi-IN':'mr-IN',
+                  { hour:'2-digit', minute:'2-digit' }
+                )}
+              </span>
+            )}
+            {hasActiveFilters && (
+              <button className="mp-clear-btn" onClick={clearFilters}>
+                <X size={12} /> {tr('clearFilters')}
+              </button>
+            )}
           </div>
+        </div>
 
-        ) : (
-          <div className="animate-fade-in">
-            {/* Best Mandi */}
-            <BestMandiBanner record={bestMandi} language={language} tr={tr} />
-
-            {/* Trend Chart */}
-            {showChart && <TrendChart data={trendData} language={language} tr={tr} />}
-
-            {/* Profit Calculator */}
-            <ProfitCalculator quantityKg={quantityKg} onChange={setQuantityKg} tr={tr} />
-
-            {/* Price cards */}
-            <div className="space-y-3">
+        {/* ── CONTENT ── */}
+        <div className="mp-body">
+          {loading ? (
+            [...Array(6)].map((_, i) => (
+              <div key={i} className="mp-skeleton">
+                <div className="mp-skel-box" style={{ width:48, height:48 }} />
+                <div style={{ flex:1, display:'flex', flexDirection:'column', gap:7 }}>
+                  <div className="mp-skel-line" style={{ height:14, width:'60%' }} />
+                  <div className="mp-skel-line" style={{ height:11, width:'40%' }} />
+                  <div className="mp-skel-line" style={{ height:11, width:'30%' }} />
+                </div>
+                <div className="mp-skel-box" style={{ width:64, height:40 }} />
+              </div>
+            ))
+          ) : error ? (
+            <div className="mp-center-state">
+              <div className="mp-state-icon"><AlertCircle size={28} color="#c0392b" /></div>
+              <div className="mp-state-title">{tr('errorTitle')}</div>
+              <div className="mp-state-sub">{tr('errorHint')}</div>
+              <button className="mp-retry-btn" onClick={() => loadPrices(0)}>
+                <RefreshCw size={15} /> {tr('retry')}
+              </button>
+            </div>
+          ) : displayPrices.length === 0 ? (
+            <div className="mp-center-state">
+              <div className="mp-state-icon" style={{ fontSize:28 }}>🌾</div>
+              <div className="mp-state-title">{tr('noResults')}</div>
+              <div className="mp-state-sub">{tr('noResultsHint')}</div>
+              <button className="mp-underline-btn" onClick={clearFilters}>{tr('clearFilters')}</button>
+            </div>
+          ) : (
+            <>
+              <BestMandiBanner record={bestMandi} language={language} tr={tr} />
+              {showChart && <TrendChart data={trendData} tr={tr} />}
+              <ProfitCalculator quantityKg={quantityKg} onChange={setQuantityKg} tr={tr} />
               {displayPrices.map((price, idx) => (
                 <PriceRow
                   key={price.id || idx}
@@ -676,24 +856,19 @@ const MandiPrices = () => {
                   tr={tr}
                 />
               ))}
-            </div>
+              <Pagination
+                page={page} total={total} pageSize={PAGE_SIZE} loading={loading}
+                onPrev={() => loadPrices(page-1)}
+                onNext={() => loadPrices(page+1)}
+                tr={tr}
+              />
+            </>
+          )}
+        </div>
 
-            {/* Pagination */}
-            <Pagination
-              page={page}
-              total={total}
-              pageSize={PAGE_SIZE}
-              loading={loading}
-              onPrev={() => loadPrices(page - 1)}
-              onNext={() => loadPrices(page + 1)}
-              tr={tr}
-            />
-          </div>
-        )}
+        <BottomNav />
       </div>
-
-      <BottomNav />
-    </div>
+    </>
   );
 };
 
