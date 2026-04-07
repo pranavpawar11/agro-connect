@@ -2,76 +2,59 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import {
   Mail, Lock, User, Phone, Eye, EyeOff, Sprout,
-  ArrowRight, CheckCircle2, Building2, UserCircle,
-  Hash, Briefcase, ShieldCheck, Leaf
+  ArrowRight, CheckCircle2, Building2,
+  Hash, Briefcase, ShieldCheck, Leaf,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth';
 
 const Register = () => {
-  const navigate = useNavigate();
-  const { t } = useTranslation();
+  const navigate  = useNavigate();
+  const { t }     = useTranslation();
   const { register } = useAuth();
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    phone: '',
-    role: 'farmer',
+    name: '', email: '', password: '', confirmPassword: '', phone: '', role: 'farmer',
   });
-
   const [companyDetails, setCompanyDetails] = useState({
-    companyName: '',
-    registrationNumber: '',
-    businessType: '',
+    companyName: '', registrationNumber: '', businessType: '',
   });
-
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword,        setShowPassword]        = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [errors,  setErrors]  = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: '' }));
+    setFormData((p) => ({ ...p, [name]: value }));
+    if (errors[name]) setErrors((p) => ({ ...p, [name]: '' }));
   };
-
   const handleCompanyChange = (e) => {
     const { name, value } = e.target;
-    setCompanyDetails((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: '' }));
+    setCompanyDetails((p) => ({ ...p, [name]: value }));
+    if (errors[name]) setErrors((p) => ({ ...p, [name]: '' }));
   };
 
   const validate = () => {
-    const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = 'Full name is required';
-    if (!formData.email.trim()) newErrors.email = 'Email is required';
-    if (!formData.phone.match(/^[0-9]{10}$/)) newErrors.phone = 'Enter a valid 10-digit number';
-    if (formData.password.length < 6) newErrors.password = 'Minimum 6 characters';
-    if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
-    if (formData.role === 'company' && !companyDetails.companyName.trim()) {
-      newErrors.companyName = 'Company name is required';
-    }
-    return newErrors;
+    const e = {};
+    if (!formData.name.trim())              e.name             = 'Full name is required';
+    if (!formData.email.trim())             e.email            = 'Email is required';
+    if (!formData.phone.match(/^[0-9]{10}$/)) e.phone          = 'Enter a valid 10-digit number';
+    if (formData.password.length < 6)       e.password         = 'Minimum 6 characters';
+    if (formData.password !== formData.confirmPassword) e.confirmPassword = 'Passwords do not match';
+    if (formData.role === 'company' && !companyDetails.companyName.trim())
+      e.companyName = 'Company name is required';
+    return e;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
+    const v = validate();
+    if (Object.keys(v).length > 0) { setErrors(v); return; }
     setLoading(true);
     try {
       const { confirmPassword, ...registerData } = formData;
-      if (formData.role === 'company') {
-        registerData.companyDetails = companyDetails;
-      }
+      if (formData.role === 'company') registerData.companyDetails = companyDetails;
       const data = await register(registerData);
       navigate(`/${data.user.role}/home`);
     } catch (error) {
@@ -82,491 +65,508 @@ const Register = () => {
     }
   };
 
-  const getPasswordStrength = (password) => {
-    if (!password) return { strength: 0, label: '', color: '' };
-    if (password.length < 6) return { strength: 25, label: 'Weak', color: '#ef4444' };
-    if (password.length < 8) return { strength: 50, label: 'Fair', color: '#f59e0b' };
-    if (password.length < 10) return { strength: 75, label: 'Good', color: '#3b82f6' };
-    return { strength: 100, label: 'Strong', color: '#22c55e' };
+  const getPasswordStrength = (pw) => {
+    if (!pw)         return { pct: 0,   label: '',        color: 'transparent' };
+    if (pw.length < 6) return { pct: 25, label: 'Weak',   color: '#c0392b' };
+    if (pw.length < 8) return { pct: 50, label: 'Fair',   color: '#b87a00' };
+    if (pw.length < 10) return { pct: 75, label: 'Good',  color: '#1d4e89' };
+    return              { pct: 100,      label: 'Strong',  color: '#2d6a4f' };
   };
-
-  const passwordStrength = getPasswordStrength(formData.password);
-  const isCompany = formData.role === 'company';
+  const pwStrength = getPasswordStrength(formData.password);
 
   const businessTypes = [
     { value: 'agri-input', label: 'Agri Input Supplier' },
-    { value: 'processor', label: 'Food Processor' },
-    { value: 'exporter', label: 'Exporter' },
-    { value: 'retailer', label: 'Retailer' },
-    { value: 'fpo', label: 'FPO / Cooperative' },
-    { value: 'other', label: 'Other' },
+    { value: 'processor',  label: 'Food Processor' },
+    { value: 'exporter',   label: 'Exporter' },
+    { value: 'retailer',   label: 'Retailer' },
+    { value: 'fpo',        label: 'FPO / Cooperative' },
+    { value: 'other',      label: 'Other' },
   ];
 
+  const isCompany = formData.role === 'company';
+
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #064e3b 0%, #065f46 30%, #047857 60%, #059669 100%)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '24px 16px',
-      position: 'relative',
-      overflow: 'hidden',
-      fontFamily: "'DM Sans', system-ui, sans-serif",
-    }}>
-      {/* Background orbs */}
-      <div style={{
-        position: 'absolute', top: '-80px', left: '-80px',
-        width: '400px', height: '400px',
-        background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)',
-        borderRadius: '50%', pointerEvents: 'none',
-      }} />
-      <div style={{
-        position: 'absolute', bottom: '-80px', right: '-80px',
-        width: '500px', height: '500px',
-        background: 'radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%)',
-        borderRadius: '50%', pointerEvents: 'none',
-      }} />
-      <div style={{
-        position: 'absolute', top: '40%', right: '10%',
-        width: '200px', height: '200px',
-        background: 'radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%)',
-        borderRadius: '50%', pointerEvents: 'none',
-      }} />
+    <>
+      <style>{`
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      <div style={{ width: '100%', maxWidth: '640px', position: 'relative', zIndex: 10 }}>
-        {/* Card */}
-        <div style={{
-          background: 'rgba(255,255,255,0.97)',
-          backdropFilter: 'blur(20px)',
-          borderRadius: '28px',
-          boxShadow: '0 32px 80px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.2)',
-          overflow: 'hidden',
-        }}>
-          {/* Top accent bar */}
-          <div style={{
-            height: '5px',
-            background: 'linear-gradient(90deg, #059669, #10b981, #34d399, #6ee7b7)',
-          }} />
+        .rg-root {
+          min-height: 100vh;
+          min-height: 100dvh;
+          background: #1c3a1c;
+          display: flex; align-items: flex-start; justify-content: center;
+          padding: 24px 16px 40px;
+          font-family: 'DM Sans', sans-serif;
+          position: relative; overflow: hidden;
+        }
+        .rg-grain {
+          position: absolute; inset: 0; pointer-events: none; z-index: 0;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+        }
+        .rg-glow-tl {
+          position: absolute; top: -100px; left: -100px;
+          width: 350px; height: 350px; border-radius: 50%;
+          background: radial-gradient(circle, rgba(82,183,136,0.12) 0%, transparent 70%);
+          pointer-events: none; z-index: 0;
+        }
+        .rg-glow-br {
+          position: absolute; bottom: -80px; right: -80px;
+          width: 300px; height: 300px; border-radius: 50%;
+          background: radial-gradient(circle, rgba(246,183,60,0.08) 0%, transparent 70%);
+          pointer-events: none; z-index: 0;
+        }
 
-          <div style={{ padding: '40px 40px 36px' }}>
-            {/* Header */}
-            <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-              <div style={{ position: 'relative', display: 'inline-block', marginBottom: '16px' }}>
-                <div style={{
-                  width: '72px', height: '72px',
-                  background: 'linear-gradient(135deg, #059669, #047857)',
-                  borderRadius: '20px',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  boxShadow: '0 8px 24px rgba(5,150,105,0.4)',
-                  margin: '0 auto',
-                }}>
-                  <Sprout size={36} color="white" />
+        /* card */
+        .rg-card {
+          position: relative; z-index: 1;
+          width: 100%; max-width: 560px;
+          background: #fff; border-radius: 24px;
+          overflow: hidden;
+          box-shadow: 0 24px 64px rgba(0,0,0,0.28);
+          margin-top: 8px;
+        }
+        .rg-accent-bar {
+          height: 5px;
+          background: linear-gradient(90deg, #2d6a4f, #52b788, #b87a00);
+        }
+        .rg-card-body { padding: 28px 24px 24px; }
+
+        /* branding */
+        .rg-brand { text-align: center; margin-bottom: 24px; }
+        .rg-brand-icon {
+          width: 64px; height: 64px; border-radius: 18px;
+          background: linear-gradient(135deg, #52b788, #1c3a1c);
+          display: flex; align-items: center; justify-content: center;
+          margin: 0 auto 14px;
+          box-shadow: 0 6px 20px rgba(28,58,28,0.35);
+        }
+        .rg-brand-name {
+          font-family: 'Playfair Display', serif;
+          font-size: 26px; font-weight: 800; color: #1c2e1c;
+          letter-spacing: -0.4px; margin-bottom: 4px;
+        }
+        .rg-brand-sub { font-size: 13px; color: #9a9080; font-weight: 500; }
+
+        /* role toggle */
+        .rg-role-label {
+          font-size: 11px; font-weight: 700; color: #6a6055;
+          text-transform: uppercase; letter-spacing: 0.4px;
+          margin-bottom: 10px;
+        }
+        .rg-role-grid {
+          display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+          margin-bottom: 20px;
+        }
+        .rg-role-btn {
+          padding: 14px 12px; border-radius: 14px; border: 1.5px solid #e8e2da;
+          background: #fafaf8; cursor: pointer; text-align: left;
+          transition: all 0.15s; position: relative; outline: none;
+        }
+        .rg-role-btn.active-farmer  { border-color: #2d6a4f; background: #f0f7f2; box-shadow: 0 3px 12px rgba(45,106,79,0.12); }
+        .rg-role-btn.active-company { border-color: #1d4e89; background: #eef4fb; box-shadow: 0 3px 12px rgba(29,78,137,0.12); }
+        .rg-role-icon {
+          width: 36px; height: 36px; border-radius: 10px;
+          display: flex; align-items: center; justify-content: center;
+          margin-bottom: 8px; background: #f0ede8;
+        }
+        .rg-role-name { font-size: 13px; font-weight: 700; color: #1c2e1c; margin-bottom: 2px; }
+        .rg-role-sub  { font-size: 11px; color: #9a9080; line-height: 1.4; }
+        .rg-role-check {
+          position: absolute; top: 10px; right: 10px;
+        }
+
+        /* section divider */
+        .rg-section-title {
+          font-size: 11px; font-weight: 700; color: #9a9080;
+          text-transform: uppercase; letter-spacing: 0.5px;
+          margin-bottom: 12px; margin-top: 4px;
+          display: flex; align-items: center; gap: 8px;
+        }
+        .rg-section-title::after {
+          content: ''; flex: 1; height: 1px; background: #ede8e0;
+        }
+
+        /* field */
+        .rg-field { display: flex; flex-direction: column; }
+        .rg-label {
+          font-size: 11px; font-weight: 700; color: #6a6055;
+          text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 5px;
+        }
+        .rg-input-wrap { position: relative; }
+        .rg-input-icon {
+          position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+          pointer-events: none; color: #b0a898;
+          display: flex; align-items: center;
+        }
+        .rg-input, .rg-select {
+          width: 100%; padding: 11px 14px 11px 42px;
+          background: #fff; border: 1.5px solid #ddd5c8; border-radius: 11px;
+          font-size: 13px; font-weight: 500; color: #1c2e1c;
+          font-family: 'DM Sans', sans-serif; outline: none;
+          transition: border-color 0.15s, box-shadow 0.15s;
+          -moz-appearance: textfield;
+        }
+        .rg-input::-webkit-outer-spin-button,
+        .rg-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+        .rg-input::placeholder, .rg-select::placeholder { color: #c8bfb2; }
+        .rg-input:focus, .rg-select:focus {
+          border-color: #2d6a4f; box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
+        }
+        .rg-input.error { border-color: #f0d0d0; }
+        .rg-input.error:focus { border-color: #c0392b; box-shadow: 0 0 0 3px rgba(192,57,43,0.08); }
+        .rg-select { appearance: none; cursor: pointer; }
+        .rg-pw-toggle {
+          position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+          width: 28px; height: 28px; border-radius: 7px;
+          background: none; border: none; cursor: pointer; color: #9a9080;
+          display: flex; align-items: center; justify-content: center;
+          transition: background 0.15s;
+        }
+        .rg-pw-toggle:hover { background: #f0ede8; }
+        .rg-error-msg { font-size: 11px; color: #c0392b; font-weight: 600; margin-top: 4px; }
+
+        /* password strength */
+        .rg-pw-track {
+          height: 4px; background: #f0ede8; border-radius: 99px;
+          overflow: hidden; margin-top: 6px;
+        }
+        .rg-pw-bar {
+          height: 100%; border-radius: 99px; transition: width 0.3s ease;
+        }
+        .rg-pw-label { font-size: 11px; font-weight: 700; margin-top: 3px; }
+
+        /* confirm match */
+        .rg-match {
+          font-size: 11px; font-weight: 700; margin-top: 4px;
+          display: flex; align-items: center; gap: 4px;
+        }
+
+        /* grid helpers */
+        .rg-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .rg-gap { margin-bottom: 12px; }
+
+        /* company section */
+        .rg-company-section {
+          background: #eef4fb; border-radius: 14px; padding: 16px;
+          border: 1.5px solid #c2d6f0; margin-bottom: 12px;
+        }
+        .rg-company-head {
+          display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+        }
+        .rg-company-icon {
+          width: 28px; height: 28px; border-radius: 8px;
+          background: #dbeafe; display: flex; align-items: center; justify-content: center;
+        }
+        .rg-company-title {
+          font-size: 12px; font-weight: 700; color: #1d4e89;
+          text-transform: uppercase; letter-spacing: 0.4px;
+        }
+        .rg-verify-note {
+          display: flex; align-items: flex-start; gap: 8px;
+          background: #dbeafe; border-radius: 10px; padding: 10px 12px;
+          margin-top: 12px;
+        }
+        .rg-verify-note p { font-size: 12px; color: #1d4e89; line-height: 1.5; }
+
+        /* company inputs use blue focus */
+        .rg-input.blue:focus { border-color: #1d4e89; box-shadow: 0 0 0 3px rgba(29,78,137,0.1); }
+
+        /* submit error */
+        .rg-submit-error {
+          padding: 11px 14px; border-radius: 11px;
+          background: #fff5f5; border: 1px solid #f0d0d0;
+          color: #c0392b; font-size: 13px; font-weight: 500;
+          margin-bottom: 12px;
+        }
+
+        /* submit button */
+        .rg-submit {
+          width: 100%; padding: 14px;
+          border-radius: 14px; border: none;
+          background: #1c3a1c; color: #f0ede8;
+          font-size: 15px; font-weight: 700; cursor: pointer;
+          font-family: 'DM Sans', sans-serif;
+          display: flex; align-items: center; justify-content: center; gap: 8px;
+          transition: background 0.15s;
+          box-shadow: 0 6px 20px rgba(28,58,28,0.3);
+          margin-top: 4px; margin-bottom: 18px;
+        }
+        .rg-submit:hover:not(:disabled) { background: #2a5a2a; }
+        .rg-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+        .rg-spinner {
+          width: 18px; height: 18px; border-radius: 50%;
+          border: 2px solid rgba(240,237,232,0.3);
+          border-top-color: #f0ede8;
+          animation: rgSpin 0.7s linear infinite;
+        }
+        @keyframes rgSpin { to { transform: rotate(360deg); } }
+
+        /* login link */
+        .rg-login-link {
+          text-align: center; font-size: 13px; color: #9a9080;
+        }
+        .rg-login-link a {
+          color: #2d6a4f; font-weight: 700; text-decoration: none;
+          display: inline-flex; align-items: center; gap: 3px;
+        }
+        .rg-login-link a:hover { color: #1c3a1c; }
+
+        /* trust row */
+        .rg-trust {
+          position: relative; z-index: 1;
+          display: flex; align-items: center; justify-content: center;
+          gap: 16px; margin-top: 18px; flex-wrap: wrap;
+        }
+        .rg-trust-item {
+          display: flex; align-items: center; gap: 5px;
+          font-size: 11px; font-weight: 600; color: rgba(240,237,232,0.55);
+        }
+        .rg-trust-dot { width: 6px; height: 6px; border-radius: 50%; background: #52b788; }
+
+        /* desktop: wider card + more padding */
+        @media (min-width: 640px) {
+          .rg-card-body { padding: 36px 40px 32px; }
+          .rg-brand-name { font-size: 30px; }
+        }
+      `}</style>
+
+      <div className="rg-root">
+        <div className="rg-grain" />
+        <div className="rg-glow-tl" />
+        <div className="rg-glow-br" />
+
+        <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: 560 }}>
+
+          {/* ── CARD ── */}
+          <div className="rg-card">
+            <div className="rg-accent-bar" />
+            <div className="rg-card-body">
+
+              {/* Branding */}
+              <div className="rg-brand">
+                <div className="rg-brand-icon">
+                  <Sprout size={30} color="#fff" />
                 </div>
+                <div className="rg-brand-name">Join AgroConnect</div>
+                <div className="rg-brand-sub">Create your account and start your farming journey</div>
               </div>
-              <h1 style={{
-                fontSize: '28px', fontWeight: '800', letterSpacing: '-0.5px',
-                color: '#064e3b', marginBottom: '6px', lineHeight: 1.2,
-              }}>
-                Join AgroConnect
-              </h1>
-              <p style={{ color: '#6b7280', fontSize: '14px', fontWeight: '500' }}>
-                Create your account and start your farming journey
-              </p>
-            </div>
 
-            {/* Role Toggle */}
-            <div style={{ marginBottom: '28px' }}>
-              <label style={{ display: 'block', fontSize: '13px', fontWeight: '700', color: '#374151', marginBottom: '10px', letterSpacing: '0.3px', textTransform: 'uppercase' }}>
-                I am registering as
-              </label>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              {/* Role toggle */}
+              <div className="rg-role-label">I am registering as</div>
+              <div className="rg-role-grid">
                 {[
-                  { role: 'farmer', Icon: Leaf, label: 'Farmer', sub: 'Crop predictions & markets', accent: '#059669', bg: '#ecfdf5', border: '#6ee7b7' },
-                  { role: 'company', Icon: Building2, label: 'Company', sub: 'Post contracts & source crops', accent: '#0369a1', bg: '#eff6ff', border: '#93c5fd' },
-                ].map(({ role, Icon, label, sub, accent, bg, border }) => (
-                  <button
-                    key={role}
-                    type="button"
-                    onClick={() => setFormData((p) => ({ ...p, role }))}
-                    style={{
-                      position: 'relative',
-                      padding: '16px',
-                      borderRadius: '16px',
-                      border: `2px solid ${formData.role === role ? border : '#e5e7eb'}`,
-                      background: formData.role === role ? bg : '#fafafa',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      textAlign: 'left',
-                      outline: 'none',
-                      boxShadow: formData.role === role ? `0 4px 16px ${accent}22` : 'none',
-                    }}
-                  >
-                    <div style={{
-                      width: '40px', height: '40px',
-                      background: formData.role === role ? `${accent}18` : '#f3f4f6',
-                      borderRadius: '12px',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      marginBottom: '10px',
-                    }}>
-                      <Icon size={20} color={formData.role === role ? accent : '#9ca3af'} />
-                    </div>
-                    <p style={{ fontSize: '14px', fontWeight: '700', color: formData.role === role ? accent : '#374151', marginBottom: '3px' }}>
-                      {label}
-                    </p>
-                    <p style={{ fontSize: '11px', color: '#9ca3af', lineHeight: 1.4 }}>{sub}</p>
-                    {formData.role === role && (
-                      <div style={{ position: 'absolute', top: '12px', right: '12px' }}>
-                        <CheckCircle2 size={18} color={accent} />
+                  { role: 'farmer',  Icon: Leaf,      label: 'Farmer',  sub: 'Crop predictions & markets',    activeClass: 'active-farmer',  iconBg: '#d8f3dc', iconColor: '#2d6a4f' },
+                  { role: 'company', Icon: Building2, label: 'Company', sub: 'Post contracts & source crops',  activeClass: 'active-company', iconBg: '#dbeafe', iconColor: '#1d4e89' },
+                ].map(({ role, Icon, label, sub, activeClass, iconBg, iconColor }) => {
+                  const isActive = formData.role === role;
+                  return (
+                    <button
+                      key={role} type="button"
+                      className={`rg-role-btn ${isActive ? activeClass : ''}`}
+                      onClick={() => setFormData((p) => ({ ...p, role }))}
+                    >
+                      <div className="rg-role-icon" style={{ background: isActive ? iconBg : '#f0ede8' }}>
+                        <Icon size={18} color={isActive ? iconColor : '#9a9080'} />
                       </div>
+                      <div className="rg-role-name" style={{ color: isActive ? iconColor : '#1c2e1c' }}>{label}</div>
+                      <div className="rg-role-sub">{sub}</div>
+                      {isActive && (
+                        <div className="rg-role-check">
+                          <CheckCircle2 size={16} color={iconColor} />
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Form */}
+              <form onSubmit={handleSubmit} noValidate>
+
+                <div className="rg-section-title">Personal Details</div>
+
+                {/* Name + Phone */}
+                <div className="rg-grid-2 rg-gap">
+                  <div className="rg-field">
+                    <label className="rg-label">{t('auth.name') || 'Full Name'}</label>
+                    <div className="rg-input-wrap">
+                      <span className="rg-input-icon"><User size={15} /></span>
+                      <input type="text" name="name" value={formData.name} onChange={handleChange}
+                        required placeholder="Full Name"
+                        className={`rg-input${errors.name ? ' error' : ''}`} />
+                    </div>
+                    {errors.name && <p className="rg-error-msg">{errors.name}</p>}
+                  </div>
+                  <div className="rg-field">
+                    <label className="rg-label">{t('auth.phone') || 'Phone'}</label>
+                    <div className="rg-input-wrap">
+                      <span className="rg-input-icon"><Phone size={15} /></span>
+                      <input type="tel" name="phone" value={formData.phone} onChange={handleChange}
+                        required placeholder="10-digit number"
+                        className={`rg-input${errors.phone ? ' error' : ''}`} />
+                    </div>
+                    {errors.phone && <p className="rg-error-msg">{errors.phone}</p>}
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div className="rg-field rg-gap">
+                  <label className="rg-label">{t('auth.email') || 'Email'}</label>
+                  <div className="rg-input-wrap">
+                    <span className="rg-input-icon"><Mail size={15} /></span>
+                    <input type="email" name="email" value={formData.email} onChange={handleChange}
+                      required placeholder="your@email.com"
+                      className={`rg-input${errors.email ? ' error' : ''}`} />
+                  </div>
+                  {errors.email && <p className="rg-error-msg">{errors.email}</p>}
+                </div>
+
+                {/* Password + Confirm */}
+                <div className="rg-grid-2 rg-gap">
+                  <div className="rg-field">
+                    <label className="rg-label">{t('auth.password') || 'Password'}</label>
+                    <div className="rg-input-wrap">
+                      <span className="rg-input-icon"><Lock size={15} /></span>
+                      <input
+                        type={showPassword ? 'text' : 'password'} name="password"
+                        value={formData.password} onChange={handleChange}
+                        required minLength="6" placeholder="••••••••"
+                        style={{ paddingRight: 42 }}
+                        className={`rg-input${errors.password ? ' error' : ''}`}
+                      />
+                      <button type="button" className="rg-pw-toggle" onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
+                      </button>
+                    </div>
+                    {formData.password && (
+                      <>
+                        <div className="rg-pw-track">
+                          <div className="rg-pw-bar" style={{ width: `${pwStrength.pct}%`, background: pwStrength.color }} />
+                        </div>
+                        <p className="rg-pw-label" style={{ color: pwStrength.color }}>{pwStrength.label}</p>
+                      </>
                     )}
-                  </button>
-                ))}
-              </div>
-            </div>
+                    {errors.password && <p className="rg-error-msg">{errors.password}</p>}
+                  </div>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} noValidate>
-              {/* Name + Phone row */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
-                <Field label={t('auth.name') || 'Full Name'} error={errors.name}>
-                  <InputIcon icon={<User size={17} />}>
-                    <input
-                      type="text" name="name" value={formData.name}
-                      onChange={handleChange} required placeholder="Full Name"
-                      style={inputStyle(!!errors.name)}
-                    />
-                  </InputIcon>
-                </Field>
-                <Field label={t('auth.phone') || 'Phone'} error={errors.phone}>
-                  <InputIcon icon={<Phone size={17} />}>
-                    <input
-                      type="tel" name="phone" value={formData.phone}
-                      onChange={handleChange} required placeholder="10-digit number"
-                      style={inputStyle(!!errors.phone)}
-                    />
-                  </InputIcon>
-                </Field>
-              </div>
-
-              {/* Email */}
-              <div style={{ marginBottom: '16px' }}>
-                <Field label={t('auth.email') || 'Email'} error={errors.email}>
-                  <InputIcon icon={<Mail size={17} />}>
-                    <input
-                      type="email" name="email" value={formData.email}
-                      onChange={handleChange} required placeholder="your@email.com"
-                      style={inputStyle(!!errors.email)}
-                    />
-                  </InputIcon>
-                </Field>
-              </div>
-
-              {/* Password + Confirm */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
-                <Field label={t('auth.password') || 'Password'} error={errors.password}>
-                  <InputIcon icon={<Lock size={17} />} right={
-                    <button type="button" onClick={() => setShowPassword(!showPassword)}
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: '#9ca3af', display: 'flex', alignItems: 'center' }}>
-                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                    </button>
-                  }>
-                    <input
-                      type={showPassword ? 'text' : 'password'} name="password"
-                      value={formData.password} onChange={handleChange}
-                      required minLength="6" placeholder="••••••••"
-                      style={{ ...inputStyle(!!errors.password), paddingRight: '44px' }}
-                    />
-                  </InputIcon>
-                  {formData.password && (
-                    <div style={{ marginTop: '6px' }}>
-                      <div style={{ height: '4px', background: '#e5e7eb', borderRadius: '99px', overflow: 'hidden' }}>
-                        <div style={{
-                          height: '100%', width: `${passwordStrength.strength}%`,
-                          background: passwordStrength.color,
-                          borderRadius: '99px', transition: 'all 0.3s ease',
-                        }} />
-                      </div>
-                      <p style={{ fontSize: '11px', fontWeight: '600', color: passwordStrength.color, marginTop: '3px' }}>
-                        {passwordStrength.label}
+                  <div className="rg-field">
+                    <label className="rg-label">{t('auth.confirmPassword') || 'Confirm'}</label>
+                    <div className="rg-input-wrap">
+                      <span className="rg-input-icon"><Lock size={15} /></span>
+                      <input
+                        type={showConfirmPassword ? 'text' : 'password'} name="confirmPassword"
+                        value={formData.confirmPassword} onChange={handleChange}
+                        required placeholder="••••••••"
+                        style={{ paddingRight: 42 }}
+                        className={`rg-input${errors.confirmPassword ? ' error' : ''}`}
+                      />
+                      <button type="button" className="rg-pw-toggle" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                        {showConfirmPassword ? <EyeOff size={14} /> : <Eye size={14} />}
+                      </button>
+                    </div>
+                    {formData.confirmPassword && (
+                      <p className="rg-match" style={{
+                        color: formData.password === formData.confirmPassword ? '#2d6a4f' : '#c0392b'
+                      }}>
+                        {formData.password === formData.confirmPassword
+                          ? <><CheckCircle2 size={11} /> Passwords match</>
+                          : 'Does not match'}
                       </p>
-                    </div>
-                  )}
-                </Field>
+                    )}
+                    {errors.confirmPassword && <p className="rg-error-msg">{errors.confirmPassword}</p>}
+                  </div>
+                </div>
 
-                <Field label={t('auth.confirmPassword') || 'Confirm Password'} error={errors.confirmPassword}>
-                  <InputIcon icon={<Lock size={17} />} right={
-                    <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: '#9ca3af', display: 'flex', alignItems: 'center' }}>
-                      {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                    </button>
-                  }>
-                    <input
-                      type={showConfirmPassword ? 'text' : 'password'} name="confirmPassword"
-                      value={formData.confirmPassword} onChange={handleChange}
-                      required placeholder="••••••••"
-                      style={{ ...inputStyle(!!errors.confirmPassword), paddingRight: '44px' }}
-                    />
-                  </InputIcon>
-                  {formData.confirmPassword && (
-                    <p style={{
-                      fontSize: '11px', fontWeight: '600', marginTop: '5px',
-                      color: formData.password === formData.confirmPassword ? '#22c55e' : '#ef4444',
-                      display: 'flex', alignItems: 'center', gap: '4px',
-                    }}>
-                      {formData.password === formData.confirmPassword
-                        ? <><CheckCircle2 size={12} /> Passwords match</>
-                        : 'Passwords do not match'}
-                    </p>
-                  )}
-                </Field>
+                {/* Company section */}
+                {isCompany && (
+                  <div className="rg-company-section rg-gap">
+                    <div className="rg-company-head">
+                      <div className="rg-company-icon">
+                        <Building2 size={14} color="#1d4e89" />
+                      </div>
+                      <span className="rg-company-title">Company Details</span>
+                    </div>
+
+                    <div className="rg-field rg-gap">
+                      <label className="rg-label">Company Name *</label>
+                      <div className="rg-input-wrap">
+                        <span className="rg-input-icon"><Building2 size={15} /></span>
+                        <input type="text" name="companyName" value={companyDetails.companyName}
+                          onChange={handleCompanyChange} required placeholder="Your Company Name"
+                          className={`rg-input blue${errors.companyName ? ' error' : ''}`} />
+                      </div>
+                      {errors.companyName && <p className="rg-error-msg">{errors.companyName}</p>}
+                    </div>
+
+                    <div className="rg-grid-2">
+                      <div className="rg-field">
+                        <label className="rg-label">Registration / GST No.</label>
+                        <div className="rg-input-wrap">
+                          <span className="rg-input-icon"><Hash size={15} /></span>
+                          <input type="text" name="registrationNumber" value={companyDetails.registrationNumber}
+                            onChange={handleCompanyChange} placeholder="CIN / GST"
+                            className="rg-input blue" />
+                        </div>
+                      </div>
+                      <div className="rg-field">
+                        <label className="rg-label">Business Type</label>
+                        <div className="rg-input-wrap">
+                          <span className="rg-input-icon"><Briefcase size={15} /></span>
+                          <select name="businessType" value={companyDetails.businessType}
+                            onChange={handleCompanyChange} className="rg-select blue">
+                            <option value="">Select type</option>
+                            {businessTypes.map((bt) => (
+                              <option key={bt.value} value={bt.value}>{bt.label}</option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="rg-verify-note">
+                      <ShieldCheck size={14} color="#1d4e89" style={{ flexShrink: 0, marginTop: 1 }} />
+                      <p>Company accounts require admin verification before login access is granted.</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Submit error */}
+                {errors.submit && <div className="rg-submit-error">{errors.submit}</div>}
+
+                {/* Submit */}
+                <button type="submit" className="rg-submit" disabled={loading}>
+                  {loading
+                    ? <><div className="rg-spinner" /> Creating account...</>
+                    : <>{t('auth.register') || 'Create Account'} <ArrowRight size={17} /></>
+                  }
+                </button>
+              </form>
+
+              {/* Login link */}
+              <div className="rg-login-link">
+                {t('auth.haveAccount') || 'Already have an account?'}{' '}
+                <Link to="/login">
+                  {t('auth.login') || 'Sign in'} <ArrowRight size={12} />
+                </Link>
               </div>
 
-              {/* Company Details Section */}
-              {isCompany && (
-                <div style={{
-                  marginBottom: '16px',
-                  padding: '20px',
-                  borderRadius: '16px',
-                  border: '2px solid #bfdbfe',
-                  background: 'linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%)',
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-                    <div style={{
-                      width: '28px', height: '28px', borderRadius: '8px',
-                      background: '#dbeafe', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}>
-                      <Building2 size={15} color="#0369a1" />
-                    </div>
-                    <p style={{ fontSize: '13px', fontWeight: '700', color: '#1e40af', letterSpacing: '0.3px', textTransform: 'uppercase' }}>
-                      Company Details
-                    </p>
-                  </div>
-
-                  {/* Company Name */}
-                  <div style={{ marginBottom: '12px' }}>
-                    <Field label="Company Name *" error={errors.companyName}>
-                      <InputIcon icon={<Building2 size={17} />} accentColor="#0369a1">
-                        <input
-                          type="text" name="companyName" value={companyDetails.companyName}
-                          onChange={handleCompanyChange} required placeholder="Your Company Name"
-                          style={inputStyle(!!errors.companyName, '#0369a1')}
-                        />
-                      </InputIcon>
-                    </Field>
-                  </div>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                    <Field label="Registration / GST No." error={errors.registrationNumber}>
-                      <InputIcon icon={<Hash size={17} />} accentColor="#0369a1">
-                        <input
-                          type="text" name="registrationNumber"
-                          value={companyDetails.registrationNumber}
-                          onChange={handleCompanyChange}
-                          placeholder="CIN / GST Number"
-                          style={inputStyle(false, '#0369a1')}
-                        />
-                      </InputIcon>
-                    </Field>
-
-                    <Field label="Business Type" error={errors.businessType}>
-                      <div style={{ position: 'relative' }}>
-                        <Briefcase size={17} style={{
-                          position: 'absolute', left: '14px', top: '50%',
-                          transform: 'translateY(-50%)', color: '#9ca3af', pointerEvents: 'none',
-                        }} />
-                        <select
-                          name="businessType" value={companyDetails.businessType}
-                          onChange={handleCompanyChange}
-                          style={{
-                            ...inputStyle(false, '#0369a1'),
-                            paddingLeft: '42px',
-                            appearance: 'none',
-                            cursor: 'pointer',
-                          }}
-                        >
-                          <option value="">Select type</option>
-                          {businessTypes.map((bt) => (
-                            <option key={bt.value} value={bt.value}>{bt.label}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </Field>
-                  </div>
-
-                  <div style={{
-                    marginTop: '12px', padding: '10px 14px',
-                    borderRadius: '10px', background: '#dbeafe',
-                    display: 'flex', alignItems: 'flex-start', gap: '8px',
-                  }}>
-                    <ShieldCheck size={15} color="#0369a1" style={{ marginTop: '1px', flexShrink: 0 }} />
-                    <p style={{ fontSize: '12px', color: '#1e40af', lineHeight: 1.5 }}>
-                      Company accounts require admin verification before login access is granted.
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {/* Submit error */}
-              {errors.submit && (
-                <div style={{
-                  marginBottom: '16px', padding: '12px 16px',
-                  borderRadius: '12px', background: '#fef2f2',
-                  border: '1px solid #fecaca', color: '#dc2626',
-                  fontSize: '13px', fontWeight: '500',
-                }}>
-                  {errors.submit}
-                </div>
-              )}
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={loading}
-                style={{
-                  width: '100%',
-                  padding: '15px',
-                  borderRadius: '14px',
-                  border: 'none',
-                  background: loading
-                    ? '#9ca3af'
-                    : 'linear-gradient(135deg, #059669 0%, #047857 100%)',
-                  color: 'white',
-                  fontSize: '15px',
-                  fontWeight: '700',
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  boxShadow: loading ? 'none' : '0 8px 24px rgba(5,150,105,0.35)',
-                  transition: 'all 0.2s ease',
-                  letterSpacing: '0.2px',
-                  marginTop: '8px',
-                }}
-              >
-                {loading ? (
-                  <>
-                    <div style={{
-                      width: '18px', height: '18px',
-                      border: '2px solid rgba(255,255,255,0.4)',
-                      borderTopColor: 'white',
-                      borderRadius: '50%',
-                      animation: 'spin 0.7s linear infinite',
-                    }} />
-                    Creating account...
-                  </>
-                ) : (
-                  <>
-                    {t('auth.register') || 'Create Account'}
-                    <ArrowRight size={18} />
-                  </>
-                )}
-              </button>
-            </form>
-
-            {/* Login Link */}
-            <div style={{ marginTop: '24px', textAlign: 'center' }}>
-              <p style={{ color: '#6b7280', fontSize: '14px' }}>
-                {t('auth.haveAccount') || 'Already have an account?'}{' '}
-                <Link to="/login" style={{
-                  color: '#059669', fontWeight: '700',
-                  textDecoration: 'none', display: 'inline-flex',
-                  alignItems: 'center', gap: '3px',
-                }}>
-                  {t('auth.login') || 'Sign in'}
-                  <ArrowRight size={14} />
-                </Link>
-              </p>
             </div>
           </div>
-        </div>
 
-        {/* Trust badges */}
-        <div style={{
-          marginTop: '20px',
-          display: 'flex', alignItems: 'center',
-          justifyContent: 'center', gap: '24px',
-        }}>
-          {['Secure Registration', 'Privacy Protected', 'SSL Encrypted'].map((badge, i) => (
-            <span key={i} style={{
-              display: 'flex', alignItems: 'center', gap: '6px',
-              fontSize: '12px', color: 'rgba(255,255,255,0.75)', fontWeight: '500',
-            }}>
-              <div style={{
-                width: '7px', height: '7px',
-                background: '#34d399', borderRadius: '50%',
-              }} />
-              {badge}
-            </span>
-          ))}
+          {/* Trust badges */}
+          <div className="rg-trust">
+            {['Secure Registration', 'Privacy Protected', 'SSL Encrypted'].map((badge) => (
+              <div key={badge} className="rg-trust-item">
+                <span className="rg-trust-dot" />
+                {badge}
+              </div>
+            ))}
+          </div>
+
         </div>
       </div>
-
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
-        @keyframes spin { to { transform: rotate(360deg); } }
-        input::placeholder { color: #d1d5db; }
-        input:focus, select:focus { outline: none; }
-        button:hover:not(:disabled) { transform: translateY(-1px); }
-      `}</style>
-    </div>
+    </>
   );
 };
-
-/* ── Helpers ── */
-
-const inputStyle = (hasError = false, accentColor = '#059669') => ({
-  width: '100%',
-  paddingLeft: '42px',
-  paddingRight: '16px',
-  paddingTop: '12px',
-  paddingBottom: '12px',
-  background: 'white',
-  border: `2px solid ${hasError ? '#fca5a5' : '#e5e7eb'}`,
-  borderRadius: '12px',
-  fontSize: '14px',
-  fontWeight: '500',
-  color: '#111827',
-  transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
-  boxSizing: 'border-box',
-  fontFamily: 'inherit',
-});
-
-const Field = ({ label, error, children }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-    <label style={{ fontSize: '12px', fontWeight: '700', color: '#374151', letterSpacing: '0.2px', textTransform: 'uppercase' }}>
-      {label}
-    </label>
-    {children}
-    {error && (
-      <p style={{ fontSize: '11px', color: '#ef4444', fontWeight: '500', marginTop: '2px' }}>
-        {error}
-      </p>
-    )}
-  </div>
-);
-
-const InputIcon = ({ icon, right, children, accentColor = '#059669' }) => (
-  <div style={{ position: 'relative' }}>
-    <div style={{
-      position: 'absolute', left: '13px', top: '50%',
-      transform: 'translateY(-50%)', color: '#9ca3af',
-      display: 'flex', alignItems: 'center', pointerEvents: 'none',
-      zIndex: 1,
-    }}>
-      {icon}
-    </div>
-    {children}
-    {right && (
-      <div style={{
-        position: 'absolute', right: '12px', top: '50%',
-        transform: 'translateY(-50%)', zIndex: 1,
-      }}>
-        {right}
-      </div>
-    )}
-  </div>
-);
 
 export default Register;
